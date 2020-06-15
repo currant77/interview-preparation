@@ -130,7 +130,7 @@ template<class Key, class Hash, class Equal>
 void HashSet<Key, Hash, Equal>::resize()
 {
     // Rehash if load exceeds threshold
-    if(num_entries / table_size > LOAD_THRESHOLD)
+    if(double(num_entries) / table_size > LOAD_THRESHOLD)
     {
         // Create new table
         size_t new_table_size = table_size * EXPANSION_FACTOR;

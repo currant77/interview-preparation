@@ -29,7 +29,7 @@ class IMap
          * true and returns the corresponding value by reference;
          * else returns false.
          */
-        virtual bool lookup(const Key& k, const Value& v) const = 0;
+        virtual bool lookup(const Key& k, Value& v) const = 0;
 
         /**
          * @brief If the map contains the given key, updated the
