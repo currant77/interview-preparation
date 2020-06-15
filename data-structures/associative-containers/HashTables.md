@@ -36,10 +36,10 @@ The main advantage of a hash table is speed: a good hash function and hash table
 
 |             | Average-case | Worst-case |
 |-------------|:------------:|:----------:|
-| Search      | _O(1)_       | _O(n)      |
-| Insertion   | _O(1)_       | _O(n)      |
-| Deletion    | _O(1)_       | _O(n)      |
-|
+| Search      | _O(1)_       | _O(n)_     |
+| Insertion   | _O(1)_       | _O(n)_     |
+| Deletion    | _O(1)_       | _O(n)_     |
+
 
 ## Problems and Implementations
 
