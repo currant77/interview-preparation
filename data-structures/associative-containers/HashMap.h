@@ -13,7 +13,6 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
 
-#include <array>
 #include <utility>
 #include <functional>
 #include "IMap.h"
@@ -35,7 +34,6 @@ class HashMap : public IMap<Key, Value>
         static Entry_Type dummy;                      // Dummy entry for deletes  
         static Entry_Type* const DELETED;             // Pointer to dummy entry
     
-        
         // Members
         size_t num_entries;        
         size_t num_deleted; 
@@ -60,7 +58,7 @@ class HashMap : public IMap<Key, Value>
     
     public:
         explicit HashMap<Key, Value, Hash, Equal>(size_t size = DEFAULT_SIZE);
-        virtual ~HashMap<Key, Value, Hash, Equal>();
+        ~HashMap<Key, Value, Hash, Equal>();
 
         size_t size() const override;
         bool lookup(const Key& k, Value& v) const override;
