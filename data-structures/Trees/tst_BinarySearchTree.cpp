@@ -30,8 +30,8 @@ int main()
 
     // Add multiple values
     assert(bst.insert(15));
-    assert(bst.insert(4));
     assert(bst.insert(3));
+    assert(bst.insert(4));
     assert(bst.insert(2));
     assert(bst.insert(10));
 
@@ -43,9 +43,9 @@ int main()
     assert(!bst.find(12));
 
     // Remove values
-    assert(bst.remove(3));
-    assert(bst.remove(5));
-    assert(bst.remove(15));
+    assert(bst.remove(3));      // Node with two children
+    assert(bst.remove(5));      // Root node
+    assert(bst.remove(15));     // Node with left child
     assert(!bst.remove(15));
 
     assert(!bst.find(5));
