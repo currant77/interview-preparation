@@ -11,7 +11,7 @@ The elements of a tree are called **nodes**; each stores a value and is connecte
 It is most useful and intuitive, to define trees recursively – since this is how the tree data structure and most operations on it are typically implemented. A **tree** can be defined recursively as either:
 
 * (*i*) empty (no nodes), or 
-* (*ii*) a **root** node with zero or more subtrees (i.e. its children are themselves the roots of subtrees). 
+* (*ii*) a **root** node *r* with zero or more subtrees whose roots are children of *r*
 
 A tree can also be defined based on the mathematical definition of a tree: a *connected*, *undirected*, *acyclical* graph. Using this definition, we can define the abstract data type as a *rooted*, *directed* *out-tree*: one node is designed as the root node and all edges are directed away from the root. 
 
@@ -48,6 +48,65 @@ The table below provides an example of these terms in action for the example tre
 
 ## Traversing Trees
 
+Tree **traveral** is the fundamental process of visiting each node in a tree exactly once; it is analogous to iterating over the elements in a linear data type like a list. Trees can be traversed in either **breadth-first** or **depth-first** order.
+
+### Breadth-First Traversal
+
+**Breadth-first** traversal is also known as **level-order** traversal because it proceeds level by level, starting with the root node; it examines every node at each successive level before proceeding to the next level. While depth-first traversal uses a stack data structure (either directly or indirectly using the call stack), depth-first traversal uses a queue: when we visited each node, we push its child nodes onto the stack.
+
+````
+function breadth_first(root):
+
+    let Q be a queue
+    Q.enqueue(root)
+
+    while Q is not empty do:
+
+        node := Q.dequeue()
+
+        // ... Do something to node ...
+
+        for each child c of node:
+            Q.enqueue(node)
+
+````
+
+// TODO: runtime
+// TODO: best/worst case, runtime
+// https://en.wikipedia.org/wiki/Breadth-first_search
+
+### Depth-First Traversal
+
+Starting at the root, **depth-first** traversal proceeds by fully searching each subtree before **backtracking** to search each remaining subtrees in sequence; it traverses as far along each branch as possible (until it reaches a leaf) before backtracking. Whereas breadth-first search uses a queue data structure, depth-first search leans on a stack. It can either by implemented by using a stack directly or by taking advantange of recursion to use the call stack; examples of both are given below.
+
+````
+function depth_first_stack(root):
+    let S be a stack
+    S.push(root)
+
+    while S is not empty do:
+
+        node := S.pop()
+
+        // ... Do something to node ...
+
+        for each child c of node:
+            S.push(c)
+
+function depth_first_recursive(root):
+
+    // ... Do something to node ...
+
+    for each child c of node:
+        depth_first_recusrive(c)
+```
+
+**Depth-first** traversals can be further differentiated by whether they examine a node or its children first; in the case of binary search tree, we differentiate between a pre-order, in-order, or post-order depth-first traversal (see below).
+
+// TODO: runtime
+// Best worst case
+// Comparison
+// Specializations
 
 
 ## Hoffman Trees
@@ -60,6 +119,7 @@ The table below provides an example of these terms in action for the example tre
 
 // TODO
 // Different terms for binary traversal (pre-,in-post-order)
+// Fullness / completness
 
 ## Binary Search Tree
 
