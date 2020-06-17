@@ -24,7 +24,7 @@ class LinkedList
     public:
         // Forward declarations
         class iterator;
-        class const_iterator;
+        // class const_iterator;
 
         /**
          * @brief Returns true if the list is empty; false otherwise
@@ -58,7 +58,7 @@ class LinkedList
         /**
          * @brief Returns a constant iterator to the beginning of the list 
          */
-        const_iterator begin() const;
+        // const_iterator cbegin() const;
 
         /**
          * @brief Returns an iterator to the end of the list
@@ -68,7 +68,7 @@ class LinkedList
         /**
          * @brief Returns a constant iterator to the end of the list
          */
-        const_iterator end() const;
+        // const_iterator cend() const;
 
         /**
          * @brief Inserts \p value at the given \p index
@@ -78,6 +78,7 @@ class LinkedList
 
         /**
          * @brief Inserts \p value at the given \p position
+         * @return iterator - iterator that points to the newly inserted value
          */
         iterator insert(iterator position, const T& value);
 
@@ -89,8 +90,12 @@ class LinkedList
 
         /**
          * @brief Removes the value at \p position from the list
+         * @throw std::out_of_range if \p position == list.end()
+         * @return iterator - iterator that points to the next value
+         * after the value that was removed; if the last element was 
+         * removed, points to list.end().
          */
-        iterator remove(iterator pos);
+        iterator remove(iterator position);
 
         /**
          * @brief Removes all the values from the list
@@ -114,46 +119,156 @@ class LinkedList<T>::iterator
 {
     public:
 
-    iterator();
-    ~iterator();
+    iterator()
+    {
+        // TODO
+    }
 
-    iterator(const iterator& it);               // Copy constructor
-    iterator& operator=(const iterator& it);    // Assignment operator
+    ~iterator()
+    {
+        // TODO
+    }
 
-    T& operator*() const;
-    T* operator->() const;
+    iterator(const iterator& it)   // Copy constructor
+    {
+        // TODO
+        return;
+    }
 
-    iterator& operator++();                     // Prefix increment
-    iterator& operator++(int);                  // Postfix increment
-    iterator& operator--();                     // Prefix decrement
-    iterator& operator--(int);                  // Postfix decrement 
+    iterator& operator=(const iterator& it)   // Assignment operator
+    {
+        // TODO
+        return *this;
+    }
 
-    bool operator==(const iterator& other); 
-    bool operator!=(const iterator& other);
+    T& operator*() const   // Dereference
+    {
+        // TODO
+        T t;
+        return t;
+    }
+
+    T* operator->() const
+    {
+        // TODO
+        return new T();
+    }
+
+    iterator& operator++()  // Prefix increment
+    {
+        // TODO
+        return &this;
+    }
+
+    iterator& operator++(int)   // Postfix increment
+    {
+        // TODO
+        return *this;
+    }
+
+    iterator& operator--()   // Prefix decrement
+    {
+        // TODO
+        return *this;
+    }
+
+    iterator& operator--(int)   // Postfix decrement 
+    {
+        // TODO
+        return *this;
+    }
+
+    bool operator==(const iterator& other)
+    {
+        // TODO
+        return false;
+    } 
+
+    bool operator!=(const iterator& other)
+    {
+        // TODO
+        return false;
+    }
 };
 
+/**
 template<class T>
 class LinkedList<T>::const_iterator
 {
     public:
 
-    const_iterator();
-    ~const_iterator();
+    const_iterator()
+    {
+        // TODO
+    }
 
-    const_iterator(const const_iterator& it);               // Copy constructor
-    const_iterator& operator=(const const_iterator& it);    // Assignment operator
+    ~const_iterator()
+    {
+        // TODO
+    }
 
-    T& operator*() const;
-    T* operator->() const;
+    const_iterator(const const_iterator& it)   // Copy constructor
+    {
+        // TODO
+        return;
+    }
 
-    const_iterator& operator++();                     // Prefix increment
-    const_iterator& operator++(int);                  // Postfix increment
-    const_iterator& operator--();                     // Prefix decrement
-    const_iterator& operator--(int);                  // Postfix decrement 
+    const_iterator& operator=(const const_iterator& it)   // Assignment operator
+    {
+        // TODO
+        return *this;
+    }
 
-    bool operator==(const const_iterator& other); 
-    bool operator!=(const const_iterator& other);
+    T& operator*() const    // Dereferencing
+    {
+        // TODO
+        T t;
+        return t;
+    }
+
+    T* operator->() const
+    {
+        // TODO
+        return new T();
+    }
+
+    const_iterator& operator++()   // Prefix increment
+    {
+        // TODO
+        return *this;
+    }
+
+    const_iterator& operator++(int)   // Postfix incremen
+    {
+        // TODO
+        return *this;
+    }
+
+    const_iterator& operator--()   // Prefix decrement
+    {
+        // TODO
+        return *this;
+    }
+
+    const_iterator& operator--(int)    // Postfix decrement 
+    {
+        // TODO
+        return *this;
+    }
+
+    bool operator==(const const_iterator& other)
+    {
+        // TODO
+        return false;
+    }
+
+    bool operator!=(const const_iterator& other)
+    {
+        // TODO
+        return false;
+    }
 };
+**/
 
 template<class T>
 struct LinkedList<T>::Node
@@ -187,6 +302,8 @@ template<class T>
 T& LinkedList<T>::operator[](size_t index)
 {
     // TODO
+    T t;
+    return t;
 }
 
 template<class T>
@@ -199,54 +316,67 @@ template<class T>
 typename LinkedList<T>::iterator LinkedList<T>::begin()
 {
     // TODO
+    return iterator();
 }
 
+/**
 template<class T>
-typename LinkedList<T>::const_iterator LinkedList<T>::begin() const
+typename LinkedList<T>::const_iterator LinkedList<T>::cbegin() const
 {
     // TODO
+    return const_iterator();
 }
+*/
 
 template<class T>
 typename LinkedList<T>::iterator LinkedList<T>::end()
 {
     // TODO
+    return iterator();
 }
 
+/*
 template<class T>
-typename LinkedList<T>::const_iterator LinkedList<T>::end() const
+typename LinkedList<T>::const_iterator LinkedList<T>::cend() const
 {
     // TODO
+    return const_iterator();
 }
+*/
 
 template<class T>
 void LinkedList<T>::insert(size_t index, const T& value)
 {
     // TODO
+    return;
 }
 
 template<class T>
 typename LinkedList<T>::iterator LinkedList<T>::insert(iterator pos, const T& value)
 {
     // TODO
+    return iterator();
 }
 
 template<class T>
 void LinkedList<T>::remove(size_t index)
 {
     // TODO
+    return;
 }
 
 template<class T>
 typename LinkedList<T>::iterator LinkedList<T>::remove(iterator pos)
 {
     // TODO
+    return iterator();
 }
 
 template<class T>
 void LinkedList<T>::clear()
 {
     // TODO
+    return;
 }
 
 #endif
