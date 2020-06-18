@@ -50,6 +50,9 @@ The table below compares the runtime of typical list operations between array li
 
 McDowell, Gayle Lakkmann _Cracking the Coding Interview_. 6th ed. Palo Alto, CA: CareerCup, 2016.
 
+Zeil, Steven J. _Iterators: an ADT for Positions_. Old Dominion University, 2006. https://www.cs.odu.edu/~zeil/cs361/web11/website/Lectures/iterators/page/iterators.html.
+
+Riesbeck, Christopher. _C++ Iterators_. Northwest University, 2009. https://users.cs.northwestern.edu/~riesbeck/programming/c++/stl-iterators.html. 
 
 
 
