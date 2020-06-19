@@ -13,7 +13,7 @@
 #define LINKED_LIST_H
 
 #include "stddef.h"     // size_t
-#include <exception>    // std::out_of_range, std::invalid_argument
+#include <stdexcept>    // std::out_of_range, std::invalid_argument
 #include <algorithm>    // std::swap
 #include <iterator>     // std::bidirectional_iterator_tag
 

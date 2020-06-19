@@ -2,7 +2,7 @@
 
 ## Abstract Data Type
 
-A **list** is an abstract data type that represents an a countable collection of ordered values; the same or equal items may occur more than once in the list. Elements in a list can be referenced by their numerical position in the list, called their **index**. Lists differ from other ordered collections: unlike ordered set, they can contain duplicate values; unlike array, they can expand or shrink dynamically as values are added or removed; and unlike stacks, queues, or dequeues, values can be accessed, inserted, or removed from any index in the list.
+A **list** is an abstract data type that represents a dynamic, countable collection of ordered values; the same or equal items may occur more than once in the list. Elements in a list can be referenced by their numerical position in the list, called their **index**. Lists differ from other ordered collections: unlike ordered set, they can contain duplicate values; unlike array, they can expand or shrink dynamically as values are added or removed; and unlike stacks, queues, or dequeues, values can be accessed, inserted, or removed from any index in the list.
 
 A list supports four basic operations:
 * `insert` a value at a given index

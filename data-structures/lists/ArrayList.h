@@ -1,7 +1,7 @@
 /**
  * @file ArrayList.h
  * @author Taylor Curran
- * @brief Array list with basic functionbality
+ * @brief Array list with basic functionality
  * @version 0.1
  * @date 2020-06-19
  * 
@@ -17,7 +17,7 @@
 #define ARRAY_LIST_H
 
 #include "stddef.h"   // size_t
-#include <exception>  // std::out_of_range, std::invalid_argument
+#include <stdexcept>  // std::out_of_range, std::invalid_argument
 #include <utility>    // std::move
 
 /**
