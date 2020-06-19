@@ -1,7 +1,7 @@
 /**
- * @file IList.h
+ * @file LinkedList.h
  * @author Taylor Curran
- * @brief Linked list
+ * @brief Linked list with iterators
  * @version 0.1
  * @date 2020-06-16
  * 
@@ -18,7 +18,8 @@
 #include <iterator>     // std::bidirectional_iterator_tag
 
 /**
- * @brief A linked list of values of type T
+ * @brief Linked list of values of type T; supports 
+ * operations by index and via iterators
  * @tparam T - the type of the values stored in the list
  */
 template<class T>

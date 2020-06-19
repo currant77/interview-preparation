@@ -40,11 +40,12 @@ The table below compares the runtime of typical list operations between array li
 
 ## Examples and Problems
 
-* [LinkedList](LinkedList.h) provides an example implementation of a linked list. It includes methds for accessing, modifying, adding, and removing values by index or by iterator. (see [#REF Iterator]).
+* [LinkedList](LinkedList.h) provides an example implementation of a linked list. It includes methods for accessing, modifying, adding, and removing values by index or by iterator. (see [#REF Iterator]). Its methods are loosely modelled on `std::list` (which is also implemented as a linked list) and its implementation was derived in part from from Koffman & Wolfgang 2006, Zeil 2006, and Riesbeck 2009.
 
-* TODO: array list implementation
-* TODO: linked list implementation
+* [ArrayList](ArrayList.h) contains a simple implementation of an array list that only allows values to be accessed, inserted, or removed by index; it does not support iterators, though these would be relatively trivial to implement. See also `std::vector` (which is also implemented as an array list). 
+
 * TODO: Array list problem
+
 * TODO: Linked list problem
 
 ## References
@@ -54,3 +55,5 @@ McDowell, Gayle Lakkmann _Cracking the Coding Interview_. 6th ed. Palo Alto, CA:
 Zeil, Steven J. _Iterators: an ADT for Positions_. Old Dominion University, 2006. https://www.cs.odu.edu/~zeil/cs361/web11/website/Lectures/iterators/page/iterators.html.
 
 Riesbeck, Christopher. _C++ Iterators_. Northwest University, 2009. https://users.cs.northwestern.edu/~riesbeck/programming/c++/stl-iterators.html. 
+
+Koffman, Elliot B., and Paul A. T. Wolfgang. _Objects, Abstraction, Data Structures and Design Using C++_. Hoboken, NJ: John Wiley &amp; Sons, 2006.

@@ -143,8 +143,13 @@ function depth_first_recursive(root):
 
 
 
-
-
+Search: https://medium.com/basecs/breaking-down-breadth-first-search-cebe696709d9
+Depth-First Searc: https://en.wikipedia.org/wiki/Depth-first_search
+Example BST code: https://gist.github.com/harish-r/a7df7ce576dda35c9660 
+Tree Data Structure: https://www.cs.cmu.edu/~clo/www/CMU/DataStructures/Lessons/lesson4_1.htm 
+Trees: http://people.eecs.berkeley.edu/~bh/ssch18/trees.html 
+Trees 2: https://xlinux.nist.gov/dads/HTML/tree.html 
+Trees 3: http://infolab.stanford.edu/~ullman/focs/ch05.pdf 
 
 
 
