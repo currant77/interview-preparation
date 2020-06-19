@@ -41,9 +41,10 @@ The main advantage of a hash table is speed: a good hash function and hash table
 | Deletion    | _O(1)_       | _O(n)_     |
 
 
-## Problems and Implementations
+## Problems and Examples
 
-* [Hash Set](HashSet.h) provides a generic implementation of [ISet](ISet.h) that allows the user to override the default hash function (`std::hash<T>`) and equality comparison (`std::equal_to<T>`) (see [here](https://thispointer.com/using-unordered_set-with-custom-hasher-and-comparision-function/) for another example of how to write custom hash and comparison functions). The [test file](tst_HashSet.cpp) provides an example of this for `std::string` and a custom struct; it also provides examples of a string hash function (Koffman & Wolfgang 2006, 538) and a hash function for a custom class based on `boost:hash_combine`. 
+* [HashSet](HashSet.h) provides a generic implementation of [ISet](ISet.h) that allows the user to override the default hash function (`std::hash<T>`) and equality comparison (`std::equal_to<T>`) (see [here](https://thispointer.com/using-unordered_set-with-custom-hasher-and-comparision-function/) for another example of how to write custom hash and comparison functions). The [test file](tst_HashSet.cpp) provides an example of this for `std::string` and a custom struct; it also provides examples of a string hash function (Koffman & Wolfgang 2006, 538) and a hash function for a custom class based on `boost:hash_combine`. 
+
 * TODO: implementation of `Map` interface and `HashMap` implementation (using open addressing)
 * TODO: at least one problem from _Cracking the Coding Interview_
 

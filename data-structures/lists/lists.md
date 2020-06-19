@@ -40,7 +40,8 @@ The table below compares the runtime of typical list operations between array li
 
 ## Examples and Problems
 
-* TODO: list interface
+* [LinkedList](LinkedList.h) provides an example implementation of a linked list. It includes methds for accessing, modifying, adding, and removing values by index or by iterator. (see [#REF Iterator]).
+
 * TODO: array list implementation
 * TODO: linked list implementation
 * TODO: Array list problem
@@ -53,14 +54,3 @@ McDowell, Gayle Lakkmann _Cracking the Coding Interview_. 6th ed. Palo Alto, CA:
 Zeil, Steven J. _Iterators: an ADT for Positions_. Old Dominion University, 2006. https://www.cs.odu.edu/~zeil/cs361/web11/website/Lectures/iterators/page/iterators.html.
 
 Riesbeck, Christopher. _C++ Iterators_. Northwest University, 2009. https://users.cs.northwestern.edu/~riesbeck/programming/c++/stl-iterators.html. 
-
-
-
-
-
-[IList.h](1_data_structures\1_sequence_containers/1_lists/IList.h) provides a simple C++ list interface, with methods for accesing items by index, adding and removing items, and determining the number of items in the list. [ArrayList.h](1_data_structures\1_sequence_containers/1_lists/ArrayList.h) and [LinkedList.h](1_data_structures\1_sequence_containers/1_lists/LinkedList.h) provide array list and a doubly linked list implementations of the interface, respectively. Tests for both implementations are provided in [tst_IList.cpp](1_data_structures\1_sequence_containers/1_lists/tst_IList.cpp).
-
-
-
-
-**TODO**: expand interface and implementation to include support to C++ iterators, equality comparison, other constructors, operator overloads...
