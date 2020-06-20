@@ -26,7 +26,7 @@ class Queue
 {
     public:
         // Definitions
-        typename LinkedList<T>::const_iterator const_iterator;
+        typedef typename LinkedList<T>::const_iterator const_iterator;
         
         Queue();
         ~Queue();
@@ -138,13 +138,13 @@ const T& Queue<T>::front() const
 template<class T>
 T& Queue<T>::back()
 {
-    return list[list.size()];
+    return list[list.size() - 1];
 }
 
 template<class T>
 const T& Queue<T>::back() const
 {
-    return list[list.size()];
+    return list[list.size() - 1];
 }
 
 template<class T>
