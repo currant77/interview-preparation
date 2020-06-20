@@ -1,7 +1,7 @@
 /**
  * @file Queue.h
  * @author Taylor Curran
- * @brief Queue wity basic functionality and support for const
+ * @brief Queue with basic functionality and support for const
  * iteration over all positions in the queue.
  * @version 0.1
  * @date 2020-06-19

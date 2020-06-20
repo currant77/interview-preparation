@@ -34,7 +34,6 @@ The functionality required for each of these abstract data types is a subset of 
 
 * [Stack](Stack.h) implements a stack as a wrapper to [ArrayList](../lists/ArrayList.h).
 * [Queue](Queue.h) implements a stack as a wrapper to [LinkedList](../lists/LinkedList.h); it defined a constant iterator to allow read-only access to all the values in the queue.
-* [Deque](Deque.h) implements a deque as a wrapper to `std::list` (the STL linked list container).
 
 * TODO: stack problem
 * TODO: queue problem

@@ -123,7 +123,7 @@ class ArrayList
 
 template<class T>
 ArrayList<T>::ArrayList(size_t initial_capacity) :
-    initial_capacity(initial_capacity), capacity(capacity),
+    initial_capacity(initial_capacity), capacity(initial_capacity),
     num_entries(0), array(new T[initial_capacity])
 {
     

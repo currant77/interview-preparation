@@ -33,6 +33,7 @@ class Stack
         /**
          * @brief Returns a reference to the value at the 
          * top of the stack
+         * @throw std::out_of_range if stack is empty
          * @return T& - reference to value at the top of 
          * the stack
          */
@@ -41,6 +42,7 @@ class Stack
         /**
          * @brief Returns a const reference to the value 
          * at the  top of the stack
+         * @throw std::out_of_range if stack is empty
          * @return const T& - const reference to value at the 
          * top of the stack
          */
@@ -54,7 +56,7 @@ class Stack
 
         /**
          * @brief Removes the top value from the stack
-         * @throw std::invalid_argument if stack is empty
+         * @throw std::out_of_range if stack is empty
          */
         void pop();
 
@@ -94,13 +96,13 @@ size_t Stack<T>::size() const
 template<class T>
 T& Stack<T>::top()
 {
-    return list[0];
+    return list[list.size() - 1];
 }
 
 template<class T>
 const T& Stack<T>::top() const
 {
-    return list[0];
+    return list[list.size() - 1];
 }
 
 template<class T>
@@ -112,7 +114,7 @@ void Stack<T>::push(const T& value)
 template<class T>
 void Stack<T>::pop()
 {
-    list.pop_front();
+    list.pop_back();
 }
 
 template<class T>
