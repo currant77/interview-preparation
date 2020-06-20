@@ -38,6 +38,10 @@ The table below compares the runtime of typical list operations between array li
 \* When the array is full, all the contents of the array need to be copied over to a new, larger array, with takes _O(n)_. However, this happens infrequently enough that the amortized runtime is still O(1). See *Cracking the Coding Interview*, p. 89, for further discussion.
 \*\* If the linked list implementation maintains a pointer to the tail node; otherwise the runtime is _O(n)_.
 
+## Algorithms
+
+// TODO
+
 ## Examples and Problems
 
 * [LinkedList](LinkedList.h) provides an example implementation of a linked list. It includes methods for accessing, modifying, adding, and removing values by index or by iterator. (see [#REF Iterator]). Its methods are loosely modelled on `std::list` (which is also implemented as a linked list) and its implementation was derived in part from from Koffman & Wolfgang 2006, Zeil 2006, and Riesbeck 2009.

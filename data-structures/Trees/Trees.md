@@ -1,21 +1,21 @@
 # Trees
 
-A **tree** is an abstract data type that models a hierarchical tree structure and consists of a series of **nodes** linked by directed **branches** (or **edges**). Trees are widely used for representing hierarchies and storing data for efficient lookup.
+A **tree** is an abstract data type that models a hierarchical tree structure and consists of a series of **nodes** linked by directed **branches** (or **edges**) from **parent** nodes to **child** nodes. Trees are widely used for representing hierarchies and storing data for efficient lookup.
 
 ![Tree](https://www.thecrazyprogrammer.com/wp-content/uploads/2019/09/General-Tree-Structure.png)
 
-## General Definition
+## Abstract Data Type
 
 The elements of a tree are called **nodes**; each stores a value and is connected by directed **branches** (or **edges**) to zero or more successor nodes called **child** nodes; the predecessor of a node is called its **parent** node.
 
-It is most useful and intuitive, to define trees recursively – since this is how the tree data structure and most operations on it are typically implemented. A **tree** can be defined recursively as either:
+There are many ways to define trees, but it is most useful and intuitive (at least in my opinion) to define trees recursively – since this is how the tree data structure and most operations on it are typically implemented. A **tree** can be defined recursively as either:
 
-* (*i*) empty (no nodes), or 
-* (*ii*) a **root** node *r* with zero or more subtrees whose roots are children of *r*
+* (i) empty (no nodes), or 
+* (ii) a **root** node *r* with zero or more subtrees whose roots are child nodes of *r*
 
 A tree can also be defined based on the mathematical definition of a tree: a *connected*, *undirected*, *acyclical* graph. Using this definition, we can define the abstract data type as a *rooted*, *directed* *out-tree*: one node is designed as the root node and all edges are directed away from the root. 
 
-Two important results flow from these definitions: every node in tree except for the root node has exactly one parent node; and there is exactly one path from the root node to each node in the tree.
+Two important results flow from these definitions: every node in tree except for the root node has exactly one parent node; and there is exactly one path from the root node to each node in the tree (because there are no cycles).
 
 Trees are replete with terminology; many of them are based on analogy with a (physical) tree or a family tree:
 
@@ -35,7 +35,7 @@ Trees are replete with terminology; many of them are based on analogy with a (ph
 
 The table below provides an example of these terms in action for the example tree in the image above. This tree has a height of 3 and a breadth of 6; it has five branch nodes (A, B, C, D, G) and six leaf nodes (E, F, J, K, H, I).
 
-| Node          | A (root)                     | G (internal)        | J (leaf)       |
+| Node          | A (*root node*)              | G (*internal node*) | J (*leaf node*)|
 |---------------|:----------------------------:|:-------------------:|:--------------:|
 | Children      | B, C, D                      | J, K                | -              |
 | Parent        | -                            | C                   | G              |
@@ -45,120 +45,23 @@ The table below provides an example of these terms in action for the example tre
 | Depth         | 0                            | 2                   | 3              |
 | Level         | 1                            | 3                   | 4              |
 
+The tree abstract data type is incredibly flexible and is used in a wide range of applications – and so there are numerous specializations in common use (see binary search trees (#REF), tries (#REF), red-black trees (#REF), and binary heaps (#REF)). As a result, there is not a set of basic operations that all trees will tend to implement (unlike other abstract data types like queues or lists). However, trees will generally provide methods for adding and removing nodes and traversing the elements of the tree (see below).
 
-## Traversing Trees
+## Implementations
 
-Tree **traveral** is the fundamental process of visiting each node in a tree exactly once; it is analogous to iterating over the elements in a linear data type like a list. Trees can be traversed in either **breadth-first** or **depth-first** order.
+As discussed above, the wide variety of different types of trees makes any generlizations about tree data structures impossible. For example, despite their underlying tree structure, binary heaps (#REF) are typically implemented using an array. 
 
-### Breadth-First Traversal
+Nonetheless, a general tree data structure is relatively easy to implement: it can be as simple as an object that holds a value and a collection of child nodes (see below). The more important and difficult features of trees are their accompanying algorithms. Some of these are general (e.g. how to traverse a tree) and are discussed in the section below; others are specific to a given type of tree (e.g. balancing red-black trees). 
 
-**Breadth-first** traversal is also known as **level-order** traversal because it proceeds level by level, starting with the root node; it examines every node at each successive level before proceeding to the next level. While depth-first traversal uses a stack data structure (either directly or indirectly using the call stack), depth-first traversal uses a queue: when we visited each node, we push its child nodes onto the stack.
+## Algorithms
 
-````
-function breadth_first(root):
-
-    let Q be a queue
-    Q.enqueue(root)
-
-    while Q is not empty do:
-
-        node := Q.dequeue()
-
-        // ... Do something to node ...
-
-        for each child c of node:
-            Q.enqueue(node)
-
-````
-
-// TODO: runtime
-// TODO: best/worst case, runtime
-// https://en.wikipedia.org/wiki/Breadth-first_search
-
-### Depth-First Traversal
-
-Starting at the root, **depth-first** traversal proceeds by fully searching each subtree before **backtracking** to search each remaining subtrees in sequence; it traverses as far along each branch as possible (until it reaches a leaf) before backtracking. Whereas breadth-first search uses a queue data structure, depth-first search leans on a stack. It can either by implemented by using a stack directly or by taking advantange of recursion to use the call stack; examples of both are given below.
-
-````
-function depth_first_stack(root):
-    let S be a stack
-    S.push(root)
-
-    while S is not empty do:
-
-        node := S.pop()
-
-        // ... Do something to node ...
-
-        for each child c of node:
-            S.push(c)
-
-function depth_first_recursive(root):
-
-    // ... Do something to node ...
-
-    for each child c of node:
-        depth_first_recusrive(c)
-```
-
-**Depth-first** traversals can be further differentiated by whether they examine a node or its children first; in the case of binary search tree, we differentiate between a pre-order, in-order, or post-order depth-first traversal (see below).
-
-// TODO: runtime
-// Best worst case
-// Comparison
-// Specializations
-
-
-## Hoffman Trees
+### Traversal
 
 // TODO
-// See Foffman & Wolfgang 2006, 449-450
-// TODO: implement Huffman tree cnoding / decoding
 
-## Binary Trees
+## Problems and Examples
 
 // TODO
-// Different terms for binary traversal (pre-,in-post-order)
-// Fullness / completness
-
-## Binary Search Tree
-
-// TODO
-// Definition
-
-## Heaps and Priority Queues
-
-
-
-
-
-// Other
-## Hoffman Trees
-
-// TODO
-// See Foffman & Wolfgang 2006, 449-450
-// TODO: implement Huffman tree cnoding / decoding
-
-
-
-
-
-Search: https://medium.com/basecs/breaking-down-breadth-first-search-cebe696709d9
-Depth-First Searc: https://en.wikipedia.org/wiki/Depth-first_search
-Example BST code: https://gist.github.com/harish-r/a7df7ce576dda35c9660 
-Tree Data Structure: https://www.cs.cmu.edu/~clo/www/CMU/DataStructures/Lessons/lesson4_1.htm 
-Trees: http://people.eecs.berkeley.edu/~bh/ssch18/trees.html 
-Trees 2: https://xlinux.nist.gov/dads/HTML/tree.html 
-Trees 3: http://infolab.stanford.edu/~ullman/focs/ch05.pdf 
-
-
-
-
-
-
-
-
-
 
 ## References
 
