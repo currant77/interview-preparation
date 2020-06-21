@@ -26,33 +26,95 @@ class Tree
         // Definitions
         class dfs_iterator;
         //class bfs_iterator;
-        class Node;
+        // class Node;
 
         Tree();
         ~Tree();
 
         bool empty() const;
-        size_t num_nodes() const;
-
-        Node* root();
-
+        size_t size() const;
+  
+        /**
+         * @brief Returns a depth-first order iterator to
+         * the root node
+         * @return dfs_iterator - depth-first order iterator
+         * to the root node
+         */
         dfs_iterator dfs_begin();
+
+        /**
+         * @brief Returns a depth-first order iterator 
+         * that points to the node *after* the last node.
+         * in the tree.
+         * 
+         * @return dfs_iterator - Depth-first iterator to 
+         * bode after the last node in the tree
+         */
         dfs_iterator dfs_end();
+        
         //bfs_iterator bfs_begin();
         //bfs_iterator bfs_end();
 
+        /**
+         * @brief Creates a new node with \p value and
+         * inserts it as the last child of node at \p pos. 
+         * If the tree is empty, inserts it as the root node.
+         * 
+         * @param pos - depth-first order iterator to a tree node
+         * @param value - value associated with the new node
+         * @return dfs_iterator - depth-first order iterator to the
+         * new node.
+         */
         dfs_iterator insert_child(dfs_iterator pos, const T& value);
         //bfs_iterator insert_child(bfs_iterator pos, const T& value);
 
+        /**
+         * @brief Creates a new node with \p value and
+         * inserts it as a sibling of the node at \p pos (i.e.
+         * it will have the same parent node). It will be 
+         * inserted directly *before* \p pos in the parents
+         * children. If the tree is empty, inserts it as the root node.
+         * @throw std::invalid_argument if \p pos points
+         * to the the root node
+         * @param pos - depth-first order iterator to a tree node
+         * @param value - value associated with the new node
+         * @return dfs_iterator - depth-first order iterator to the
+         * new node.
+         */
         dfs_iterator insert_before(dfs_iterator pos, const T& value);
         //bfs_iterator insert_before(bfs_iterator pos, const T& value);
 
+       /**
+         * @brief Creates a new node with \p value and
+         * inserts it as a sibling of the node at \p pos (i.e.
+         * it will have the same parent node). It will be 
+         * inserted directly *after* \p pos in the parents
+         * children. If the tree is empty, inserts it as the root node.
+         * @throw std::invalid_argument if \p pos points
+         * to the the root node
+         * @param pos - depth-first order iterator to a tree node
+         * @param value - value associated with the new node
+         * @return dfs_iterator - depth-first order iterator to the
+         * new node.
+         */
         dfs_iterator insert_after(dfs_iterator pos, const T& value);
         //bfs_iterator insert_after(bfs_iterator pos, const T& value);
 
+        /**
+         * @brief Removes the node (and its entire subtree) at
+         * the position indicated by \p pos from the tree
+         * @throw std::invalid_argument if \p pos equals dfs_end()
+         * @param pos - depth-first order iterator to a tree node
+         * @return dfs_iterator - depth-first order iterator
+         * to the next node in depth-first order
+         */
         dfs_iterator remove(dfs_iterator pos);
         //bfs_iterator remove(bfs_iterator pos);
 
+        /**
+         * @brief Clears all node from the tree. (All iterators
+         * become invalid). 
+         */
         void clear();
 
         class dfs_iterator
@@ -69,6 +131,7 @@ class Tree
                 {
                     // TODO
                 }
+                
                 // dfs_iterator(const bfs_iterator& it); 
 
                 dfs_iterator& operator=(const dfs_iterator& it)
@@ -76,12 +139,12 @@ class Tree
                     // TODO
                     return *this;
                 }
+                
                 // dfs_iterator& operator=(const bfs_iterator& it);
 
                 T& operator*() const
                 {
                     // TODO
-                    return T();
                 }
 
                 T* operator->() const
@@ -174,21 +237,22 @@ class Tree
                 // TODO
         };
         */
-        class Node
+    
+    private:
+
+        struct Node
         {
             public:
                 explicit Node(const T& value);
                 ~Node();
 
-                T& value();
-                Node* parent();
-                std::vector<Node*> children();
-
-            private:
                 T& value;
                 Node* parent;
                 std::vector<Node*> children();
         };
+
+        Node* root;
+        size_t num_nodes;
 };
 
 template<class T>
@@ -211,17 +275,10 @@ bool Tree<T>::empty() const
 }
 
 template<class T>
-size_t Tree<T>::num_nodes() const
+size_t Tree<T>::size() const
 {
     // TODO
     return 0;   
-}
-
-template<class T>
-typename Tree<T>::Node* Tree<T>::root()
-{
-    // TODO
-    return NULL;
 }
 
 template<class T>

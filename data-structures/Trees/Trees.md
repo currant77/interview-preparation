@@ -63,6 +63,22 @@ Nonetheless, a general tree data structure is relatively easy to implement: it c
 
 // TODO
 
+dfs_iterator
+bfs_iterator
+
+insert_child(pos, ref)
+insert_after(pos, ref)
+insert_before(pos, ref)
+remove(pos, ref)
+
+parent()
+children()
+
+empty();
+num_nodes();
+
+
+
 ## References
 
 Koffman, Elliot B., and Paul A. T. Wolfgang. _Objects, Abstraction, Data Structures and Design Using C++_. Hoboken, NJ: John Wiley &amp; Sons, 2006.
