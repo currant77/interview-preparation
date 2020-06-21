@@ -32,6 +32,7 @@ Trees are replete with terminology; many of them are based on analogy with a (ph
 * **Width**: the number of nodes in a level
 * **Height**: the number of edges on the longest path between the root and a descendant
 * **Breadth**: the number of leaf nodes in a tree
+* **Branching factor**: the number of children for a given node
 
 The table below provides an example of these terms in action for the example tree in the image above. This tree has a height of 3 and a breadth of 6; it has five branch nodes (A, B, C, D, G) and six leaf nodes (E, F, J, K, H, I).
 
@@ -49,36 +50,89 @@ The tree abstract data type is incredibly flexible and is used in a wide range o
 
 ## Implementations
 
-As discussed above, the wide variety of different types of trees makes any generlizations about tree data structures impossible. For example, despite their underlying tree structure, binary heaps (#REF) are typically implemented using an array. 
+As discussed above, the wide variety of different types of trees makes any generlizations about tree data structures impossible. For example, despite their underlying tree structure, binary heaps (#REF) are typically implemented using an array. Nonetheless, a general tree data structure is relatively easy to implement: it can be as simple as an object that holds a value and a collection of child nodes (see example below in C++). The more important and difficult features of trees are their accompanying algorithms. Some of these are general (e.g. how to traverse a tree) and are discussed in the section below; others are specific to a given type of tree (e.g. balancing red-black trees). 
 
-Nonetheless, a general tree data structure is relatively easy to implement: it can be as simple as an object that holds a value and a collection of child nodes (see below). The more important and difficult features of trees are their accompanying algorithms. Some of these are general (e.g. how to traverse a tree) and are discussed in the section below; others are specific to a given type of tree (e.g. balancing red-black trees). 
+````
+template<class T>
+struct Tree_Node
+{
+    T& value;    
+    list<Tree_Node*> children;
+}
+````
 
 ## Algorithms
 
-### Traversal
+Tree **traveral** is the fundamental process of visiting each node in a tree exactly once; it is analogous to iterating over the elements in a linear data type like a list. Trees can be traversed in either **breadth-first** or **depth-first** order (same as graphs (#REF)).
 
-// TODO
+### Breadth-First Traversal
+
+**Breadth-first** traversal is also known as **level-order** traversal because it proceeds level by level, starting with the root node; it examines every node at each successive level before proceeding to the next level. Depth-first traversal uses a queue: when we visited each node, we push its child nodes onto the queue.
+
+````
+function breadth_first(root):
+
+    let Q be a queue
+    Q.enqueue(root)
+
+    while Q is not empty do:
+
+        node := Q.dequeue()
+
+        // ... Do something to node ...
+
+        for each child c of node:
+            Q.enqueue(node)
+
+````
+
+A breadth-first traversal visits each node exactly once, so its runtime is linear over the number of nodes in the tree. Its space complexity is proportional to the breadth of the tree (the total number of leaf node); it is _O(n)_ in the worst case, where every leaf node is a child of the root node. For a tree with depth _d_ and maximum branching factor _b_, the space complexity of breadth-first traversal can also be expressed as _O(b<sup>d</sup>)_
+
+### Depth-First Traversal
+
+Starting at the root, **depth-first** traversal proceeds by fully searching each subtree before **backtracking** to search each remaining subtrees in sequence; it traverses as far along each branch as possible (until it reaches a leaf) before backtracking. Whereas breadth-first search uses a queue data structure, depth-first search leans on a stack. This can either by implemented by using a stack directly or by taking advantange of recursion to use the call stack; examples of both are given below.
+
+````
+function depth_first_stack(root):
+    
+    let S be a stack
+    S.push(root)
+
+    while S is not empty do:
+
+        node := S.pop()
+
+        // ... Do something to node ...
+
+        for each child c of node:
+            S.push(c)
+````
+````
+function depth_first_recursive(root):
+
+    // ... Do something to node ...
+
+    for each child c of node:
+        depth_first_recusrive(c)
+````
+
+**Depth-first** traversals differ in whether they examine a node or its children first; in the case of binary search tree (#REF), we differentiate between pre-order, in-order, or post-order depth-first traversals.
+
+Like breath-first traversal, the runtime of depth-first search is linear over the total number of nodes in the tree. Unlike breath-first traversal, the space complexity of depth-first traversal it is proportional to the depth of the tree (the length of the longest path between a leaf node and the root node); but it is also _O(n)_ in the worst case, where every node has exactly one child.  
 
 ## Problems and Examples
 
-// TODO
-
-dfs_iterator
-bfs_iterator
-
-insert_child(pos, ref)
-insert_after(pos, ref)
-insert_before(pos, ref)
-remove(pos, ref)
-
-parent()
-children()
-
-empty();
-num_nodes();
-
-
+* TODO: example using breadth-first 
+* TODO: example using depth-first
 
 ## References
 
 Koffman, Elliot B., and Paul A. T. Wolfgang. _Objects, Abstraction, Data Structures and Design Using C++_. Hoboken, NJ: John Wiley &amp; Sons, 2006.
+
+Joshi, Vaidehi. _Breaking Down Breadth-First Search_. Medium.com, 2017. https://medium.com/basecs/breaking-down-breadth-first-search-cebe696709d9. 
+
+Black, Paul E. "tree" in _Dictionary of Algorithms and Data Structures_. National Institute of Standards and Technology, 2017. https://xlinux.nist.gov/dads/HTML/tree.html. 
+
+
+
+
