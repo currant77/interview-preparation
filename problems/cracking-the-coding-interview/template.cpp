@@ -12,8 +12,11 @@
  * 
  */
 
-/* Problem <problem-num>: <problem-statement> */
+/* Problem <problem-num>: <text> */
 
+/* Approach: <text> */
+
+#include <cassert>
 #include <iostream>
 
 int main()
