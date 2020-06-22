@@ -3,7 +3,7 @@
  * @author Taylor Curran
  * @brief Solution to problem 1.2 from Cracking the Coding Interview
  * @version 0.1
- * @date <date>
+ * @date 2020-06-22
  * 
  * @note McDowell, Gayle Lakkmann. Cracking the Coding Interview. 
  * 6th ed. Palo Alto, CA: CareerCup, 2016.
