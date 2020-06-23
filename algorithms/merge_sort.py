@@ -5,6 +5,9 @@
 @version 0.1
 @date 2020-06-22
 
+@note This is a simple implementation that repeatedly copies the entire list over, rather
+than (more efficiently) sorting in place; see merge_sort.cpp for such an approach
+
 @copyright Copyright (c) 2020
 """
 
