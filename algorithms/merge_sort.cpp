@@ -13,6 +13,7 @@
 #include <vector>
 #include <cassert>
 #include <iostream>
+#include <algorithm>
 
 /**
  * @brief Merges the sublists between left and mid and
@@ -24,29 +25,31 @@
 template<class T>
 void merge(std::vector<T>& a, size_t left, size_t mid, size_t right)
 {
-    // Proceed through both lists at the same time
-    while(left <= mid && mid < right)
-    {
-        T temp;
+    // Create new list
+    std::vector<T> merged;
 
-        if(a[left] <= a[right])
-            left++;
+    size_t left_start = left;
+    size_t right_start = mid + 1;
+
+    // Proceed through both lists at the same time
+    while(left_start <= mid && right_start <= right)
+    {
+        if(a[left_start] <= a[right_start])
+            merged.push_back(a[left_start++]);
 
         else
-        {
-            temp = a[mid + 1];
-            
-            // Shift left list over
-            for(size_t i = mid + 1; i > left; --i)
-                a[i] = a[i - 1];
-            
-            a[left] = temp;
-            ++left;
-            ++mid;
-        }
+            merged.push_back(a[right_start++]);
     }
 
-    // Remainder is automatically in order
+    // Add remainders
+    while (left_start <= mid)
+        merged.push_back(a[left_start++]);
+
+    while(right_start <= right)
+        merged.push_back(a[right_start++]);
+
+    // Copy values over
+    std::copy(merged.begin(), merged.end(), a.begin() + left);    
 }
 
 /**

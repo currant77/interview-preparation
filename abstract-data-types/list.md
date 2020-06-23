@@ -64,9 +64,7 @@ The table below compares the runtime of typical list operations between array li
 
 #### Merge Sort
 
-**Merge sort** takes a divide and conquer approach: it breaks the list in two, recursively sorts each half of the list, and then merges the two sorted halves. In essence, the algorithm repeatedly splits the list in half until each sublist contains only a single value, and then merges these sorted sublists back together to get the final sorted list (see image below). 
-
-![Merge Sort](https://cdn.programiz.com/sites/tutorial2program/files/merge-sort-example_0.png)
+**Merge sort** takes a divide and conquer approach: it breaks the list in two, recursively sorts each half of the list, and then merges the two sorted halves. In essence, the algorithm repeatedly splits the list in half until each sublist contains only a single value, and then merges these sorted sublists back together to get the final sorted list (see diagram [here](https://cdn.programiz.com/sites/tutorial2program/files/merge-sort-example_0.png)). (#REF) and (#REF) provide implementations of merge sort in C++ and Python, respectively. 
 
 ````
 function merge_sort(list m):
@@ -109,8 +107,6 @@ function merge_sort(list m):
 
     return result
 ````
-
-See (#REF) for an implementation of merge sort in Python and tests.
 
 #### Heap Sort
 
