@@ -77,9 +77,9 @@ recursively sorts the halves on either side of the pivot (see diagram [here](htt
 
 There are several different approaches to partitioning the list. Two common ones are the Lumot and Hoare partitioning schemes:
 
-* In the _Lomuto_ partitioning scheme, the pivot is placed at the end of the list. The algorithm then uses an index _j_ to scan linearly across the list linearly, while maintaing an index _i_ such that all values to the left of _i_ are less than the pivot and all those between _i_ and _j_ are greater than it. Before recursively sorting the partitioned lists, it swaps the pivot element with the element at index _i_. 
+* In the _Lomuto_ partitioning scheme, the pivot is placed at the end of the list. The algorithm then uses an index _j_ to scan linearly across the list linearly, while maintaing an index _i_ such that all values to the left of _i_ are less than the pivot and all those between _i_ and _j_ are greater than it. Before recursively sorting the partitioned lists, it swaps the pivot element with the element at index _i_. See implementation here (#REF).
 
-* The _Hoare_ partitioning scheme starts with two indices at the opposite ends of the list. These indices move towards each other, swapping values whenever they detect an _inversion_ – a pair of elements on the wrong side of the partition – until they meet somewhere in the middle.
+* The _Hoare_ partitioning scheme starts with two indices at the opposite ends of the list. These indices move towards each other, swapping values whenever they detect an _inversion_ – a pair of elements on the wrong side of the partition – until they meet somewhere in the middle. See implementation here (#REF).
 
 Lomuto's partitioning scheme is simple and easy to understand, but has worse performance than Hoare's partitioning scheme: it requires three times more swaps on average.
 

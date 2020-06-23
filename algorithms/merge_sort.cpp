@@ -5,8 +5,6 @@
  * @version 0.1
  * @date 2020-06-22
  * 
- * @note Uses std::less to allow any ordering
- * 
  * @copyright Copyright (c) 2020 
  */
 
@@ -75,8 +73,7 @@ void merge_sort(std::vector<T>& a, size_t left, size_t right)
 }
 
 /**
- * @brief Sorts the given T array in place using the ordering provided
- * by the comparison object L 
+ * @brief Sorts the given T vector (ascdending)
  */
 template<class T>
 void merge_sort(std::vector<T>& a)
