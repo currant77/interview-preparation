@@ -81,43 +81,21 @@ def rotate_inplace(arr):
        
     # Recursively rotate the other layers
     rotate_inplace(arr[1:n-1,1:n-1])
-    
+
     return arr
-
-def compare_arrays(arr1, arr2):
-    """ Returns true if the two 2d np arrays are equal (i.e. if the
-    have the same size and the same values at each location) """
-
-    if arr1.shape != arr2.shape:
-        return False
-
-    m,n = arr1.shape
-    for row in range(m):
-        for col in range(n):
-            if arr1[row][col] != arr2[row][col]:
-                return False
-
-    return True
 
 print("Beginning tests...")
 
-# Test compare_arrays
-assert compare_arrays(np.array([[]]), np.array([[]]))  
-assert compare_arrays(np.array([[1]]), np.array([[1]]))  
-assert compare_arrays(np.array([[1,2],[2,1]]), np.array([[1,2],[2,1]]))
-assert not compare_arrays(np.array([[1,2],[2,1]]), np.array([[1,2],[1,1]]))
-assert not compare_arrays(np.array([[1,2]]), np.array([[1,2], [2,1]]))
-
 # Test rotate_array
-assert(compare_arrays(np.array([[]]), rotate_array(np.array([[]]))))
-assert(compare_arrays(np.array([[1]]), rotate_array(np.array([[1]]))))
-assert(compare_arrays(np.array([[1],[2]]), rotate_array(np.array([[1,2]]))))
-assert(compare_arrays(np.array([[2,1]]), rotate_array(np.array([[1],[2]]))))
-assert(compare_arrays(np.array([[5,3,1],[6,4,2]]), rotate_array(np.array([[1,2],[3,4],[5,6]]))))
+assert(np.array_equal(np.array([[]]), rotate_array(np.array([[]]))))
+assert(np.array_equal(np.array([[1]]), rotate_array(np.array([[1]]))))
+assert(np.array_equal(np.array([[1],[2]]), rotate_array(np.array([[1,2]]))))
+assert(np.array_equal(np.array([[2,1]]), rotate_array(np.array([[1],[2]]))))
+assert(np.array_equal(np.array([[5,3,1],[6,4,2]]), rotate_array(np.array([[1,2],[3,4],[5,6]]))))
 
 # Test rotate_inplace
-assert(compare_arrays(np.array([[1]]), rotate_inplace(np.array([[1]]))))
-assert(compare_arrays(np.array([[3,1],[4,2]]), rotate_inplace(np.array([[1,2],[3,4]]))))
-assert(compare_arrays(np.array([[7,4,1],[8,5,2],[9,6,3]]), rotate_inplace(np.array([[1,2,3],[4,5,6],[7,8,9]]))))
+assert(np.array_equal(np.array([[1]]), rotate_inplace(np.array([[1]]))))
+assert(np.array_equal(np.array([[3,1],[4,2]]), rotate_inplace(np.array([[1,2],[3,4]]))))
+assert(np.array_equal(np.array([[7,4,1],[8,5,2],[9,6,3]]), rotate_inplace(np.array([[1,2,3],[4,5,6],[7,8,9]]))))
 
 print("All tests passed!")
