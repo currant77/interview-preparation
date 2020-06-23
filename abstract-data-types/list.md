@@ -58,55 +58,34 @@ The table below compares the runtime of typical list operations between array li
 
 // TODO
 
-#### Quick Sort
-
-// TODO
-
 #### Merge Sort
 
 **Merge sort** takes a divide and conquer approach: it breaks the list in two, recursively sorts each half of the list, and then merges the two sorted halves. In essence, the algorithm repeatedly splits the list in half until each sublist contains only a single value, and then merges these sorted sublists back together to get the final sorted list (see diagram [here](https://cdn.programiz.com/sites/tutorial2program/files/merge-sort-example_0.png)). (#REF) and (#REF) provide implementations of merge sort in C++ and Python, respectively. 
 
-````
-function merge_sort(list m):
+The runtime of the merge sort algorithm can be expressed by the recurrence relation _T(n) = 2 T(n / 2) + O(n)_, which yieds a time complexity of _O(nlog(n))_ in the worst, best and average cases (since the list is always split in half on each recursive call). 
 
-    let len := length of m
-    
-    // Base case
-    if len <= 1 then:
-        return m
+Most common implementations of merge sort do not sort in place, and so the algorithm typically requires O(n) space (though there are more complicated 'in place' variants that require only a constant amount of additional space). When dealing with linked lists, it is possible to implement merge sort so that it requires only constant auxiliary space and _O(log(n))_ stack space.
 
-    // Recursive case
-    let mid := len / 2
-    
-    let left := left sublist from index 0 to mid - 1
-    let right := right sublist from index mid to len - 1
+The basic merge sort algorithm is _stable_: it maintains the original order of equal elements.
 
-    // Sort each sublist
-    merge_sort(left)
-    merge_sort(right)
+#### Quick Sort
 
-    // Merge sorted lists
-    let result := empty list
+Like merge sort, **quick sort** is also a divide and conquer algorithm. It picks a _pivot_
+element from the list, reorders the elements of the array so that all the elements with 
+values less than the pivot come before it in the list (called _partitioning_), and then 
+recursively sorts the halves on either side of the pivot (see diagram [here](https://images.deepai.org/glossary-terms/a5228ea07c794b468efd1b7f758b9ead/Quicksort.png)).
 
-    while right is not empty and left is not empty do:
-        if first(left) <= first(right) then:
-            append first(left) to result
-            pop value from left
-        else:
-            append first(right) to result
-            pop value from right
+There are several different approaches to partitioning the list. Two common ones are the Lumot and Hoare partitioning schemes:
 
-    // Append remaining values
-    while left is not empty do:
-        append first(left) to result
-        pop value from left
+* In the _Lomuto_ partitioning scheme, the pivot is placed at the end of the list. The algorithm then uses an index _j_ to scan linearly across the list linearly, while maintaing an index _i_ such that all values to the left of _i_ are less than the pivot and all those between _i_ and _j_ are greater than it. Before recursively sorting the partitioned lists, it swaps the pivot element with the element at index _i_. 
 
-    while right is not empty do:
-        append first(right) to result
-        pop value from right
+* The _Hoare_ partitioning scheme starts with two indices at the opposite ends of the list. These indices move towards each other, swapping values whenever they detect an _inversion_ – a pair of elements on the wrong side of the partition – until they meet somewhere in the middle.
 
-    return result
-````
+Lomuto's partitioning scheme is simple and easy to understand, but has worse performance than Hoare's partitioning scheme: it requires three times more swaps on average.
+
+The worst-case performance of quick sort occurs when the pivot (at each step) is chosen to be the smallest or largest value in the list. In this case, there will be no elements either greater than or less than the pivot, and so one partition will be empty and the other will contain all the elements except the partition – leading to _O(n<sup>2</sup>)_ performance. This commonly occurs when the first or last element is chosen as the pivot and the list is already sorted (a relatively common use case). But this can be rectified relatively easily, such as by simply choosing to pivot about an element in the middle of the list, or by pivoting about the median element in the list (which can be retrieved in linear time). 
+
+The average and best-case performance of quick sort is _O(nlog(n))_ – the same as merge sort. Partitioning in quick sort is in-place and requires only constant space; the recursive calls then require _O(log(n))_ space in the best and average cases and _O(n)_ space in the worst case. Quick sort is not a stable sorting algorithm.
 
 #### Heap Sort
 
@@ -118,14 +97,18 @@ function merge_sort(list m):
 
 #### Comparison
 
-|                       | Best-case     | Average-case  | Worst-case    |
-|:----------------------|:-------------:|:-------------:|:-------------:|
-| Bubble sort           |               |               |               |
-| Selection sort        |               |               |               |
-| Quick sort            |               |               |               |
-| Merge sort            |               |               |               |
-| Heap sort             |               |               |               |
-| Radix sort            |               |               |               |
+|                       | Best-case     | Average-case  | Worst-case         |
+|:----------------------|:-------------:|:-------------:|:------------------:|
+| Bubble sort           |               |               |                    |
+| Selection sort        |               |               |                    |
+| Merge sort            | _O(nlog(n))_  | _O(nlog(n))_  | _O(nlog(n))_       |
+| Quick sort            | _O(nlog(n))_  | _O(nlog(n))_  | _O(n<sup>2</sup>)_ |
+| Heap sort             |               |               |                    |
+| Radix sort            |               |               |                    |
+
+Merge sort: typically requires fewer comparison; more efficient if data can only be accessed sequentially (linked lists); better worst-case performance; constant store on linked lists.
+
+Quick sort: smaller space requirement on arrays; can be more efficient if data can be randomly accessed; poor on linked lists (random access)
 
 ### Searching Algorithms
 
