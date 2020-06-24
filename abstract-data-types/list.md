@@ -132,6 +132,11 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
 
 * TODO: Linked list problem
 
+* Merge sort C++ (#REF)
+* Merge sort Python (#REF)
+* Quick sort Hoare C++ (#REF)
+* Quick sort Lomuto Python (#REF)
+
 ## References
 
 Koffman, Elliot B., and Paul A. T. Wolfgang. _Objects, Abstraction, Data Structures and Design Using C++_. Hoboken, NJ: John Wiley &amp; Sons, 2006.
