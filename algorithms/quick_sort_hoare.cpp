@@ -14,13 +14,65 @@
 #include <algorithm>
 
 /**
- * @brief Sorts the given T vector (ascending)
+ * @brief Partitions the list segment between start and
+ * end. Returns partition index.
+ */
+template<class T>
+size_t partition(std::vector<T>& a, size_t start, size_t end)
+{
+    size_t mid = (end + start) / 2;
+    T pivot = a[mid];
+    
+    size_t front = start;
+    size_t back = end;
+    
+    while(true)
+    {
+        // Find next to swap
+        while(a[front] < pivot)
+            ++front;
+
+        while(a[back] > pivot)
+            --back;
+
+        // Partitioning done
+        if(front >= back)
+            return back;
+        
+        // Swap values
+        T temp = a[back];
+        a[back] = a[front];
+        a[front] = temp;
+    }
+}
+/**
+ * @brief Sorts the segment of the list between \p start
+ * and \p end using quick sort (ascending)
+ */
+template<class T>
+void quick_sort(std::vector<T>& a, size_t start, size_t end)
+{
+    size_t n = end - start + 1;
+
+    // Base case
+    if(n < 2) return;
+
+    // Partition
+    size_t pi = partition(a, start, end);
+
+    // Sort each half
+    quick_sort(a, start, pi - 1);
+    quick_sort(a, pi + 1, end);
+}
+
+/**
+ * @brief Sorts the given T vector (ascending).
+ * Uses the Hoare partitioning approach.
  */
 template<class T>
 void quick_sort(std::vector<T>& a)
 {
-    // TODO
-    return;
+    quick_sort(a, 0, a.size() - 1);
 }
 
 int main()
