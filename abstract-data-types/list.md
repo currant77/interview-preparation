@@ -58,25 +58,23 @@ Most sorting algorithms are **comparison-sorting** algorithms: they sort the lis
 
 While sorting algorithms are most commonly compared by their runtime, there are other important differences. Some applications require a **stable** sorting algorithm, which sorts repeated elements into the same order that they appear in the input. Some algorithms depend on random access and so are unsuitable to linked list; others are **in-place** sorting algorithms that are more memory-efficient: they sort the list without needing to copy its values to another list. Finally, while some sorting algorithms may be inefficient for larger lists, their smaller overhead may make their more efficient for small lists – many efficient library sorting algorimths use these simple algorithms to sort smaller lists within more efficient recursive algorithms such as merge or quick sort.
 
-#### Selection Sort
+#### Selection, Bubble, and Insertion Sorts
+
+Selection, bubble, and insertion sort are three simple sorting algorithms that achieve _O(n<sup>2</sup>)_ in the average case.
 
 **Selection sort** is perhaps the simplest of all the sorting algorithms. It scans the list to find the smallest element, swaps that element to the start of the list, and then continues to repeatedly sort the remainder of the list. It runtime _O(n<sup>2</sup>)_ but it is a stable, in-place sorting algorithm that requires only constant memory. 
 
-See implementation in `Python`. #REF
+On the other hand, **bubble sort** proceeds through the array in order, swapping adjacent values when their relative order, and repeat this process until the list is sorted (i.e. no swaps were needed on the last pass). It is named for the way that smaller elements (in the case of ascending sort) "bubble" to the front of the list In this case, smaller elements (nicknamed "turtles") can only move one position (towards the front of the list) per pass, while larger elements (nicknamed "rabbits") can move serveral positions – if it is unique, the largest value in the list will move all the way to the end on the first pass. 
 
-#### Bubble Sort
+Like selection sort, the average- and worst-case performance of bubble sort is _O(n<sup>2</sup>)_. However, unlike selection sort (and even more efficient algorithms such as quick sort), bubble sort can detect when the list is already sorted: its runtime in this case is just _O(n)_. It is also a stable sorting algorithm.
 
-**Bubble sort** is another simple sorting algorithm. We proceed through the array in order, swapping adjacent values when their relative order, and repeat this process until the list is sorted (i.e. no swaps were needed on the last pass). It is named for the way that smaller elements (in the case of ascending sort) "bubble" to the front of the list In this case, smaller elements (nicknamed "turtles") can only move one position (towards the front of the list) per pass, while larger elements (nicknamed "rabbits") can move serveral positions – if it is unique, the largest value in the list will move all the way to the end on the first pass. 
+Lastly, **insertion sort** builds the final sorted list element-by-element (see graphic below). Like selection and insertion sort, it average- and worst-case runtime is _O(n<sup>2</sup>)_. But, like bubble sort, its best-case runtime (when the list is already sorted) is linear; in fact, its runtime is only _O(kn)_ is the case where the each value is at most _k_ positions away from its sorted position (i.e. when the list is already roughly sorted). It is a stable, in-place algorithm that requires only constant memory.
 
-Like selection sort, the average- and worst-case performance of bubble sort is _O(n<sup>2</sup>)_. However, unlike selection sort (and even more efficient algorithms such as quick sort), bubble sort can detect when the list is already sorted: its runtime in this case is just _O(n)_.
+![Selection Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Selection_Sort.gif "Selection Sort") ![Bubble Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Bubble_Sort.gif "Bubble Sort") ![Insertion Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Insertion_Sort.gif "Insertion Sort")
 
-See implementation (#REF) in `Python`.
+*Selection, bubble, and insertion sort*
 
-#### Insertion Sort
-
-// TODO
-
-
+See #REF. #REF, and #REF.
 
 #### Merge Sort
 
@@ -115,9 +113,13 @@ The average and best-case performance of quick sort is _O(nlog(n))_ – the same
 
 #### Comparison
 
+https://visualgo.net/bn/sorting
+https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms 
+
 Selection, insertion, bubble comparison
 - selection and insertion can detect sorted list
 - Insertion sort generally runs faster (https://en.wikipedia.org/wiki/Bubble_sort#:~:text=Bubble%20sort%2C%20sometimes%20referred%20to,until%20the%20list%20is%20sorted) and performs better on list that is already substantiallysorted. 
+- Insertion is most efficient in practice
 
 Merge sort: typically requires fewer comparison; more efficient if data can only be accessed sequentially (linked lists); better worst-case performance; constant store on linked lists.
 
@@ -126,7 +128,8 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
 |                       | Best-case          | Average-case       | Worst-case                        | Memory                      | Stable    |
 |:----------------------|:------------------:|:------------------:|:---------------------------------:|:---------------------------:|:---------:|
 | Selection sort        | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
-| Bubble sort           |                    |                    |                                   |                             |           |
+| Bubble sort           | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
+| Insertion sort        | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
 | Merge sort            | _O(nlog(n))_       | _O(nlog(n))_       | _O(nlog(n))_                      | _O(n)_ <sup>[1]</sup>       | Yes       |
 | Quick sort            | _O(nlog(n))_       | _O(nlog(n))_       | _O(n<sup>2</sup>)_ <sup>[2]</sup> | _O(log(n))_ <sup>[3]</sup>  | No        |
 | Heap sort             |                    |                    |                                   |                             |           |  
