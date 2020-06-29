@@ -52,9 +52,24 @@ The table below compares the runtime of typical list operations between array li
 
 ### Sorting Algorithms
 
-// TODO
+A **sorting algorithm** is an algorithm that orders the values in a list according to some sorting order. Sorting is an common and important operation that improves the efficiency of other algorithms such as search (#REF) and merge (#REF).
 
-#### Bubble Sort & Selection Sort
+Most sorting algorithms are **comparison-sorting** algorithms: they sort the list by comparing values using a _comparison operator_ which indicates their relative order. The following sections will discuss six comparison sorting algorithms: three simple but inefficient ones (insertion, bubble, and selection sort) and three more complex and more efficient ones (quick, merge, and heap sort). Comparison sorting algorithms cannot achieve performance better than _O(nlog(n))_, but non-comparison sorts can sort a list in linear time. They rely on the underyling characteristics of the data being sorted (e.g. the nuumber of bits in `int`) to avoid needing compare values to each other. We will discuss radix (or bucket) sort.
+
+While sorting algorithms are most commonly compared by their runtime, there are other important differences. Some applications require a **stable** sorting algorithm, which sorts repeated elements into the same order that they appear in the input. Some algorithms depend on random access and so are unsuitable to linked list; others are **in-place** sorting algorithms that are more memory-efficient: they sort the list without needing to copy its values to another list. Finally, while some sorting algorithms may be inefficient for larger lists, their smaller overhead may make their more efficient for small lists – many efficient library sorting algorimths use these simple algorithms to sort smaller lists within more efficient recursive algorithms such as merge or quick sort.
+
+#### Selection Sort
+
+**Selection sort** is perhaps the simplest of all the sorting algorithms. It scans the list to find the smallest element, swaps that element to the start of the list, and then continues to repeatedly sort the remainder of the list. It runtime _O(n<sup>2</sup>)_ but it is a stable, in-place sorting algorithm that requires only constant memory.
+
+#### Insertion Sort
+
+
+
+
+
+
+#### Bubble & Selection Sort
 
 // TODO
 
@@ -131,6 +146,8 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
 * TODO: Array list problem
 
 * TODO: Linked list problem
+
+* Selection sort (`Python`)
 
 * Merge sort C++ (#REF)
 * Merge sort Python (#REF)
