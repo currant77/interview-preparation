@@ -60,28 +60,31 @@ While sorting algorithms are most commonly compared by their runtime, there are 
 
 #### Selection Sort
 
-**Selection sort** is perhaps the simplest of all the sorting algorithms. It scans the list to find the smallest element, swaps that element to the start of the list, and then continues to repeatedly sort the remainder of the list. It runtime _O(n<sup>2</sup>)_ but it is a stable, in-place sorting algorithm that requires only constant memory.
+**Selection sort** is perhaps the simplest of all the sorting algorithms. It scans the list to find the smallest element, swaps that element to the start of the list, and then continues to repeatedly sort the remainder of the list. It runtime _O(n<sup>2</sup>)_ but it is a stable, in-place sorting algorithm that requires only constant memory. 
+
+See implementation in `Python`. #REF
+
+#### Bubble Sort
+
+**Bubble sort** is another simple sorting algorithm. We proceed through the array in order, swapping adjacent values when their relative order, and repeat this process until the list is sorted (i.e. no swaps were needed on the last pass). It is named for the way that smaller elements (in the case of ascending sort) "bubble" to the front of the list In this case, smaller elements (nicknamed "turtles") can only move one position (towards the front of the list) per pass, while larger elements (nicknamed "rabbits") can move serveral positions – if it is unique, the largest value in the list will move all the way to the end on the first pass. 
+
+Like selection sort, the average- and worst-case performance of bubble sort is _O(n<sup>2</sup>)_. However, unlike selection sort (and even more efficient algorithms such as quick sort), bubble sort can detect when the list is already sorted: its runtime in this case is just _O(n)_.
+
+See implementation (#REF) in `Python`.
 
 #### Insertion Sort
 
-
-
-
-
-
-#### Bubble & Selection Sort
-
 // TODO
+
+
 
 #### Merge Sort
 
 **Merge sort** takes a divide and conquer approach: it breaks the list in two, recursively sorts each half of the list, and then merges the two sorted halves. In essence, the algorithm repeatedly splits the list in half until each sublist contains only a single value, and then merges these sorted sublists back together to get the final sorted list (see diagram [here](https://cdn.programiz.com/sites/tutorial2program/files/merge-sort-example_0.png)). (#REF) and (#REF) provide implementations of merge sort in C++ and Python, respectively. 
 
-The runtime of the merge sort algorithm can be expressed by the recurrence relation _T(n) = 2 T(n / 2) + O(n)_, which yieds a time complexity of _O(nlog(n))_ in the worst, best and average cases (since the list is always split in half on each recursive call). 
+The runtime of the merge sort algorithm can be expressed by the recurrence relation _T(n) = 2 T(n / 2) + O(n)_, which yieds a time complexity of _O(nlog(n))_ in the worst, best and average cases (since the list is always split in half on each recursive call). Most common implementations of merge sort do not sort in place, and so the algorithm typically requires _O(n)_ space (though there are more complicated 'in place' variants that require only a constant amount of additional space). When dealing with linked lists, it is possible to implement merge sort so that it requires only constant auxiliary space and _O(log(n))_ stack space. The basic merge sort algorithm is _stable_.
 
-Most common implementations of merge sort do not sort in place, and so the algorithm typically requires O(n) space (though there are more complicated 'in place' variants that require only a constant amount of additional space). When dealing with linked lists, it is possible to implement merge sort so that it requires only constant auxiliary space and _O(log(n))_ stack space.
-
-The basic merge sort algorithm is _stable_: it maintains the original order of equal elements.
+See implementations in `C++` (#REF) and `Python` (#REF).
 
 #### Quick Sort
 
@@ -112,18 +115,28 @@ The average and best-case performance of quick sort is _O(nlog(n))_ – the same
 
 #### Comparison
 
-|                       | Best-case     | Average-case  | Worst-case         |
-|:----------------------|:-------------:|:-------------:|:------------------:|
-| Bubble sort           |               |               |                    |
-| Selection sort        |               |               |                    |
-| Merge sort            | _O(nlog(n))_  | _O(nlog(n))_  | _O(nlog(n))_       |
-| Quick sort            | _O(nlog(n))_  | _O(nlog(n))_  | _O(n<sup>2</sup>)_ |
-| Heap sort             |               |               |                    |
-| Radix sort            |               |               |                    |
+Selection, insertion, bubble comparison
+- selection and insertion can detect sorted list
+- Insertion sort generally runs faster (https://en.wikipedia.org/wiki/Bubble_sort#:~:text=Bubble%20sort%2C%20sometimes%20referred%20to,until%20the%20list%20is%20sorted) and performs better on list that is already substantiallysorted. 
 
 Merge sort: typically requires fewer comparison; more efficient if data can only be accessed sequentially (linked lists); better worst-case performance; constant store on linked lists.
 
 Quick sort: smaller space requirement on arrays; can be more efficient if data can be randomly accessed; poor on linked lists (random access)
+
+|                       | Best-case          | Average-case       | Worst-case                        | Memory                      | Stable    |
+|:----------------------|:------------------:|:------------------:|:---------------------------------:|:---------------------------:|:---------:|
+| Selection sort        | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
+| Bubble sort           |                    |                    |                                   |                             |           |
+| Merge sort            | _O(nlog(n))_       | _O(nlog(n))_       | _O(nlog(n))_                      | _O(n)_ <sup>[1]</sup>       | Yes       |
+| Quick sort            | _O(nlog(n))_       | _O(nlog(n))_       | _O(n<sup>2</sup>)_ <sup>[2]</sup> | _O(log(n))_ <sup>[3]</sup>  | No        |
+| Heap sort             |                    |                    |                                   |                             |           |  
+| Radix sort            |                    |                    |                                   |                             |           |
+
+<sup>[1]</sup> Typical implementation on array list. There are more complex in-place variants that require only constant space and linked list implementations that require only constant auxiliary storage and _O(nlog(n))_ stack space.
+
+<sup>[2]</sup> Worst-case performance of merge sort occurs when the pivot is always chosen to be the largest or smallest remaining value, such that the size of the list is only reduced by one on each pass.
+
+<sup>[3]</sup> Average case. In the worst-case, required _O(n)_ storage space (see note above).
 
 ### Searching Algorithms
 
@@ -147,7 +160,7 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
 
 * TODO: Linked list problem
 
-* Selection sort (`Python`)
+* Selection sort #REF (`Python`)
 
 * Merge sort C++ (#REF)
 * Merge sort Python (#REF)

@@ -8,7 +8,7 @@
 @copyright Copyright (c) 2020
 """
 
-def merge_sort(list):
+def selection_sort(list):
 
     n = len(list)
 
@@ -30,11 +30,11 @@ def merge_sort(list):
 
 print("Beginning tests...")
 
-assert [] == merge_sort([])
-assert [1] == merge_sort([1])
-assert [1,2,3] == merge_sort([1,2,3])
-assert [1,2,3] == merge_sort([1,3,2])
-assert [1,2,3] == merge_sort([3,1,2])
-assert [1,2,3,4,5] == merge_sort([1,5,4,2,3])
+assert [] == selection_sort([])
+assert [1] == selection_sort([1])
+assert [1,2,3] == selection_sort([1,2,3])
+assert [1,2,3] == selection_sort([1,3,2])
+assert [1,2,3] == selection_sort([3,1,2])
+assert [1,2,3,4,5] == selection_sort([1,5,4,2,3])
 
 print("All tests passed!")
