@@ -16,53 +16,54 @@
 /**
  * @brief Partitions the list segment between start and
  * end. Returns partition index.
+ * 
+ * @note Partition index is such that all values to its left
+ * are less than or equal to the partition index, while all 
+ * values to the right are greater than or equal to. The 
+ * partition value itself, however, can be at any index
  */
 template<class T>
-size_t partition(std::vector<T>& a, size_t start, size_t end)
-{
-    size_t mid = (end + start) / 2;
-    T pivot = a[mid];
+size_t partition(std::vector<T>& a, int left, int right)
+{  
+    T pivot = a[(left + right) / 2];
     
-    size_t front = start;
-    size_t back = end;
-    
-    while(true)
+    while(left <= right)
     {
-        // Find next to swap
-        while(a[front] < pivot)
-            ++front;
+        while(a[left] < pivot)
+            ++left;
 
-        while(a[back] > pivot)
-            --back;
+        while(a[right] > pivot)
+            --right;
 
-        // Partitioning done
-        if(front >= back)
-            return back;
-        
-        // Swap values
-        T temp = a[back];
-        a[back] = a[front];
-        a[front] = temp;
+        if(left <= right)
+        {
+            // Swap values
+            T temp = a[left];
+            a[left] = a[right];
+            a[right] = temp;
+
+            ++left;
+            --right;
+        }
     }
+
+    return left;
 }
+
 /**
  * @brief Sorts the segment of the list between \p start
  * and \p end using quick sort (ascending)
  */
 template<class T>
-void quick_sort(std::vector<T>& a, size_t start, size_t end)
+void quick_sort(std::vector<T>& a, int start, int end)
 {
-    size_t n = end - start + 1;
+    int index = partition(a, start, end);
 
-    // Base case
-    if(n < 2) return;
+    if(start < index - 1)
+        quick_sort(a, start, index - 1);
 
-    // Partition
-    size_t pi = partition(a, start, end);
-
-    // Sort each half
-    quick_sort(a, start, pi - 1);
-    quick_sort(a, pi + 1, end);
+    if(index < end)
+        quick_sort(a, index, end);
 }
 
 /**
@@ -72,7 +73,8 @@ void quick_sort(std::vector<T>& a, size_t start, size_t end)
 template<class T>
 void quick_sort(std::vector<T>& a)
 {
-    quick_sort(a, 0, a.size() - 1);
+    if(!a.empty())
+        quick_sort(a, 0, a.size() - 1);
 }
 
 int main()
