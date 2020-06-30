@@ -80,7 +80,7 @@ See #REF. #REF, and #REF.
 
 **Merge sort** takes a divide and conquer approach: it breaks the list in two, recursively sorts each half of the list, and then merges the two sorted halves. In essence, the algorithm repeatedly splits the list in half until each sublist contains only a single value, and then merges these sorted sublists back together to get the final sorted list (see diagram [here](https://cdn.programiz.com/sites/tutorial2program/files/merge-sort-example_0.png)). (#REF) and (#REF) provide implementations of merge sort in C++ and Python, respectively. 
 
-The runtime of the merge sort algorithm can be expressed by the recurrence relation _T(n) = 2 T(n / 2) + O(n)_, which yieds a time complexity of _O(nlog(n))_ in the worst, best and average cases (since the list is always split in half on each recursive call). Most common implementations of merge sort do not sort in place, and so the algorithm typically requires _O(n)_ space (though there are more complicated 'in place' variants that require only a constant amount of additional space). When dealing with linked lists, it is possible to implement merge sort so that it requires only constant auxiliary space and _O(log(n))_ stack space. The basic merge sort algorithm is _stable_.
+The runtime of the merge sort algorithm is _O(nlog(n))_ in the worst, best and average cases, since the list is always split in half on each recursive call. Most common implementations of merge sort do not sort in place, and so the algorithm typically requires _O(n)_ space (though there are more complicated 'in place' variants that require only a constant amount of additional space). When dealing with linked lists, it is possible to implement merge sort so that it requires only constant auxiliary space and _O(log(n))_ stack space. The basic merge sort algorithm is _stable_.
 
 See implementations in `C++` (#REF) and `Python` (#REF).
 
@@ -109,7 +109,11 @@ The average and best-case performance of quick sort is _O(nlog(n))_ – the same
 
 #### Radix Sort
 
-// TODO
+**Radix sort** (also called **bucket sort**) is a non-comparison sorting algorithms that takes advantage of the fact that many primitive data types are stored or represented using a finite number of _digits_ – such as binary bits (i.e. `0` or `1`), decimal digits (i.e. `0` to `9`), or characters (i.e. `a`, `b`, `c`,...) – that can be used to sort them.
+
+Let _d_ be the number of different digits (e.g. two for binary digits, ten for decimal digits). In radix sort, we group the values in the list into _d_ "buckets" by one of their digits. We then repeat this process, sorting the values in the list by their next digit, and so on, until the list is sorted. 
+
+Because this process only requires iterating over the list once for every digit, radix sort has a runtime of _O(kn)_, where _k_ is the number of digits in the data type (e.g. `int` or `long`). 
 
 #### Comparison
 
