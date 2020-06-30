@@ -16,40 +16,44 @@ A positions in a list is often specified by its ordinal number, called its _inde
 
 Lists are typically implemented using one of two data structures: as a dynamically-resizing array called at **array list** or as a chain of linked nodes called a **linked list**.
 
+## Array List
+
 An **array list** or **dynamic array** (a *vector* in C++) stores the list values contiguously at the start of a fixed-size static array; the remaining positions towards the end of the array remain unused. As items are added to the array, these positions are filled. When the array is full, a new, larger array is created, and the items are copied over. 
 
 [ArrayList](#REF) contains a simple implementation of an array list that only allows values to be accessed, inserted, or removed by index; it does not support iterators, though these would be relatively trivial to implement. See also `std::vector` (which is also implemented as an array list).
+
+## Linked List
 
 A **linked list** (simply a *list* in C++) consists of a series of **nodes**; each node holds the corresponding list value and a reference to one or two other nodes. The list itself only maintains a reference to the first (head) and possibly the last (tail) nodes in the sequence. In a **singly linked list**, each node only stores a reference to the next node; in a **doubly linked-list**, each node holds a reference to both the next and the previous nodes.
 
 [LinkedList](#REF) provides an example implementation of a linked list. It includes methods for accessing, modifying, adding, and removing values by index or by iterator (see #REF). Its methods are loosely modelled on `std::list` (which is also implemented as a linked list) and its implementation was derived in part from from Koffman & Wolfgang 2006, Zeil 2006, and Riesbeck 2009.
 
+### Comparison
+
+Array lists often achieve better performance than linked lists and use memory more efficiently: linked lists require significantly more memory to store pointers between nodes and their unpredictable memory access (because the nodes are not stored sequentially) maximize cache misses. Array lists also provide more efficient random access, since accessing an arbitrary index in a linked list required iterating through the nodes sequentially until the desired node is reached. And while inserting or removing items from an array list involves shifting over a large number of items within the array, this is an operation that modern caches perform extremely efficiently (see [Why you should avoid Linked Lists](https://www.youtube.com/watch?v=YQs6IC-vgmo) by Bjarne Stroustrup, the creator of C++).
+
 <p align="center">
     <img src="https://s3-us-west-2.amazonaws.com/ib-assessment-tests/problem_images/array-vs-ll.png">
 </p>
 <p align="center">
-    <em>Comparison of Array List and Linked List Data Structure</em>
+    <em>Comparison of array list and linked list data structures</em>
 </p>
-
-### Comparison
-
-Array lists often achieve better performance than linked lists and use memory more efficiently: linked lists require significantly more memory to store pointers between nodes and their unpredictable memory access (because the nodes are not stored sequentially) maximize cache misses. Array lists also provide more efficient random access, since accessing an arbitrary index in a linked list required iterating through the nodes sequentially until the desired node is reached. And while inserting or removing items from an array list involves shifting over a large number of items within the array, this is an operation that modern caches perform extremely efficiently (see [Why you should avoid Linked Lists](https://www.youtube.com/watch?v=YQs6IC-vgmo) by Bjarne Stroustrup, the creator of C++).
 
 The principal benefit of a linked list is that items can be added or removed without reallocating or reorganizing the entire data structure (because the nodes do not need to be stored contiguously in memory); this is particularly advantageous when removing the first element from a list (e.g. a queue) or when the list is used to store very lasrge data types.
 
 The table below compares the runtime of typical list operations between array lists and linked lists.
 
-|                                               | Array List        | Linked List                   |
-| :-------------------------------------------- | :---------------: | :---------------------------: |
-| Random Access                                 | _O(1)_            | _O(n)_                        |
-| Insertion / removal at start                  | _O(n)_            | _O(1)_                        |
-| Insertion / removal at end                    | _O(1)_*           | _O(1)_**                      |
-| Insertion / removal during iteration          | _O(n)_            | _O(1)_                        |
-| Insertion / removal by index                  | _O(n)_            | _O(n)_                        |
+|                                               | Array List            | Linked List                   |
+|:----------------------------------------------|:---------------------:|:-----------------------------:|
+| Random Access                                 | _O(1)_                | _O(n)_                        |
+| Insertion / removal at start                  | _O(n)_                | _O(1)_                        |
+| Insertion / removal at end                    | _O(1)_ <sup>[1]</sup> | _O(1)_ <sup>[2]</sup>         |
+| Insertion / removal during iteration          | _O(n)_                | _O(1)_                        |
+| Insertion / removal by random index                  | _O(n)_                | _O(n)_                        |
 
-\* When the array is full, all the contents of the array need to be copied over to a new, larger array, with takes _O(n)_. However, this happens infrequently enough that the amortized runtime is still O(1). See *Cracking the Coding Interview*, p. 89, for further discussion.
+<sup>[1]</sup> When the array is full, all the contents of the array need to be copied over to a new, larger array, with takes _O(n)_. However, this happens infrequently enough that the amortized runtime is still O(1). See *Cracking the Coding Interview*, p. 89, for further discussion.
 
-\*\* If the linked list implementation maintains a pointer to the tail node; otherwise the runtime is _O(n)_.
+<sup>[2]</sup>If the linked list implementation maintains a pointer to the tail node; otherwise the runtime is _O(n)_.
 
 ## Algorithms
 
@@ -73,9 +77,15 @@ Like selection sort, the average- and worst-case performance of bubble sort is _
 
 Lastly, **insertion sort** builds the final sorted list element-by-element (see graphic below). Like selection and insertion sort, it average- and worst-case runtime is _O(n<sup>2</sup>)_. But, like bubble sort, its best-case runtime (when the list is already sorted) is linear; in fact, its runtime is only _O(kn)_ is the case where the each value is at most _k_ positions away from its sorted position (i.e. when the list is already roughly sorted). It is a stable, in-place algorithm that requires only constant memory.
 
-![Selection Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Selection_Sort.gif "Selection Sort") ![Bubble Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Bubble_Sort.gif "Bubble Sort") ![Insertion Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Insertion_Sort.gif "Insertion Sort")
+<p align="center">
+    <img src="https://www.codeproject.com/KB/recipes/SortVisualization/Selection_Sort.gif" width="30%">
+    <img src="https://www.codeproject.com/KB/recipes/SortVisualization/Bubble_Sort.gif" width="30%">
+    <img src="https://www.codeproject.com/KB/recipes/SortVisualization/Insertion_Sort.gif" width="30%">
+</p>
 
-*Selection, bubble, and insertion sort*
+<p align="center">
+    <em>Illustration of selection sort (left), bubble sort (center), and insertion sort (right)</em>
+</p>
 
 See #REF. #REF, and #REF.
 
@@ -89,10 +99,14 @@ The runtime of the merge sort algorithm is _O(nlog(n))_ in the worst, best and a
 
 See implementations in `C++` (#REF) and `Python` (#REF).
 
-![Merge Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Merge_Sort.gif "Merge Sort")
-![Quick Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Quick_Sort.gif "Quick Sort")
+<p align="center">
+    <img src="https://www.codeproject.com/KB/recipes/SortVisualization/Merge_Sort.gif" width="30%">
+    <img src="https://www.codeproject.com/KB/recipes/SortVisualization/Quick_Sort.gif" width="30%">
+</p>
 
-_Merge sort and quick sort_
+<p align="center">
+    <em>Illustration of merge sort (left) and quick sort (right) </em>
+</p>
 
 Other other hand. **quick sort** picks a _pivot_ element from the list, reorders the elements of the array so that all the elements with values less than the pivot come before it in the list (called _partitioning_), and then recursively sorts the halves on either side of the pivot (see diagram [here](https://images.deepai.org/glossary-terms/a5228ea07c794b468efd1b7f758b9ead/Quicksort.png)).
 
@@ -118,17 +132,31 @@ Counting and radix sort are two common non-comparison sorting algorithms. Rather
 
 **Counting sort** sorts list values according to associated integer keys: each value in the list must map to an integer key. Suppose _max_ and _min_ are the maximum and minimum key values, respectively; let _k_ be the number of possible key values, where _k = max - min + 1_. Counting sort works by creating an count array of size _k_ that stores the number of occurences of each key in the list: the number of occurences of key _i_ is stored at index _i_ - min. This can then be transformed into a cumulative count array that stores the number of keys in the list less than or equal to a given key: the value at index _i_ stores the number of keys in the list less than or equal to _i + min_. We can then use this cumulative count array to place the list element into their final sorted order. The reference [here](https://www.programiz.com/dsa/counting-sort) provides a good illustration of this process.
 
+<p align="center">
+    <img src="https://cdn.programiz.com/sites/tutorial2program/files/Counting-sort-4_1.png" width="80%">
+</p>
+
+<p align="center">
+    <em>Illustration of counting sort with input array, cumulative count array, and output array</em>
+</p>
+
 The performance of counting sort depends on the size of the list (_n_) and the range of integer keys (_k_). If _k_ is not known, it can be determine in linear time by scanning the list. It then takes _O(n)_ to create the count array, _O(k)_ to turn it into a cumulative count array, and _O(n)_ to use this array to create an output array, which can then be copied to the input list to produce the final sorted list.
 
 Counting sort has best-, average-, and worst-case runtime of _O(n + k)_ and requires _O(n+ k)_ memory for the count, cumulative count, and output array. As a result, counting sort can be very efficient when the range of possible keys (_k_) is small relative to the size of the list. In this case, it runtime and memory are linear, yielding much better performance than any of the comparative sorting algorithms (which can only manage _O(nlog(n))_ at best). However, in most applications, the range of possible integer keys (e.g. a list of `int` values) is too large to make counting sort appropriate. 
 
 Lastly, counting sort is a stable sorting algorithm. This will prove important in radix sort.
 
-![Counting Sort](https://cdn.programiz.com/sites/tutorial2program/files/Counting-sort-4_1.png "Counting Sort")
-
-_Illustration of Counting Sort_
+Counting sort #REF
 
 **Radix sort** (also called **bucket sort**) is a non-comparison sorting algorithms that takes advantage of the fact that many primitive data types are represented using a finite number of unique digits such as binary bits (i.e. `0` or `1`), decimal digits (i.e. `0` to `9`), or characters (i.e. `a`, `b`, `c`, etc.). Radix sort uses this property to sort these data types without needing to directly compare them.
+
+<p align="center">
+    <img src="https://www.researchgate.net/publication/291086231/figure/fig1/AS:614214452404240@1523451545568/Simplistic-illustration-of-the-steps-performed-in-a-radix-sort-In-this-example-the.png" width="80%">
+</p>
+
+<p align="center">
+    <em>Illustration of radix sort performed on three-digit decimal integers (k = 3, d = 10)</em>
+</p>
 
 Let the **radix** _d_ be the number of unique digits (e.g. two for binary digits, ten for decimal digits). In radix sort, we sort the values in the list into _d_ "buckets" by their radix; if values have more than one significant digit, we repeat this process for each digit until the list is sorted. Radix sort can be implemented to start with either the most significant digit (MSD) or least significant digit (LSD); LSD radix sort produces the order typically desired for numerical types: from smallest to largest.
 
@@ -138,25 +166,21 @@ As a result, radix sort only requires iterating over the list once for every dig
 
 See #REF.
 
-![Radix Sort](https://www.researchgate.net/publication/291086231/figure/fig1/AS:614214452404240@1523451545568/Simplistic-illustration-of-the-steps-performed-in-a-radix-sort-In-this-example-the.png "Radix Sort")
-
-_Illustration of Radix Sort_
-
 #### Comparison
 
-There are numerous resources that provide comparisons and illustrations of sorting algorithms. [Visualgo](https://visualgo.net/bn/sorting) has a simple interactive animation of all the sorting algorithms discussed above; Robert Kanasz's article on [Code Project](https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms) provides a more detailedd discussion of a far wider range of sorting algorithms, and it the source for the diagrams contained in the sections above.
+There are numerous resources that provide comparisons and illustrations of sorting algorithms. [Visualgo](https://visualgo.net/bn/sorting) has a simple interactive animation of all the sorting algorithms discussed above; Robert Kanasz's article on [Code Project](https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms) provides a more detailedd discussion of a far wider range of sorting algorithms, and it the source for several of the the diagrams contained in the sections above.
 
+Selection, bubble, and insertion sort are all simple, stable sorting algorithms with _O(n<sup>2</sup>)_ runtime. However, both bubble sort and insertion require only constant runtime in the best case (when the list is already sorted). In practice, insertion sort is the most efficient of these three algorithms because it also performs better on a list that is already substantially sorted. 
 
-https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms 
+Despite their slower asymptotic runtime, all three of these algorithms sort in-place, require only constant memory, and can be faster in practice that more efficient sorting because of this lower overhead. As a result, many sorting implementations based on merge sort or quick sort use one of these algorimths (particularly insertion sort) internally to sort smaller lists.
 
-Selection, insertion, bubble comparison
-- selection and insertion can detect sorted list
-- Insertion sort generally runs faster (https://en.wikipedia.org/wiki/Bubble_sort#:~:text=Bubble%20sort%2C%20sometimes%20referred%20to,until%20the%20list%20is%20sorted) and performs better on list that is already substantiallysorted. 
-- Insertion is most efficient in practice
+// TODO merge sort vs quick sort vs heap sort
 
 Merge sort: typically requires fewer comparison; more efficient if data can only be accessed sequentially (linked lists); better worst-case performance; constant store on linked lists.
 
 Quick sort: smaller space requirement on arrays; can be more efficient if data can be randomly accessed; poor on linked lists (random access)
+
+// TODO array vs linked list
 
 |                               | Best-case          | Average-case       | Worst-case                        | Memory                      | Stable    |
 |:------------------------------|:------------------:|:------------------:|:---------------------------------:|:---------------------------:|:---------:|
@@ -206,9 +230,6 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
 * Heap sort (#REF)
 * Counting sort (#REF)
 * Radix sort (#REF)
-
-
-
 
 ## References
 
