@@ -107,13 +107,31 @@ The average and best-case performance of quick sort is _O(nlog(n))_ – the same
 
 // TODO
 
+#### Counting Sort
+
+**Counting sort** is a non-comparison sorting algorithm that sorts list values by corresponding integer keys. Suppose _max_ and _min_ are the maximum and minimum key values, respectively; let _k_ be the number of possible key values, where _k = max - min + 1_. 
+
+Counting sort works by creating an count array of size _k_ that stores the number of occurences of each key in the list: the number of occurences of key _i_ is stored at index _i_ - min. This can then be transformed into a cumulative count array that stores the number of keys in the list less than or equal to a given key: the value at index _i_ stores the number of keys in the list less than or equal to _i + min_. We can then use this cumulative count array to place the list element into their final sorted order. The reference [here](https://www.programiz.com/dsa/counting-sort) provides a good illustration of this process.
+
+The performance of radix sort depends on the size of the list (_n_) and the range of integer keys (_k_). If _k_ is not known, it can be determine in linear time. It then takes _O(n)_ to create the count array, _O(k)_ to turn it into a cumulative count array, and _O(n)_ to use this array to create the final sorted list. As a result, the total runtime is _O(n + k)_; similarly, counting sort needs _O(n+ k)_ memory. 
+
+As a result, counting sort can be very efficient when the range of possible keys (_k_) is small. In this case, it runtime and memory are linear, yielding much better performance than any of the comparative sorting algorithms (which can only manage _O(nlog(n))_ at best). However, in most applications, the range of possible integer keys (e.g. a list of `int` values) is too large to make counting sort appropriate. 
+
+Lastly, counting sort is a stable sorting algorithm. This will prove important in the radix sort (#REF).
+
+See #REF
+
 #### Radix Sort
 
-**Radix sort** (also called **bucket sort**) is a non-comparison sorting algorithms that takes advantage of the fact that many primitive data types are stored or represented using a finite number of _digits_ – such as binary bits (i.e. `0` or `1`), decimal digits (i.e. `0` to `9`), or characters (i.e. `a`, `b`, `c`,...) – that can be used to sort them.
+**Radix sort** (also called **bucket sort**) is a non-comparison sorting algorithms that takes advantage of the fact that many primitive data types are represented using a finite number of unique digits such as binary bits (i.e. `0` or `1`), decimal digits (i.e. `0` to `9`), or characters (i.e. `a`, `b`, `c`, etc.). Radix sort uses this property to sort these data types without needing to directly compare them.
 
-Let _d_ be the number of different digits (e.g. two for binary digits, ten for decimal digits). In radix sort, we group the values in the list into _d_ "buckets" by one of their digits. We then repeat this process, sorting the values in the list by their next digit, and so on, until the list is sorted. 
+Let the **radix** _d_ be the number of unique digits (e.g. two for binary digits, ten for decimal digits). In radix sort, we sort the values in the list into _d_ "buckets" by their radix; if values have more than one significant digit, we repeat this process for each digit until the list is sorted. Radix sort can be implemented to start with either the most significant digit (MSD) or least significant digit (LSD); LSD radix sort produces the order typically desired for numerical types: from smallest to largest.
 
-Because this process only requires iterating over the list once for every digit, radix sort has a runtime of _O(kn)_, where _k_ is the number of digits in the data type (e.g. `int` or `long`). 
+There are different approach to sorting by radix. The most common is based on counting sort (#REF), where the range of integer keys is simply the radix _d_. The list can then be sorted by a given digit in _O(n + d)_. 
+
+As a result, radix sort only requires iterating over the list once for every digit, giving a runtime of _O(k(n + d))_, where _k_ is the number of digits in the data type. Since both _k_ and _d_ are typically small, this usually reduces to linear runtime. For example, consider performing radix sort on a 32-bit integer. If we sort by binary digit, _d_ = 2 and_k_ = 32; if we sort by decimal digits, _d_ = 10 and _k_ = 10 (the maximum 32-bit integer is just over 2 trillion). Radix sort requires _O(k(n + d))_ storage and is a stable sorting algorithm.
+
+See #REF.
 
 #### Comparison
 
@@ -129,21 +147,26 @@ Merge sort: typically requires fewer comparison; more efficient if data can only
 
 Quick sort: smaller space requirement on arrays; can be more efficient if data can be randomly accessed; poor on linked lists (random access)
 
-|                       | Best-case          | Average-case       | Worst-case                        | Memory                      | Stable    |
-|:----------------------|:------------------:|:------------------:|:---------------------------------:|:---------------------------:|:---------:|
-| Selection sort        | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
-| Bubble sort           | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
-| Insertion sort        | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
-| Merge sort            | _O(nlog(n))_       | _O(nlog(n))_       | _O(nlog(n))_                      | _O(n)_ <sup>[1]</sup>       | Yes       |
-| Quick sort            | _O(nlog(n))_       | _O(nlog(n))_       | _O(n<sup>2</sup>)_ <sup>[2]</sup> | _O(log(n))_ <sup>[3]</sup>  | No        |
-| Heap sort             |                    |                    |                                   |                             |           |  
-| Radix sort            |                    |                    |                                   |                             |           |
+|                               | Best-case          | Average-case       | Worst-case                        | Memory                      | Stable    |
+|:------------------------------|:------------------:|:------------------:|:---------------------------------:|:---------------------------:|:---------:|
+| Selection sort                | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
+| Bubble sort                   | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
+| Insertion sort                | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
+| Merge sort                    | _O(nlog(n))_       | _O(nlog(n))_       | _O(nlog(n))_                      | _O(n)_ <sup>[1]</sup>       | Yes       |
+| Quick sort                    | _O(nlog(n))_       | _O(nlog(n))_       | _O(n<sup>2</sup>)_ <sup>[2]</sup> | _O(log(n))_ <sup>[3]</sup>  | No        |
+| Heap sort                     |                    |                    |                                   |                             |           |  
+| Counting sort <sup>[4]</sup>  | _O(n + k)_         | _O(n + k)_         |  _O(n + k)_                       | _O(n + k)_                  | Yes       |
+| Radix sort <sup>[5]</sup>     | _O(d(n+k))_        | _O(d(n+k))_        | _O(d(n+k))_                       | _O(d(n+k))_                 | Yes       |
 
 <sup>[1]</sup> Typical implementation on array list. There are more complex in-place variants that require only constant space and linked list implementations that require only constant auxiliary storage and _O(nlog(n))_ stack space.
 
 <sup>[2]</sup> Worst-case performance of merge sort occurs when the pivot is always chosen to be the largest or smallest remaining value, such that the size of the list is only reduced by one on each pass.
 
 <sup>[3]</sup> Average case. In the worst-case, required _O(n)_ storage space (see note above).
+
+<sup>[4]</sup> _k_ is the range of integer key values.
+
+<sup>[4]</sup> _k_ is the radix (the number of unique digits) and _d_ is the number of digits per value
 
 ### Searching Algorithms
 
@@ -163,20 +186,28 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
 
 ## Examples and Problems
 
-* TODO: Array list problem
+* Sorting
+* Selection sort (#REF)
+* Bubble sort (#REF)
+* Insertion sort (#REF)
+* Merge sort (#REF)
+* Quick sort (#REF)
+* Heap sort (#REF)
+* Counting sort (#REF)
+* Radix sort (#REF)
 
-* TODO: Linked list problem
 
-* Selection sort #REF (`Python`)
 
-* Merge sort C++ (#REF)
-* Merge sort Python (#REF)
-* Quick sort Hoare C++ (#REF)
-* Quick sort Lomuto Python (#REF)
 
 ## References
 
 Koffman, Elliot B., and Paul A. T. Wolfgang. _Objects, Abstraction, Data Structures and Design Using C++_. Hoboken, NJ: John Wiley &amp; Sons, 2006.
 
 McDowell, Gayle Lakkmann. _Cracking the Coding Interview_. 6th ed. Palo Alto, CA: CareerCup, 2016.
+
+“Counting Sort Algorithm.” Learn DS &amp; Algorithms. Programiz. Accessed June 30, 2020. hhttps://www.programiz.com/dsa/counting-sort.
+
+“Radix Sort Algorithm.” Learn DS &amp; Algorithms. Programiz. Accessed June 30, 2020. https://www.programiz.com/dsa/radix-sort.
+
+Robert, Kanasz. “Visualization and Comparison of Sorting Algorithms in C#.” CodeProject, December 14, 2010. https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms.
 
