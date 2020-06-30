@@ -16,17 +16,20 @@ A positions in a list is often specified by its ordinal number, called its _inde
 
 Lists are typically implemented using one of two data structures: as a dynamically-resizing array called at **array list** or as a chain of linked nodes called a **linked list**.
 
-### Array List
-
 An **array list** or **dynamic array** (a *vector* in C++) stores the list values contiguously at the start of a fixed-size static array; the remaining positions towards the end of the array remain unused. As items are added to the array, these positions are filled. When the array is full, a new, larger array is created, and the items are copied over. 
 
 [ArrayList](#REF) contains a simple implementation of an array list that only allows values to be accessed, inserted, or removed by index; it does not support iterators, though these would be relatively trivial to implement. See also `std::vector` (which is also implemented as an array list).
 
-### Linked List
-
 A **linked list** (simply a *list* in C++) consists of a series of **nodes**; each node holds the corresponding list value and a reference to one or two other nodes. The list itself only maintains a reference to the first (head) and possibly the last (tail) nodes in the sequence. In a **singly linked list**, each node only stores a reference to the next node; in a **doubly linked-list**, each node holds a reference to both the next and the previous nodes.
 
 [LinkedList](#REF) provides an example implementation of a linked list. It includes methods for accessing, modifying, adding, and removing values by index or by iterator (see #REF). Its methods are loosely modelled on `std::list` (which is also implemented as a linked list) and its implementation was derived in part from from Koffman & Wolfgang 2006, Zeil 2006, and Riesbeck 2009.
+
+<p align="center">
+    <img src="https://s3-us-west-2.amazonaws.com/ib-assessment-tests/problem_images/array-vs-ll.png">
+</p>
+<p align="center">
+    <em>Comparison of Array List and Linked List Data Structure</em>
+</p>
 
 ### Comparison
 
@@ -76,20 +79,22 @@ Lastly, **insertion sort** builds the final sorted list element-by-element (see 
 
 See #REF. #REF, and #REF.
 
-#### Merge Sort
+#### Merge and Quick Sort
 
-**Merge sort** takes a divide and conquer approach: it breaks the list in two, recursively sorts each half of the list, and then merges the two sorted halves. In essence, the algorithm repeatedly splits the list in half until each sublist contains only a single value, and then merges these sorted sublists back together to get the final sorted list (see diagram [here](https://cdn.programiz.com/sites/tutorial2program/files/merge-sort-example_0.png)). (#REF) and (#REF) provide implementations of merge sort in C++ and Python, respectively. 
+Merge and quick sort are two of the most efficient and widely-used sorting algorithms. Both use a divide and conquer approach to achieve _O(nlog(n))_ average runtime; but their worst-case performance, storage requirements, and stability differ
+
+**Merge sort** breaks the list in two, recursively sorts each half of the list, and then merges the two sorted halves. In essence, the algorithm repeatedly splits the list in half until each sublist contains only a single value, and then merges these sorted sublists back together to get the final sorted list (see diagram [here](https://cdn.programiz.com/sites/tutorial2program/files/merge-sort-example_0.png)). (#REF) and (#REF) provide implementations of merge sort in C++ and Python, respectively. 
 
 The runtime of the merge sort algorithm is _O(nlog(n))_ in the worst, best and average cases, since the list is always split in half on each recursive call. Most common implementations of merge sort do not sort in place, and so the algorithm typically requires _O(n)_ space (though there are more complicated 'in place' variants that require only a constant amount of additional space). When dealing with linked lists, it is possible to implement merge sort so that it requires only constant auxiliary space and _O(log(n))_ stack space. The basic merge sort algorithm is _stable_.
 
 See implementations in `C++` (#REF) and `Python` (#REF).
 
-#### Quick Sort
+![Merge Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Merge_Sort.gif "Merge Sort")
+![Quick Sort](https://www.codeproject.com/KB/recipes/SortVisualization/Quick_Sort.gif "Quick Sort")
 
-Like merge sort, **quick sort** is also a divide and conquer algorithm. It picks a _pivot_
-element from the list, reorders the elements of the array so that all the elements with 
-values less than the pivot come before it in the list (called _partitioning_), and then 
-recursively sorts the halves on either side of the pivot (see diagram [here](https://images.deepai.org/glossary-terms/a5228ea07c794b468efd1b7f758b9ead/Quicksort.png)).
+_Merge sort and quick sort_
+
+Other other hand. **quick sort** picks a _pivot_ element from the list, reorders the elements of the array so that all the elements with values less than the pivot come before it in the list (called _partitioning_), and then recursively sorts the halves on either side of the pivot (see diagram [here](https://images.deepai.org/glossary-terms/a5228ea07c794b468efd1b7f758b9ead/Quicksort.png)).
 
 There are several different approaches to partitioning the list. Two common ones are the Lumot and Hoare partitioning schemes:
 
@@ -101,27 +106,27 @@ Lomuto's partitioning scheme is simple and easy to understand, but has worse per
 
 The worst-case performance of quick sort occurs when the pivot (at each step) is chosen to be the smallest or largest value in the list. In this case, there will be no elements either greater than or less than the pivot, and so one partition will be empty and the other will contain all the elements except the partition – leading to _O(n<sup>2</sup>)_ performance. This commonly occurs when the first or last element is chosen as the pivot and the list is already sorted (a relatively common use case). But this can be rectified relatively easily, such as by simply choosing to pivot about an element in the middle of the list, or by pivoting about the median element in the list (which can be retrieved in linear time). 
 
-The average and best-case performance of quick sort is _O(nlog(n))_ – the same as merge sort. Partitioning in quick sort is in-place and requires only constant space; the recursive calls then require _O(log(n))_ space in the best and average cases and _O(n)_ space in the worst case. Quick sort is not a stable sorting algorithm.
+The average and best-case performance of quick sort is _O(nlog(n))_ – the same as merge sort – since in the average case each pivot with partition the list roughly in half. Partitioning in quick sort is in-place and requires only constant space; the recursive calls then require _O(log(n))_ space in the best and average cases and _O(n)_ space in the worst case. Quick sort is not a stable sorting algorithm.
 
 #### Heap Sort
 
 // TODO
 
-#### Counting Sort
+#### Counting and Radix Sort
 
-**Counting sort** is a non-comparison sorting algorithm that sorts list values by corresponding integer keys. Suppose _max_ and _min_ are the maximum and minimum key values, respectively; let _k_ be the number of possible key values, where _k = max - min + 1_. 
+Counting and radix sort are two common non-comparison sorting algorithms. Rather than comparing the values in the list directly, they use some underlying properties of the data to sort it. This allows they to sort the list in linear time under certain circumstances: for counting sort, when the values in the list can be mapped to integer keys that have a small range of possible values; for radix sort, when the data in the list is composed using a small number of unique digits.
 
-Counting sort works by creating an count array of size _k_ that stores the number of occurences of each key in the list: the number of occurences of key _i_ is stored at index _i_ - min. This can then be transformed into a cumulative count array that stores the number of keys in the list less than or equal to a given key: the value at index _i_ stores the number of keys in the list less than or equal to _i + min_. We can then use this cumulative count array to place the list element into their final sorted order. The reference [here](https://www.programiz.com/dsa/counting-sort) provides a good illustration of this process.
+**Counting sort** sorts list values according to associated integer keys: each value in the list must map to an integer key. Suppose _max_ and _min_ are the maximum and minimum key values, respectively; let _k_ be the number of possible key values, where _k = max - min + 1_. Counting sort works by creating an count array of size _k_ that stores the number of occurences of each key in the list: the number of occurences of key _i_ is stored at index _i_ - min. This can then be transformed into a cumulative count array that stores the number of keys in the list less than or equal to a given key: the value at index _i_ stores the number of keys in the list less than or equal to _i + min_. We can then use this cumulative count array to place the list element into their final sorted order. The reference [here](https://www.programiz.com/dsa/counting-sort) provides a good illustration of this process.
 
-The performance of radix sort depends on the size of the list (_n_) and the range of integer keys (_k_). If _k_ is not known, it can be determine in linear time. It then takes _O(n)_ to create the count array, _O(k)_ to turn it into a cumulative count array, and _O(n)_ to use this array to create the final sorted list. As a result, the total runtime is _O(n + k)_; similarly, counting sort needs _O(n+ k)_ memory. 
+The performance of counting sort depends on the size of the list (_n_) and the range of integer keys (_k_). If _k_ is not known, it can be determine in linear time by scanning the list. It then takes _O(n)_ to create the count array, _O(k)_ to turn it into a cumulative count array, and _O(n)_ to use this array to create an output array, which can then be copied to the input list to produce the final sorted list.
 
-As a result, counting sort can be very efficient when the range of possible keys (_k_) is small. In this case, it runtime and memory are linear, yielding much better performance than any of the comparative sorting algorithms (which can only manage _O(nlog(n))_ at best). However, in most applications, the range of possible integer keys (e.g. a list of `int` values) is too large to make counting sort appropriate. 
+Counting sort has best-, average-, and worst-case runtime of _O(n + k)_ and requires _O(n+ k)_ memory for the count, cumulative count, and output array. As a result, counting sort can be very efficient when the range of possible keys (_k_) is small relative to the size of the list. In this case, it runtime and memory are linear, yielding much better performance than any of the comparative sorting algorithms (which can only manage _O(nlog(n))_ at best). However, in most applications, the range of possible integer keys (e.g. a list of `int` values) is too large to make counting sort appropriate. 
 
-Lastly, counting sort is a stable sorting algorithm. This will prove important in the radix sort (#REF).
+Lastly, counting sort is a stable sorting algorithm. This will prove important in radix sort.
 
-See #REF
+![Counting Sort](https://cdn.programiz.com/sites/tutorial2program/files/Counting-sort-4_1.png "Counting Sort")
 
-#### Radix Sort
+_Illustration of Counting Sort_
 
 **Radix sort** (also called **bucket sort**) is a non-comparison sorting algorithms that takes advantage of the fact that many primitive data types are represented using a finite number of unique digits such as binary bits (i.e. `0` or `1`), decimal digits (i.e. `0` to `9`), or characters (i.e. `a`, `b`, `c`, etc.). Radix sort uses this property to sort these data types without needing to directly compare them.
 
@@ -133,9 +138,15 @@ As a result, radix sort only requires iterating over the list once for every dig
 
 See #REF.
 
+![Radix Sort](https://www.researchgate.net/publication/291086231/figure/fig1/AS:614214452404240@1523451545568/Simplistic-illustration-of-the-steps-performed-in-a-radix-sort-In-this-example-the.png "Radix Sort")
+
+_Illustration of Radix Sort_
+
 #### Comparison
 
-https://visualgo.net/bn/sorting
+There are numerous resources that provide comparisons and illustrations of sorting algorithms. [Visualgo](https://visualgo.net/bn/sorting) has a simple interactive animation of all the sorting algorithms discussed above; Robert Kanasz's article on [Code Project](https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms) provides a more detailedd discussion of a far wider range of sorting algorithms, and it the source for the diagrams contained in the sections above.
+
+
 https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms 
 
 Selection, insertion, bubble comparison
