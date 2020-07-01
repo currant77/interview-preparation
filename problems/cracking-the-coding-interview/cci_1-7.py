@@ -33,7 +33,6 @@ matrix"""
 
 # Imports
 import numpy as np
-import math as math
 
 # (a)
 def rotate_array(arr):

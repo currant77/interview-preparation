@@ -221,15 +221,27 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
 
 ## Examples and Problems
 
-* Sorting
-* Selection sort (#REF)
-* Bubble sort (#REF)
-* Insertion sort (#REF)
-* Merge sort (#REF)
-* Quick sort (#REF)
-* Heap sort (#REF)
-* Counting sort (#REF)
-* Radix sort (#REF)
+* Data Structures:
+    * Array list
+    * Linked list
+
+* Algorithms:
+    * Sorting:
+        * Selection sort (#REF)
+        * Bubble sort (#REF)
+        * Insertion sort (#REF)
+        * Merge sort (#REF)
+        * Quick sort (#REF)
+        * Heap sort (#REF)
+        * Counting sort (#REF)
+        * Radix sort (#REF)
+    * Searching
+
+* _Cracking the Coding Interview_ Questions:
+    * Chapter 10: Sorting and Searching
+        * 10.2 Group Anagrams (#REF)
+        * 10.4 Sorted Search, No Size (#REF)
+
 
 ## References
 
