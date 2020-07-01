@@ -22,10 +22,9 @@ occurs multiple times, you may return any index."
 
 """ 
 Approach:
-(1) Use a 'quadratic bounding' approach, starting with index 1. If the search value is 
-greater than the value at that index, double the index. If it is less or past the end of
-the list, take half the distance to the previous index.
-
+Use a 'quadratic bounding' approach (modified binary search), starting with index 1. 
+If the search value is greater than the value at that index, double the index. If it is 
+less or past the end of the list, take half the distance to the previous index.
 """
 
 import math as math
