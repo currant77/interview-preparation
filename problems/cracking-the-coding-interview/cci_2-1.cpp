@@ -23,29 +23,15 @@ is already in the set.
 (b) Much slower. Two pointers. First one stays static as second one searches
 rest of the list and removes duplicates. Runtime O(n^2).  */
 
-#include <cassert>          // assert
-#include <iostream>         // std::cout, std::endl
-#include <unordered_set>    // std::unordered_set
-
-// Classes and structs
+#include <cassert>                          // assert
+#include <iostream>                         // std::cout, std::endl
+#include <unordered_set>                    // std::unordered_set
+#include "../../data-structures/Node.h"     // SinglyLinkedList Node
 
 template<class T>
-struct Node
-{
-    T data;
-    Node<T>* next;
+using Node = SinglyLinkedListNode<T>;
 
-    explicit Node(const T& data, Node<T>* next = NULL) : 
-        data(data), next(next) 
-    { 
-
-    }  
-    
-    ~Node()
-    { 
-        delete next; 
-    }
-};
+// Classes and structs
 
 // Functions
 
