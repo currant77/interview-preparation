@@ -16,6 +16,7 @@
 #include <stdexcept>    // std::out_of_range, std::invalid_argument
 #include <algorithm>    // std::swap
 #include <iterator>     // std::bidirectional_iterator_tag
+#include "Node.h"       // DoublyLinkedListNode
 
 /**
  * @brief Linked list of values of type T; supports 
@@ -30,7 +31,7 @@ class LinkedList
         class iterator;
         class const_iterator;
 
-        // Give iterators access to private members (?)
+        // Give iterators access to private members
         friend class iterator;
         friend class const_iterator;
 
@@ -144,20 +145,17 @@ class LinkedList
         void clear();
 
     private:
-        // Forward declarations
-        struct Node;
-        friend class Node;
 
         // Members
-        Node* head;
-        Node* tail;
+        DoublyLinkedListNode<T>* head;
+        DoublyLinkedListNode<T>* tail;
         size_t num_entries;
 
         /**
          * @brief Returns a pointer to the node at \p index
          * @throw std::out_of_range if \p index is not in [0,size())
          */
-        Node* find(size_t index) const;
+        DoublyLinkedListNode<T>* find(size_t index) const;
 };
 
 template<class T>
@@ -191,7 +189,7 @@ class LinkedList<T>::iterator
             if(node == NULL)
                 throw std::invalid_argument("Iterator equal to end()");
             else
-                return node->value;
+                return node->data;
         }
 
         /**
@@ -204,7 +202,7 @@ class LinkedList<T>::iterator
             if(node == NULL)
                 throw std::invalid_argument("Iterator equal to end()");
             else
-                return &(node->value);
+                return &(node->data);
         }
 
         /**
@@ -249,7 +247,7 @@ class LinkedList<T>::iterator
                 node = list->tail;
             
             else
-                node = node->previous;
+                node = node->prev;
             
             return *this;
         }
@@ -284,10 +282,10 @@ class LinkedList<T>::iterator
         // Only LinkedList<T> has access to private constructor
         friend class LinkedList<T>;
 
-        iterator(LinkedList<T>* list, Node* node) :
+        iterator(LinkedList<T>* list, DoublyLinkedListNode<T>* node) :
             list(list), node(node){ }
 
-        Node* node;
+        DoublyLinkedListNode<T>* node;
         LinkedList<T>* list;
 };
 
@@ -322,7 +320,7 @@ class LinkedList<T>::const_iterator
             if(node == NULL)
                 throw std::invalid_argument("Iterator equal to end()");
             else
-                return node->value;
+                return node->data;
         }
 
         /**
@@ -335,7 +333,7 @@ class LinkedList<T>::const_iterator
             if(node == NULL)
                 throw std::invalid_argument("Iterator equal to end()");
             else
-                return &(node->value);
+                return &(node->data);
         }
 
         /**
@@ -380,7 +378,7 @@ class LinkedList<T>::const_iterator
                 node = list->tail;
             
             else
-                node = node->previous;
+                node = node->prev;
             
             return *this;
         }
@@ -414,23 +412,11 @@ class LinkedList<T>::const_iterator
     private:
         friend class LinkedList<T>;
 
-        const_iterator(const LinkedList<T>* list, const Node* node) :
+        const_iterator(const LinkedList<T>* list, const DoublyLinkedListNode<T>* node) :
             list(list), node(node){ }
 
-        const Node* node;
+        const DoublyLinkedListNode<T>* node;
         const LinkedList<T>* list;
-};
-
-template<class T>
-struct LinkedList<T>::Node
-{
-    // Allow iterators access to node
-    friend class iterator;
-    friend class const_iterator;
-
-    T value;
-    Node* previous = NULL;
-    Node* next = NULL;
 };
 
 template<class T>
@@ -444,7 +430,7 @@ LinkedList<T>::LinkedList()
 template<class T>
 LinkedList<T>::~LinkedList()
 {
-    Node* temp;
+    DoublyLinkedListNode<T>* temp;
     while(head != NULL)
     {
         temp = head;
@@ -489,7 +475,7 @@ size_t LinkedList<T>::size() const
 template<class T>
 T& LinkedList<T>::operator[](size_t index)
 {
-    return find(index)->value;
+    return find(index)->data;
 }
 
 template<class T>
@@ -526,11 +512,11 @@ typename LinkedList<T>::const_iterator LinkedList<T>::cend() const
 template<class T>
 void LinkedList<T>::push_front(const T& value)
 {
-    head = new Node{value, NULL, head};
+    head = new DoublyLinkedListNode<T>(value, NULL, head);
 
     // Update next node
     if(head->next) 
-        head->next->previous = head;
+        head->next->prev = head;
 
     // Update tail
     if(tail == NULL)
@@ -542,11 +528,11 @@ void LinkedList<T>::push_front(const T& value)
 template<class T>
 void LinkedList<T>::push_back(const T& value)
 {
-    tail = new Node{value, tail, NULL};
+    tail = new DoublyLinkedListNode<T>(value, tail, NULL);
 
     // Update previous node
-    if(tail->previous)
-        tail->previous->next = tail;
+    if(tail->prev)
+        tail->prev->next = tail;
 
     // Update head
     if(head == NULL)
@@ -569,13 +555,13 @@ void LinkedList<T>::insert(size_t index, const T& value)
     // Insert in middle
     else
     {
-        Node* prev = find(index - 1);
-        Node* next = prev->next;
+        DoublyLinkedListNode<T>* prev = find(index - 1);
+        DoublyLinkedListNode<T>* next = prev->next;
 
-        Node* insert = new Node{value, prev, next};
+        DoublyLinkedListNode<T>* insert = new DoublyLinkedListNode<T>(value, prev, next);
 
-        insert->next->previous = insert;
-        insert->previous->next = insert;
+        insert->next->prev = insert;
+        insert->prev->next = insert;
 
         num_entries++; 
     }   
@@ -604,13 +590,13 @@ typename LinkedList<T>::iterator LinkedList<T>::insert(iterator pos, const T& va
     // Insert in middle
     else
     {
-        Node* next = pos.node;
-        Node* prev = next->previous;
+        DoublyLinkedListNode<T>* next = pos.node;
+        DoublyLinkedListNode<T>* prev = next->prev;
 
-        Node* insert = new Node{value, prev, next};
+        DoublyLinkedListNode<T>* insert = new DoublyLinkedListNode<T>(value, prev, next);
 
-        insert->next->previous = insert;
-        insert->previous->next = insert;
+        insert->next->prev = insert;
+        insert->prev->next = insert;
 
         num_entries++;
         return iterator(this, insert);
@@ -623,11 +609,11 @@ void LinkedList<T>::pop_front()
     if(!num_entries)
         throw std::out_of_range("Cannot pop_front() on an empty list");
 
-    Node* temp = head;
+    DoublyLinkedListNode<T>* temp = head;
     head = head->next;
 
     if(head)
-        head->previous = NULL;
+        head->prev = NULL;
     else
         tail = NULL;
 
@@ -641,8 +627,8 @@ void LinkedList<T>::pop_back()
     if(!num_entries)
         throw std::out_of_range("Cannot pop_back() on an empty list");
 
-    Node* temp = tail;
-    tail = tail->previous;
+    DoublyLinkedListNode<T>* temp = tail;
+    tail = tail->prev;
 
     if(tail)
         tail->next = NULL;
@@ -665,10 +651,10 @@ void LinkedList<T>::remove(size_t index)
     
     else
     {
-        Node* re = find(index);
+        DoublyLinkedListNode<T>* re = find(index);
 
-        re->next->previous = re->previous;
-        re->previous->next = re->next;
+        re->next->prev = re->prev;
+        re->prev->next = re->next;
 
         delete re;
         num_entries--;   
@@ -701,10 +687,10 @@ typename LinkedList<T>::iterator LinkedList<T>::remove(iterator pos)
     // Remove from middle
     else
     {
-        Node* erase = pos.node;
+        DoublyLinkedListNode<T>* erase = pos.node;
 
-        erase->next->previous = erase->previous;
-        erase->previous->next = erase->next;
+        erase->next->prev = erase->prev;
+        erase->prev->next = erase->next;
 
         delete erase;
         num_entries--;
@@ -716,7 +702,7 @@ typename LinkedList<T>::iterator LinkedList<T>::remove(iterator pos)
 template<class T>
 void LinkedList<T>::clear()
 {
-    Node* temp;
+    DoublyLinkedListNode<T>* temp;
     while(head != NULL)
     {
         temp = head;
@@ -729,7 +715,7 @@ void LinkedList<T>::clear()
 }
 
 template<class T>
-typename LinkedList<T>::Node* LinkedList<T>::find(size_t index) const
+DoublyLinkedListNode<T>* LinkedList<T>::find(size_t index) const
 {
     // Check bounds
     if(index < 0 || index >= num_entries)
@@ -737,7 +723,7 @@ typename LinkedList<T>::Node* LinkedList<T>::find(size_t index) const
         throw std::out_of_range("Index must be in range [0,size())");
     }
 
-    Node* n = head;
+    DoublyLinkedListNode<T>* n = head;
     for(size_t i = 0; i != index; i++)
         n = n->next;
 
