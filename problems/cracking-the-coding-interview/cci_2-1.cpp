@@ -127,26 +127,26 @@ int main()
     // Tests (a)
 
     Node<int>* head = NULL;       
-    remove_dups_a(head);            // Input: []
-    print_list(head);               // Output: []  
+    remove_dups_a(head);                    // [] -> []
+    assert(compare_list<int>(head, {}));           
 
     head = new Node<int>(5);
-    remove_dups_a(head);            // Input: [5]
-    print_list(head);               // Output: [5]
+    remove_dups_a(head);                    // [5] -> [5]
+    assert(compare_list<int>(head, {5}));    
 
     auto six = new Node<int>(6);
     head->next = six;
-    remove_dups_a(head);            // Input: [5,6]
-    print_list(head);               // Output: [5,6]
+    remove_dups_a(head);                    // [5,6] -> [5,6]
+    assert(compare_list<int>(head, {5,6}));    
 
     auto five = new Node<int>(5);
     six->next = five;
-    remove_dups_a(head);            // Input: [5,6,5]
-    print_list(head);               // Output: [5,6]
+    remove_dups_a(head);                    // [5,6,5] -> [5,6]
+    assert(compare_list<int>(head, {5,6}));   
 
     six->next = new Node<int>(6);
-    remove_dups_a(head);            // Input: [5,6,6]
-    print_list(head);               // Output: [5,6]
+    remove_dups_a(head);                    // [5,6,6] -> [5,6]
+    assert(compare_list<int>(head, {5,6}));   
 
     auto sevenA = new Node<int>(7);
     auto eight = new Node<int>(8);
@@ -159,8 +159,8 @@ int main()
     eight->next = nineA;
     nineA->next = nineB;
     nineB->next = sevenB;
-    remove_dups_a(head);            // Input: [5,6,7,8,9,9,7]
-    print_list(head);               // Output: [5,6,7,8,9]
+    remove_dups_a(head);                    // [5,6,7,8,9,9,7] -> [5,6,7,8,9]
+    assert(compare_list<int>(head, {5,6,7,8,9}));  
 
     delete head;
 
@@ -171,39 +171,40 @@ int main()
     std::cout << "Beginning tests for (b)..." << std::endl; 
 
     head = NULL;       
-    remove_dups_b(head);            // Input: []
-    print_list(head);               // Output: []  
+    remove_dups_a(head);                    // [] -> []
+    assert(compare_list<int>(head, {}));           
 
     head = new Node<int>(5);
-    remove_dups_b(head);            // Input: [5]
-    print_list(head);               // Output: [5]
+    remove_dups_a(head);                    // [5] -> [5]
+    assert(compare_list<int>(head, {5}));    
 
     six = new Node<int>(6);
     head->next = six;
-    remove_dups_b(head);            // Input: [5,6]
-    print_list(head);               // Output: [5,6]
+    remove_dups_a(head);                    // [5,6] -> [5,6]
+    assert(compare_list<int>(head, {5,6}));    
 
     five = new Node<int>(5);
     six->next = five;
-    remove_dups_b(head);            // Input: [5,6,5]
-    print_list(head);               // Output: [5,6]
+    remove_dups_a(head);                    // [5,6,5] -> [5,6]
+    assert(compare_list<int>(head, {5,6}));   
 
     six->next = new Node<int>(6);
-    remove_dups_b(head);            // Input: [5,6,6]
-    print_list(head);               // Output: [5,6]
+    remove_dups_a(head);                    // [5,6,6] -> [5,6]
+    assert(compare_list<int>(head, {5,6}));   
 
     sevenA = new Node<int>(7);
     eight = new Node<int>(8);
     nineA = new Node<int>(9);
     sevenB = new Node<int>(7);
     nineB = new Node<int>(9);
+
     six->next = sevenA;
     sevenA->next = eight;
     eight->next = nineA;
     nineA->next = nineB;
     nineB->next = sevenB;
-    remove_dups_b(head);            // Input: [5,6,7,8,9,9,7]
-    print_list(head);               // Output: [5,6,7,8,9]
+    remove_dups_a(head);                    // [5,6,7,8,9,9,7] -> [5,6,7,8,9]
+    assert(compare_list<int>(head, {5,6,7,8,9}));  
 
     delete head;
 
