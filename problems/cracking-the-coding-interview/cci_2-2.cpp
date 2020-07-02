@@ -12,12 +12,25 @@
  * 
  */
 
-/* Problem 2.2: Remove Kth to Last: implement an algorithm to find the kth to last element of a singly linked list. */
+/* 
+Problem 2.2: Remove Kth to Last: implement an algorithm to find the kth to 
+last element of a singly linked list. 
+*/
 
-/* Approach: <text> */
+/* 
+Approach (a): 
+(1) Scan the list to find length
+(2) Scan the list to find k-th last element and remove it 
+
+Approach (b):
+Recursive approach. Recursive function return the length of the remaining
+elements, and removes the next node if appropriate. SImilar but slight 
+differences to several solutions in Cracking the Coding Interview.
+*/
 
 #include <cassert>                          // assert
 #include <iostream>                         // std::cout, std::endl;
+#include <functional>                       // std::function
 #include "../../data-structures/Node.h"     // DoublyLinkedList
 
 template<class T>
@@ -31,7 +44,7 @@ using Node = SinglyLinkedListNode<T>;
  * greater than the length of the list.
  */
 template<class T>
-void remove_kth_last(Node<T>*& head, size_t k)
+void remove_kth_last_a(Node<T>*& head, size_t k)
 {
     if(k < 1)
         throw std::out_of_range("k cannot be less than one");
@@ -76,12 +89,52 @@ void remove_kth_last(Node<T>*& head, size_t k)
     delete ptr;
 }
 
-int main()
+/**
+ * @brief Removes the kth to last element in head.
+ * Throw std::out_of_range if k is less than one or
+ * greater than the length of the list.
+ */
+template<class T>
+void remove_kth_last_b(Node<T>*& head, size_t k)
 {
-    std::cout << "Beginning tests..." << std::endl; 
+    if(k < 1)
+        throw std::out_of_range("k cannot be less than one");
 
+    size_t length = b_recursive(head, k);
+
+    if(k < length)
+        throw std::out_of_range("k cannot be greater than list length");
+}
+
+/**
+ * @brief Recursive helper. Returns
+ * the position of head from the end of the 
+ * original last (with element removed)
+ */
+template<class T>
+size_t b_recursive(Node<T>*& head, size_t k)
+{
+    // Base case
+    if(!head)
+        return 0;
+
+    // General case
+    size_t next_index = b_recursive(head->next, k);
+
+    if(next_index == k)
+    {
+        Node<T>* ptr = head;
+        head = head->next;
+        delete head;
+    }
+
+    return next_index + 1;
+}
+
+void tst(std::function<void(Node<int>*&, size_t)> fn)
+{
     Node<int>* head = new Node<int>(5);        
-    remove_kth_last(head, 1);               // [5] -> []
+    fn(head, 1);                            // [5] -> []
     assert(compare_list(head, {}));
 
     head =                         
@@ -92,7 +145,7 @@ int main()
 
     try
     {
-        remove_kth_last(head, 5);
+        fn(head, 5);                        
         assert(false);
     }
     catch(const std::out_of_range& e)
@@ -102,22 +155,22 @@ int main()
     
     assert(compare_list(head, {5,6,7,8}));
 
-    remove_kth_last(head, 4);               // [5,6,7,8] -> [6,7,8]
+    fn(head, 4);                            // [5,6,7,8] -> [6,7,8]
     assert(compare_list(head, {6,7,8}));
 
-    remove_kth_last(head, 2);               // [6,7,8] -> [6,8]
+    fn(head, 2);                            // [6,7,8] -> [6,8]
     assert(compare_list(head, {6,8}));
 
-    remove_kth_last(head, 2);               // [6,8] -> [8]
+    fn(head, 2);                            // [6,8] -> [8]
     assert(compare_list(head, {8}));
 
-    remove_kth_last(head, 1);               // [8] -> []
+    fn(head, 1);                            // [8] -> []
     assert(compare_list(head, {}));
 
     try
     {
         head = NULL;
-        remove_kth_last(head, 0);
+        fn(head, 0);                       
         assert(false);
     }
     catch(const std::exception& e)
@@ -126,6 +179,21 @@ int main()
     }
 
     assert(compare_list(head, {}));
+}
+
+int main()
+{
+    std::cout << std::endl << "Beginning tests for approach (a)..." << std::endl; 
+
+    tst(*remove_kth_last_a<int>);
+
+    std::cout << "All tests for approach (a) passed!" << std::endl;
+
+    std::cout << std::endl << "Beginning tests for approach (b)..." << std::endl; 
+
+    tst(*remove_kth_last_a<int>);
+
+    std::cout << "All tests for approach (b) passed!" << std::endl << std::endl;
     
     std::cout << "All tests passed!" << std::endl;
     exit(0); 
