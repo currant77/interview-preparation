@@ -31,33 +31,102 @@ using Node = SinglyLinkedListNode<T>;
  * greater than the length of the list.
  */
 template<class T>
-void remove_kth_last(Node<T>* head, size_t k)
+void remove_kth_last(Node<T>*& head, size_t k)
 {
+    if(k < 1)
+        throw std::out_of_range("k cannot be less than one");
 
+    // Determine length
+    size_t length = 0;
+    Node<T>* it = head;
+
+    while(it)
+    {
+        ++length;
+        it = it->next;
+    }
+
+    if(k > length)
+        throw std::out_of_range("k cannot be larger than length of list");
+
+    Node<T>* ptr;
+
+    // Remove head
+    if(k == length)
+    {
+        ptr = head;
+        head = head->next;
+        delete ptr;
+    }
+
+    // Remove another element
+    else
+    {
+        it = head;
+        while(k < length - 1)
+        {
+            it = it->next;
+            --length;
+        }
+
+        ptr = it->next;
+        it->next = it->next->next;
+    }
+    
+    delete ptr;
 }
 
 int main()
 {
     std::cout << "Beginning tests..." << std::endl; 
 
-    Node<int>* head = NULL;
-    remove_kth_last(head, 0);
+    Node<int>* head = new Node<int>(5);        
+    remove_kth_last(head, 1);               // [5] -> []
+    assert(compare_list(head, {}));
 
-    head = new Node<int>(5);        // Input:   [5]
-    remove_kth_last(head, 1);       // Output:  []
-
-    head =                          // Input: [5,6,7,8]
+    head =                         
         new Node<int>(5, 
             new Node<int>(6, 
                 new Node<int>(7, 
                     new Node<int>(8))));
+
+    try
+    {
+        remove_kth_last(head, 5);
+        assert(false);
+    }
+    catch(const std::out_of_range& e)
+    {
+        assert(true);
+    }
     
-    remove_kth_last(head, 4);       // Output: [6,7,8]
-    remove_kth_last(head, 2);       // Output: [6,8]
-    remove_kth_last(head, 2);       // Output: [8]
-    remove_kth_last(head, 1);       // Output: []
+    assert(compare_list(head, {5,6,7,8}));
 
+    remove_kth_last(head, 4);               // [5,6,7,8] -> [6,7,8]
+    assert(compare_list(head, {6,7,8}));
 
+    remove_kth_last(head, 2);               // [6,7,8] -> [6,8]
+    assert(compare_list(head, {6,8}));
+
+    remove_kth_last(head, 2);               // [6,8] -> [8]
+    assert(compare_list(head, {8}));
+
+    remove_kth_last(head, 1);               // [8] -> []
+    assert(compare_list(head, {}));
+
+    try
+    {
+        head = NULL;
+        remove_kth_last(head, 0);
+        assert(false);
+    }
+    catch(const std::exception& e)
+    {
+        assert(true);
+    }
+
+    assert(compare_list(head, {}));
+    
     std::cout << "All tests passed!" << std::endl;
     exit(0); 
 }
