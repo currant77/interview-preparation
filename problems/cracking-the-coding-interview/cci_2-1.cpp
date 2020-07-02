@@ -45,27 +45,25 @@ void remove_dups_a(Node<T>* head)
     std::unordered_set<T> set;
 
     Node<T>* temp;
-    while(head && head->next)
-    {
-        // Insert head data
-        set.insert(head->data);
+    Node<T>* ptr = head;
 
-        // head->next is duplicate
-        if(set.count(head->next->data) > 0)
+    while(ptr && ptr->next)
+    {
+        set.insert(ptr->data);
+
+        if(set.count(ptr->next->data) > 0)
         {
-            temp = head->next;
-            head->next = head->next->next;
-            temp->next = NULL;
+            temp = ptr->next;
+            ptr->next = ptr->next->next;
+            ptr->next = NULL;
             delete temp;
         }
 
         else
         {
-            head = head->next;
+            ptr = ptr->next;
         }  
     }
-
-
 }
 
 template<class T>
@@ -82,21 +80,16 @@ void remove_dups_b(Node<T>* head)
         {
             temp = it->next;
             it->next = it->next->next;
-            temp->next = NULL;
             delete temp;
         }
 
         else
-        {
             it = it->next;
-        }
     }
 
     // Recursively remove duplicates from rest of list
     if(head)
-    {
         remove_dups_b(head->next);
-    } 
 }
 
 template<class T>
