@@ -49,6 +49,10 @@ struct Node
 
 // Functions
 
+/**
+ * @brief Removes all nodes with duplicate values
+ * from the linked list that starts at \p head
+ */
 template<class T>
 void remove_dups_a(Node<T>* head)
 {
@@ -81,7 +85,32 @@ void remove_dups_a(Node<T>* head)
 template<class T>
 void remove_dups_b(Node<T>* head)
 {
-    // TODO
+    // Remove duplicates of `head` node
+    Node<T>* temp;
+    Node<T>* it = head;
+
+    while(it && it->next)
+    {
+        // Remove it->next
+        if(it->next->data == head->data)
+        {
+            temp = it->next;
+            it->next = it->next->next;
+            temp->next = NULL;
+            delete temp;
+        }
+
+        else
+        {
+            it = it->next;
+        }
+    }
+
+    // Recursively remove duplicates from rest of list
+    if(head)
+    {
+        remove_dups_b(head->next);
+    } 
 }
 
 template<class T>
