@@ -31,7 +31,7 @@ differences to several solutions in Cracking the Coding Interview.
 #include <cassert>                          // assert
 #include <iostream>                         // std::cout, std::endl;
 #include <functional>                       // std::function
-#include "../../data-structures/Node.h"     // DoublyLinkedList
+#include "../../data-structures/Node.h"     // SinglyLinkedListNode
 
 template<class T>
 using Node = SinglyLinkedListNode<T>;
