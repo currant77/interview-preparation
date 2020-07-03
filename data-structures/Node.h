@@ -78,4 +78,21 @@ bool compare_list(SinglyLinkedListNode<T>* head, std::vector<T> expected)
         return true;
 }
 
+template<class T>
+void print_list(SinglyLinkedListNode<T>* head)
+{
+    std::cout << "[";
+
+    while(head)
+    {
+        std::cout << head->data;
+        head = head->next;
+
+        if(head)
+            std::cout << ",";
+    }
+
+    std::cout << "]" << std::endl;
+}
+
 #endif

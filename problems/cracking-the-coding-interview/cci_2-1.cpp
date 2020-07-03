@@ -92,25 +92,6 @@ void remove_dups_b(Node<T>* head)
         remove_dups_b(head->next);
 }
 
-template<class T>
-void print_list(Node<T>* head)
-{
-    std::cout << "[";
-
-    while(head && head->next)
-    {
-        std::cout << head->data << ",";
-        head = head->next;
-    }
-
-    if(head)
-    {
-        std::cout << head->data;
-    }
-
-    std::cout << "]" << std::endl;
-}
-
 // Tests
 
 int main()
