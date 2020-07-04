@@ -22,8 +22,8 @@ addition to a bool */
 
 #include <cassert>                          // assert
 #include <iostream>                         // std::cout, std::endl;
-#include "../../data-structures/Node.h"     // SinglyLinkedListNode<T>, print_list<T>
 #include <functional>                       // std::function
+#include "../../data-structures/Node.h"     // SinglyLinkedListNode<T>, print_list<T>
 
 template<class T>
 using Node = SinglyLinkedListNode<T>;
