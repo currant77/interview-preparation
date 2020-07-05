@@ -19,8 +19,9 @@ loop." */
 /* Approach: 
 
 (a) Set (linear): use a set to store node addresses; return true if duplicates found
-(b) Recursive (quadratic): use a recursive function; each will iterate through the 
-list searching for the head node. */
+
+(b) Some crazy shit.
+*/
 
 #include <cassert>          // assert
 #include <iostream>         // std::cout, std::endl;
@@ -49,6 +50,33 @@ Node<T>* contains_cycle_set(Node<T>* head)
     }
 
     return NULL;
+}
+
+template<class T>
+Node<T>* contains_cycle_wow(Node<T>* head)
+{
+    Node<T>* fast = head;
+    Node<T>* slow = head;
+
+    // Find collision point
+    while(fast && fast->next)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    if(fast != slow)
+        return NULL;
+
+    // Meeting is k before loop (see above)
+    fast = head;
+    while(fast != slow)
+    {
+        fast = fast->next;
+        slow = slow->next;
+    }
+
+    return fast;
 }
 
 void tst(std::function<void(Node<int>*)> fn)
@@ -118,5 +146,12 @@ int main()
     tst(*contains_cycle_set<int>);
 
     std::cout << "All tests passed!" << std::endl;
+
+    std::cout << std::endl << "Beginning tests..." << std::endl;
+
+    tst(*contains_cycle_wow<int>);
+
+    std::cout << "All tests passed!" << std::endl;
+    
     exit(0); 
 }
