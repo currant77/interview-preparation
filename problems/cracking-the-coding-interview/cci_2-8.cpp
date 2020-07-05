@@ -24,10 +24,84 @@ list searching for the head node. */
 
 #include <cassert>      // assert
 #include <iostream>     // std::cout, std::endl;
+#include <functional>   // std::function
+
+#include "../../data-structures/Node.h"     // SinglyLinkedListNode<T>, print_list<T>
+
+template<class T>
+using Node = SinglyLinkedListNode<T>;
+
+template<class T>
+Node<T>* contains_cycle_set(Node<T>* head)
+{
+    return NULL;
+}
+
+void tst(std::function<void(Node<int>*)> fn)
+{
+    Node<int>* head = NULL;
+    assert(!contains_cycle_set(head));
+
+    head = new Node<int>(5);
+    assert(!contains_cycle_set(head));
+    delete head;
+
+    auto nine = new Node<int>(9);
+    auto eight = new Node<int>(8, nine);
+    auto seven = new Node<int>(7, eight);
+    auto six = new Node<int>(6, seven);
+    auto five = new Node<int>(5, six);
+    auto four = new Node<int>(4, five);
+    auto three = new Node<int>(3, four);
+    auto two = new Node<int>(2, three);
+    auto one = new Node<int>(1, two);
+
+    // 9 -> 1
+    nine->next = one;
+    assert(contains_cycle_set<int>(one) == one);
+
+    // 9 -> 2
+    nine->next = two;
+    assert(contains_cycle_set<int>(one) == two);
+
+    // 9 -> 3
+    nine->next = three;
+    assert(contains_cycle_set<int>(one) == three);
+
+    // 9 -> 4
+    nine->next = four;
+    assert(contains_cycle_set<int>(one) == four);
+
+    // 9 -> 5
+    nine->next = five;
+    assert(contains_cycle_set<int>(one) == five);
+
+    // 9 -> 6
+    nine->next = six;
+    assert(contains_cycle_set<int>(one) == six);
+
+    // 9 -> 7
+    nine->next = seven;
+    assert(contains_cycle_set<int>(one) == seven);
+
+    // 9 -> 8
+    nine->next = eight;
+    assert(contains_cycle_set<int>(one) == eight);
+
+    // 9 -> 9
+    nine->next = nine;
+    assert(contains_cycle_set<int>(one) == nine);
+
+    // 9 -> NULL
+    nine->next = NULL;
+    assert(!contains_cycle_set<int>(one));
+}
 
 int main()
 {
-    std::cout << "Beginning tests..." << std::endl; 
+    std::cout << "Beginning tests..." << std::endl;
+
+    tst(*contains_cycle_set<int>);
 
     std::cout << "All tests passed!" << std::endl;
     exit(0); 
