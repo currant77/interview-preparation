@@ -15,11 +15,17 @@
 /* Problem  2.6: "Palindrome: Implement a function to check if a 
 linked list is a palindrome" */
 
-/* Approach: A palindrome is a word that is spelled the same forward
-as backwards. Using a recursive approach. Function should return a 
-reference to the last remaining node in the list (by reference) in
-addition to a bool */
+/* Approach: 
 
+(a) Reverse list and compare 
+
+(b) Using a stack and a fast/slow runner (fast runner cover two nodes 
+for each one covered by the slow runner). Push nodes onto the stack,
+and then compare the second half. Need to be careful to account for list
+of odd length (can maintain length counter)
+*/
+
+#include <stack>                            // std::stack
 #include <cassert>                          // assert
 #include <iostream>                         // std::cout, std::endl;
 #include <functional>                       // std::function
@@ -28,8 +34,79 @@ addition to a bool */
 template<class T>
 using Node = SinglyLinkedListNode<T>;
 
+/**
+ * @brief Returns linked list head that is a reversed
+ * copy of the list that starts at \p head. Also returns
+ * the length of the list by reference in \p length
+ */
 template<class T>
-void tst(std::function<bool(Node<T>*)> fn)
+Node<T>* clone_and_reverse(Node<T>* head, int& length)
+{
+    length = 0;
+    Node<T>* reversed = NULL;
+
+    while(head)
+    {
+        reversed = new Node<T>(head->data, reversed);
+        head = head->next;
+        ++length;
+    }
+
+    return reversed;
+}
+
+template<class T>
+bool is_palindrome_a(Node<T>* head)
+{
+    // Create reversed copy
+    int length = 0;
+    Node<T>* reversed = clone_and_reverse<T>(head, length);
+
+    // Compare
+    for(size_t i = 0; i < length / 2; ++i)
+    {
+        if(head->data != reversed->data)
+            return false;
+
+        head = head->next;
+        reversed = reversed->next;
+    }
+
+    return true;
+}
+
+template<class T>
+bool is_palindrome_b(Node<T>* head)
+{
+    Node<T>* slow = head;
+    Node<T>* fast = head;
+    std::stack<Node<T>*> stack;
+
+    while(fast && fast->next)
+    {
+        stack.push(slow);
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    // Skip over middle in odd-length list
+    if(fast)
+        slow = slow->next;
+
+    // Compare second half
+    while(slow)
+    {
+        if(slow->data != stack.top()->data)
+            return false;
+
+        stack.pop();
+        slow = slow->next;  
+    }
+
+    return true;
+}
+
+void tst(std::function<bool(Node<int>*)> fn)
 {
     Node<int>* empty = NULL;            
     assert(fn(empty));               // [] -> true
@@ -38,51 +115,55 @@ void tst(std::function<bool(Node<T>*)> fn)
     assert(fn(one));                 // [5] -> true
     delete one; 
 
-    Node<char>* two_true = 
-        new Node<char>('a', 
-        new Node<char>('a'));
-    assert(fn(two_true));            // ['a','a'] -> true
+    Node<int>* two_true = 
+        new Node<int>(1, 
+        new Node<int>(1));
+    assert(fn(two_true));            // [1,1] -> true
     delete two_true; 
     
-    Node<char>* two_false = 
-        new Node<char>('a', 
-        new Node<char>('b'));
-    assert(fn(two_false));           // ['a','b'] -> false
+    Node<int>* two_false = 
+        new Node<int>(1, 
+        new Node<int>(2));
+    assert(!fn(two_false));          // [1,2] -> false
     delete two_false;
 
-     Node<char>* three_true = 
-        new Node<char>('a', 
-        new Node<char>('b',
-        new Node<char>('a')));
-    assert(fn(three_true));          // ['a','b','a'] -> true
+     Node<int>* three_true = 
+        new Node<int>(1, 
+        new Node<int>(2,
+        new Node<int>(1)));
+    assert(fn(three_true));          // [1,2,1] -> true
     delete three_true; 
     
-    Node<char>* three_false = 
-        new Node<char>('a', 
-        new Node<char>('b',
-        new Node<char>('c')));
-    assert(fn(three_false));         // ['a','b','c'] -> false
+    Node<int>* three_false = 
+        new Node<int>(1, 
+        new Node<int>(2,
+        new Node<int>(3)));
+    assert(!fn(three_false));        // [1,2,3] -> false
     delete three_false; 
 
-    Node<std::string>* long_true =
-        new Node<std::string>("r",
-        new Node<std::string>("a",
-        new Node<std::string>("c",
-        new Node<std::string>("e",
-        new Node<std::string>("c",
-        new Node<std::string>("a",
-        new Node<std::string>("r")))))));
-    assert(fn(long_true));         // ['r','a','c','e','c','a','r'] -> true
+    Node<int>* long_true =
+        new Node<int>(1,
+        new Node<int>(2,
+        new Node<int>(3,
+        new Node<int>(4,
+        new Node<int>(3,
+        new Node<int>(2,
+        new Node<int>(1)))))));
+    assert(fn(long_true));          // [1,2,3,4,3,2,1] -> true
     delete long_true;
 }
 
 int main()
 {
-    std::cout << "Beginning tests..." << std::endl; 
+    // (a) Reverse and compare
+    std::cout << std::endl << "Beginning tests for (a)..." << std::endl; 
+    tst(*is_palindrome_a<int>);
+    std::cout << "All tests for (a) passed!" << std::endl;
 
-    
-
-    std::cout << "All tests passed!" << std::endl;
+    // (b) Stack
+    std::cout << std::endl << "Beginning tests for (b)..." << std::endl; 
+    tst(*is_palindrome_b<int>);
+    std::cout << "All tests for (b) passed!" << std::endl;
     
     exit(0); 
 }
