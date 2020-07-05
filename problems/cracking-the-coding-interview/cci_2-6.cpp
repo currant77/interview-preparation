@@ -23,6 +23,8 @@ linked list is a palindrome" */
 for each one covered by the slow runner). Push nodes onto the stack,
 and then compare the second half. Need to be careful to account for list
 of odd length (can maintain length counter)
+
+(c) Using recursion. Function will return bool and reference to tail
 */
 
 #include <stack>                            // std::stack
@@ -106,6 +108,57 @@ bool is_palindrome_b(Node<T>* head)
     return true;
 }
 
+template<class T>
+bool is_palindrome(Node<T>* head, Node<T>*& tail, size_t length)
+{
+    // Base case: empty list
+    if(length == 0)
+    {
+        return true;
+    }
+    
+    // Base case: middle of odd-length list
+    if(length == 1)
+    {
+        tail = head->next;
+        return true;
+    }
+
+    // Base case: middle of even-length list
+    else if(length == 2)
+    {
+        tail = head->next;
+        bool res = (head->data == tail->data);
+        tail = tail->next;
+        return res;
+    }
+
+    else
+    {
+        bool res = is_palindrome(head->next, tail, length - 2);
+        res = res && (head->data == tail->data);
+        tail = tail->next;
+
+        return res ;
+    }  
+}
+
+template<class T>
+bool is_palindrome_c(Node<T>* head)
+{
+    // Find list length
+    size_t length = 0;
+    Node<T>* ptr = head;
+    while(ptr)
+    {
+        ptr = ptr->next;
+        ++length;
+    }
+
+    Node<T>* tail = NULL;
+    return is_palindrome(head, tail, length);
+}
+
 void tst(std::function<bool(Node<int>*)> fn)
 {
     Node<int>* empty = NULL;            
@@ -164,6 +217,11 @@ int main()
     std::cout << std::endl << "Beginning tests for (b)..." << std::endl; 
     tst(*is_palindrome_b<int>);
     std::cout << "All tests for (b) passed!" << std::endl;
+
+    // (b) Recursion
+    std::cout << std::endl << "Beginning tests for (c)..." << std::endl; 
+    tst(*is_palindrome_c<int>);
+    std::cout << "All tests for (c) passed!" << std::endl;
     
     exit(0); 
 }
