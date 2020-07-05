@@ -22,9 +22,10 @@ loop." */
 (b) Recursive (quadratic): use a recursive function; each will iterate through the 
 list searching for the head node. */
 
-#include <cassert>      // assert
-#include <iostream>     // std::cout, std::endl;
-#include <functional>   // std::function
+#include <cassert>          // assert
+#include <iostream>         // std::cout, std::endl;
+#include <functional>       // std::function
+#include <unordered_set>    // std::unordered_set
 
 #include "../../data-structures/Node.h"     // SinglyLinkedListNode<T>, print_list<T>
 
@@ -34,6 +35,19 @@ using Node = SinglyLinkedListNode<T>;
 template<class T>
 Node<T>* contains_cycle_set(Node<T>* head)
 {
+    std::unordered_set<Node<T>*> set;
+
+    while(head)
+    {
+        if(set.count(head))
+            return head;
+
+        else
+            set.insert(head);
+
+        head = head->next;
+    }
+
     return NULL;
 }
 
@@ -99,7 +113,7 @@ void tst(std::function<void(Node<int>*)> fn)
 
 int main()
 {
-    std::cout << "Beginning tests..." << std::endl;
+    std::cout << std::endl << "Beginning tests..." << std::endl;
 
     tst(*contains_cycle_set<int>);
 
