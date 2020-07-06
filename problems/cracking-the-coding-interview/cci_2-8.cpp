@@ -20,7 +20,22 @@ loop." */
 
 (a) Set (linear): use a set to store node addresses; return true if duplicates found
 
-(b) Some crazy shit.
+(b) Fast and slow runner: This approach requires quite an explanation, and is derived
+from Cracking the Coding Interview (I wish I could say I derived it myself). Suppose we have
+a fast runner (moves 2 nodes) and a slow runner (moves one node); suppose that the 
+first node in the loop has index k and that the cycle has length c. When the slow 
+runner enters the loop, the fast runner will be k nodes ahead: it will be k % c nodes
+into the loop, meaning that it will be c - (k % c) loops "behind" the slow runner. At 
+each further step around the loop, the fast runner will gain one step on the slow runner. 
+They will thus collide c - (k % c) step into the loop, which is c - (c - (k % c)) = 
+(k % c) nodes fom the start of the loop -- or simply k nodes from the start of the loop
+(which may result in us circling the loop more than once). Then, if we keep one pointer at 
+this collision point and start another from the head of the list, they will collide exactly
+at the start of the loop! 
+
+This is an incredibly elegant solution -- but it is quite a bit slower than a relatively 
+simple set solution above and probably would rarely be implemented in practice as a result --
+although it does have constant storage requirement, unlike the linear space needed for the set.
 */
 
 #include <cassert>          // assert
@@ -53,7 +68,7 @@ Node<T>* contains_cycle_set(Node<T>* head)
 }
 
 template<class T>
-Node<T>* contains_cycle_wow(Node<T>* head)
+Node<T>* contains_cycle_runners(Node<T>* head)
 {
     Node<T>* fast = head;
     Node<T>* slow = head;
@@ -68,7 +83,7 @@ Node<T>* contains_cycle_wow(Node<T>* head)
     if(fast != slow)
         return NULL;
 
-    // Meeting is k before loop (see above)
+    // Find start of cycle
     fast = head;
     while(fast != slow)
     {
@@ -141,17 +156,17 @@ void tst(std::function<void(Node<int>*)> fn)
 
 int main()
 {
-    std::cout << std::endl << "Beginning tests..." << std::endl;
+    std::cout << std::endl << "Beginning tests for (a)..." << std::endl;
 
     tst(*contains_cycle_set<int>);
 
-    std::cout << "All tests passed!" << std::endl;
+    std::cout << "All tests for (a) passed!" << std::endl;
 
-    std::cout << std::endl << "Beginning tests..." << std::endl;
+    std::cout << std::endl << "Beginning tests for (b)..." << std::endl;
 
-    tst(*contains_cycle_wow<int>);
+    tst(*contains_cycle_runners<int>);
 
-    std::cout << "All tests passed!" << std::endl;
+    std::cout << "All tests for (b) passed!" << std::endl;
     
     exit(0); 
 }
