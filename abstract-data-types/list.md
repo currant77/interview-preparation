@@ -238,10 +238,18 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
     * Searching
 
 * _Cracking the Coding Interview_ Questions:
+    * Chapter 2: Linked Lists:
+        * 2.1 Remove Duplicates (#REF)
+        * 2.2 Return Kth to Last (#REF)
+        * 2.3 Delete Middle Node (#REF)
+        * 2.4 Partition (#REF)
+        * 2.5 Sum Lists (#REF)
+        * 2.6 Palindrome (#REF)
+        * 2.7 Intersection (#REF)
+        * 2.8 Loop Detection (#REF)
     * Chapter 10: Sorting and Searching
         * 10.2 Group Anagrams (#REF)
         * 10.4 Sorted Search, No Size (#REF)
-
 
 ## References
 

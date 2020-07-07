@@ -13,6 +13,7 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <iostream> // std::cout, std::endl
 #include <vector>   // std::vector
 
 /**

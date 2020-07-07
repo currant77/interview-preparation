@@ -15,7 +15,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "../lists/LinkedList.h"
+#include "LinkedList.h"
 
 /**
  * @brief Queue of values of type T
