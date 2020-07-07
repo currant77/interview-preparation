@@ -9,7 +9,6 @@
  * 6th ed. Palo Alto, CA: CareerCup, 2016.
  * 
  * @copyright Copyright (c) 2020
- * 
  */
 
 /* Problem <problem-num>: <text> */
