@@ -25,8 +25,9 @@
 template<class T>
 struct SinglyLinkedListNode
 {
-    explicit SinglyLinkedListNode(const T& data, 
-    SinglyLinkedListNode<T>* next = NULL) : data(data), next(next)
+    explicit SinglyLinkedListNode(
+        const T& data, 
+        SinglyLinkedListNode<T>* next = NULL) : data(data), next(next)
     {
         
     }
@@ -42,18 +43,19 @@ struct SinglyLinkedListNode
  * @tparam T 
  */
 template<class T>
-struct DoublyLinkedListNode : public SinglyLinkedListNode<T>
+struct DoublyLinkedListNode
 {
     explicit DoublyLinkedListNode(
         const T& data, 
         DoublyLinkedListNode<T>* prev = NULL,  
-        DoublyLinkedListNode<T>* next = NULL) : 
-            prev(prev), SinglyLinkedListNode<T>(data,next)
+        DoublyLinkedListNode<T>* next = NULL) : data(data), prev(prev), next(next)
     {
-        
+    
     }
 
+    T data;
     DoublyLinkedListNode<T>* prev;
+    DoublyLinkedListNode<T>* next;
 };
 
 /**

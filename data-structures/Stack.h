@@ -14,7 +14,7 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "../lists/ArrayList.h"
+#include "ArrayList.h"
 
 /**
  * @brief Stack of values of type T
