@@ -30,30 +30,18 @@ void sort_stack(std::stack<T>& stack)
 {
     std::stack<T> helper;
 
-    // Transfer value to helper so than max is on top
     while(!stack.empty())
     {
         T value = stack.top();
         stack.pop();
 
-        /* Transfer items from helper back to stack
-        until we find an item that is not larger than `value` */
         while(!helper.empty() && helper.top() > value)
         {
             stack.push(helper.top());
-            helper.pop();   
-        }
+            helper.pop(); 
+        }   
 
         helper.push(value);
-
-        // Transfer values from stack to helper 
-        while(
-            helper.empty() || 
-            (!stack.empty() && stack.top() >= helper.top()))
-        {
-            helper.push(stack.top());
-            stack.pop();   
-        }
     }
 
     // Transfer back to stack
