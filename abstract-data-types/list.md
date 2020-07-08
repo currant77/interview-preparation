@@ -237,8 +237,8 @@ Quick sort: smaller space requirement on arrays; can be more efficient if data c
         * Radix sort (#REF)
     * Searching
 
-* _Cracking the Coding Interview_ Questions:
-    * Chapter 2: Linked Lists:
+* _Cracking the Coding Interview_:
+    * Chapter 2 - Linked Lists:
         * 2.1 Remove Duplicates (#REF)
         * 2.2 Return Kth to Last (#REF)
         * 2.3 Delete Middle Node (#REF)
@@ -257,7 +257,7 @@ Koffman, Elliot B., and Paul A. T. Wolfgang. _Objects, Abstraction, Data Structu
 
 McDowell, Gayle Lakkmann. _Cracking the Coding Interview_. 6th ed. Palo Alto, CA: CareerCup, 2016.
 
-“Counting Sort Algorithm.” Learn DS &amp; Algorithms. Programiz. Accessed June 30, 2020. hhttps://www.programiz.com/dsa/counting-sort.
+“Counting Sort Algorithm.” Learn DS &amp; Algorithms. Programiz. Accessed June 30, 2020. https://www.programiz.com/dsa/counting-sort.
 
 “Radix Sort Algorithm.” Learn DS &amp; Algorithms. Programiz. Accessed June 30, 2020. https://www.programiz.com/dsa/radix-sort.
 
