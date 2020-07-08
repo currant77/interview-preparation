@@ -53,6 +53,9 @@ There are no algorithms for stacks, queues, and deques that are as fundamental a
 
 * _Cracking the Coding Interview_ Questions:
     * Chapter 3: Stacks and Queues:
+        * 3.2 Stack Min (#REF)
+        * 3.4 Queue via Stack (#REF)
+        * 3.5 Sort Stack (#REF)
 
 # References
 
