@@ -16,7 +16,7 @@
 
 int main()
 {
-    std::cout << "Beginning tests..." << std::endl; 
+    std::cout << std::endl << "Beginning tests..." << std::endl; 
 
     PriorityQueue<int>* q = new HeapPriorityQueue<int>();
     
@@ -39,7 +39,6 @@ int main()
     q->push(12);
     q->push(17);
     q->push(7);
-    q->push(3);
     q->push(5);
     q->push(2);
     q->push(2);
