@@ -12,13 +12,13 @@
 #include <cassert>              // assert
 #include <iostream>             // std::endl, std::cout
 
-#include "explicit-heap.cpp"
+#include "heap-priority-queue.h"    // HeapPriorityQueue
 
 int main()
 {
     std::cout << "Beginning tests..." << std::endl; 
 
-    PriorityQueue<int>* q = new ExplicitHeap<int>();
+    PriorityQueue<int>* q = new HeapPriorityQueue<int>();
     
     // Empty 
     assert(q->empty());

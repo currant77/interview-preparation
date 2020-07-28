@@ -16,14 +16,12 @@
 #include <functional>   // std::less
 
 /**
- * @brief Generic interface for a max priority queue. 
- * Can also be used as a min priority queue by overriding
- * the \p Less template parameter.
+ * @brief Generic interface for a priority queue
  * 
- * @tparam T
- * @tparam GreaterEqual - Comparison operator object
+ * @tparam T - element type
+ * @tparam Less - Priority comparison operator object
  */
-template<class T, class GreaterEqual = std::greater_equal<T>>
+template<class T, class Less = std::less<T>>
 class PriorityQueue
 {
     public:
