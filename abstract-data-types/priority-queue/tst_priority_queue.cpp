@@ -83,6 +83,25 @@ int main()
     {
         assert(true);
     }
+
+    // Testing heapify
+    delete q;
+    q = new HeapPriorityQueue<int>({5,4,2,2,1});
+
+    assert(q->top() == 5); 
+
+    q->pop();
+    q->pop();                   // [2,2,1]
+    assert(q->top() == 2);
+
+    q->pop();                   // [2,1]
+    assert(q->top() == 2);
+
+    q->clear();                 // []
+    assert(q->empty());
+    assert(!q->size());
+    
+    delete q;
     
     std::cout << "All tests passed!" << std::endl;
     exit(0);   

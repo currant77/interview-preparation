@@ -25,7 +25,7 @@ A direct consequence of the heap property is that the root node is always the no
     <em>Example of a binary max heap</em>
 </p>
 
-Priority queues can be implemented using a heap (usually a binary heap), where the priority of each element is represented by its associated key. If the larger key value are defined to correspond to higher priority, then the highest priority element will always be at the root of the max heap. Heaps provide a maximally efficient implementation of a priority queues, allowing elements to be inserted and removed in logarithmic time.
+Priority queues can be implemented using a heap (usually a binary heap), where the priority of each element is represented by its associated key. If the larger key value are defined to correspond to higher priority, then the highest priority element will always be at the root of the max heap. 
 
 Nodes are inserted or removed from heaps by having them "swim up" from the bottom or "sink down" from the top; this "bubbling" approach is reminisent of bubble sort (#REF) (but much more efficient). To add an node, insert it in the last available position in the complete tree structure (at the bottom right); then, if it violates the heap property, recursively swap it with its parent until this is satisfied. To remove a node, replace it with the last (bottom right) node, and then recursively swap it with its larger child (in the case of a max heap) until the heap property is satisfied. See #REF and #REF.
 
@@ -41,11 +41,18 @@ Nodes are inserted or removed from heaps by having them "swim up" from the botto
 
 Because a heap is a complete binary tree (#REF), it can be implemented efficiently using an array or vector. The root element is stored at index 0, its children at indices 1 and 2, their children at incides 3, 4, 5, and 6, and so on. In the general case, for a node at position _p_, its children at are positions _2p + 1_ and _2p + 2_; similarly, the parent of a node is found at position _(p - 1) / 2_. See #REF. 
 
+Heaps provide a maximally efficient implementation of a priority queues, allowing elements to be inserted and removed in logarithmic time. They are also used to implement heap sort (#REF), an efficient _O(nlog(n))_ sorting algorithm.
+
+| Operation                        | Runtime        |
+|:---------------------------------|:--------------:|
+| Access highest-priority element  | _O(1)_         |
+| Remove highest-priority element  | _O(log(n))_    |
+| Insert element                   | _O(log(n))_    |
+
 ## Examples and Problems
 
 * Data Structures:
-    * Heap implemented using a vector: VectorHeap (#REF)
-    * Heap implemented using a binary tree: BinaryTreeHeap (#REF)
+    * Binary heap implementation of priority queue (#REF)
 
 ## References
 

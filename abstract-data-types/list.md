@@ -124,7 +124,13 @@ The average and best-case performance of quick sort is _O(nlog(n))_ – the same
 
 #### Heap Sort
 
-// TODO
+**Heap sort** is a comparison based sorting algorithm based on the **binary heap** data structure (#REF). 
+
+First, heap sort builds a heap out of the list elements – an in-place operation usually called `heapify()`. This can be implemented by starting with an empty heap and successively inserting each element (called Williams' method after the investor of the binary heap), a process that has _O(nlog(n))_ runtime. However, there is a faster approach that takes on linear time. Starting from the bottom, it swaps smaller elements (in the case of a max heap) towards the bottom of the heap. The time complexity of each step varies (from _O(1)_ for the leaf nodes to _O(log(n))_ for the root node), but the net result is a linear runtime (see [here](https://www.growingwiththeweb.com/data-structures/binary-heap/build-heap-proof/) for a proof). 
+
+Once the list has been heapified, we build the sorted list element by element. At each step, we add the root element (the largest remaining element in the heap) to the sorted list, replace it with the last element in the heap, and the recursively swap the new root node with its largest child until the heap property is restored (see #REF and #REF). Because removing each item from the heap is a _O(log(n))_ operation, the total runtime of the step is _O(nlog(n))_.
+
+Overall, the average and worst-case runtime of heap sort is _O(nlog(n))_. If the list elements are all identical, the best-case runtime is _O(n)_; otherwise it is still _O(nlog(n))_. It is an in-place sorting algorithm that requires only constant space. However, it is not a stable sorting algorithm.
 
 #### Counting and Radix Sort
 
@@ -170,30 +176,45 @@ See #REF.
 
 There are numerous resources that provide comparisons and illustrations of sorting algorithms. [Visualgo](https://visualgo.net/bn/sorting) has a simple interactive animation of all the sorting algorithms discussed above; Robert Kanasz's article on [Code Project](https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms) provides a more detailedd discussion of a far wider range of sorting algorithms, and it the source for several of the the diagrams contained in the sections above.
 
-Selection, bubble, and insertion sort are all simple, stable sorting algorithms with _O(n<sup>2</sup>)_ runtime. However, both bubble sort and insertion require only constant runtime in the best case (when the list is already sorted). In practice, insertion sort is the most efficient of these three algorithms because it also performs better on a list that is already substantially sorted. 
+Selection, bubble, and insertion sort are all simple, stable sorting algorithms with _O(n<sup>2</sup>)_ runtime. However, both bubble sort and insertion require only constant runtime in the best case (when the list is already sorted). In practice, insertion sort is the most efficient of these three algorithms because it also performs better on a list that is already substantially sorted. Despite their slower asymptotic runtime, all three of these algorithms sort in-place, require only constant memory, and can be faster in practice that more efficient sorting because of this lower overhead. As a result, many sorting implementations based on merge sort or quick sort use one of these algorimths (particularly insertion sort) internally to sort smaller lists.
 
-Despite their slower asymptotic runtime, all three of these algorithms sort in-place, require only constant memory, and can be faster in practice that more efficient sorting because of this lower overhead. As a result, many sorting implementations based on merge sort or quick sort use one of these algorimths (particularly insertion sort) internally to sort smaller lists.
+Heap, merge, and quick sort are the most widely used sorting algorithms. All three have _O(nlog(n))_ average-case runtime, but they differ on a number of other properties: 
 
-// TODO merge sort vs quick sort vs heap sort
+* _Worst-case performance_: Unlike heap and merge sorts, which have _O(nlog(n))_ worst-case performance, quick sort takes _O(n<sup>2</sup>)_ in the worst case. Though this is rare in practice if the pivot is chosen randomly, quick sort should be avoided in applications that might be sensitive to this worst-case behaviour. For example, the Linux kernel uses heap sort.
 
-Merge sort: typically requires fewer comparison; more efficient if data can only be accessed sequentially (linked lists); better worst-case performance; constant store on linked lists.
+* _Cache locality_: When sorting an array list, heap sort exhibits the worst cache locality because it makes big jumps across the array between parent and child indices. Quick sort and merge sort both exhibit good cache locality, but quick sort has a slight advantange because it is an in-place sorting algorithm: merge sort needs to also load the auxiliary array into the cache.
 
-Quick sort: smaller space requirement on arrays; can be more efficient if data can be randomly accessed; poor on linked lists (random access)
+* _Stability_: Merge sort is the only one of these three _O(nlog(n))_ sorting algorithms whose basic implementation is stable
 
-// TODO array vs linked list
+* _Memory_: Both heap sort and quick sort are in-place sorting algorithm that require only constant auxiliary memory (_O(1)_). When sorting an array list, merge sort requires a constant size auxiliary array (_O(n)_), but it can use only constant auxiliary memory (_O(1)_) when sorting a linked list. However, because both merge and quick sort are recursive, divide-and-conquer algorithm, they both also require logarithmic (_O(log(n))_) stack space.
 
-|                               | Best-case          | Average-case       | Worst-case                        | Memory                      | Stable    |
-|:------------------------------|:------------------:|:------------------:|:---------------------------------:|:---------------------------:|:---------:|
-| Selection sort                | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
-| Bubble sort                   | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
-| Insertion sort                | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                      | Yes       |
-| Merge sort                    | _O(nlog(n))_       | _O(nlog(n))_       | _O(nlog(n))_                      | _O(n)_ <sup>[1]</sup>       | Yes       |
-| Quick sort                    | _O(nlog(n))_       | _O(nlog(n))_       | _O(n<sup>2</sup>)_ <sup>[2]</sup> | _O(log(n))_ <sup>[3]</sup>  | No        |
-| Heap sort                     |                    |                    |                                   |                             |           |  
-| Counting sort <sup>[4]</sup>  | _O(n + k)_         | _O(n + k)_         |  _O(n + k)_                       | _O(n + k)_                  | Yes       |
-| Radix sort <sup>[5]</sup>     | _O(d(n+k))_        | _O(d(n+k))_        | _O(d(n+k))_                       | _O(d(n+k))_                 | Yes       |
+* _Sorting array lists_: Because of its better cache locality (and because arrays allow constant-time random access), quick sort typically has the best average performance when sorting array lists, except when handling very large data sets.
 
-<sup>[1]</sup> Typical implementation on array list. There are more complex in-place variants that require only constant space and linked list implementations that require only constant auxiliary storage and _O(nlog(n))_ stack space.
+* _Sorting linked lists_: Linked lists do not store elements contiguously in memory, allow rapid insertion and removal from anywhere in the list (with a reference), and do not all constant-time random access. This makes heap sort immediately impractical: jumping between parent and child nodes becomes a constant-time operation. Meanwhile, quick sort's cache locality advantage disappears, and the lack of constant-time random access makes it difficult to avoid worst-case performance. As a result, merge sort is usually perferable for sorting linked lists, where it can be implemented to use only constant auxiliary memory.
+
+* _External sorting_: When operating on very large datasets that are store on (slow) external drives, a variant of merge sort is typically used. In **k-way merge sort**, _k_ chunks of the dataset are loaded into RAM, sorted using any sorting algorithm, and then stored to disk. They can then be merged piece-by-piece and written back into memory. See [external sorting](https://en.wikipedia.org/wiki/External_sorting).
+
+
+
+
+- arrays: quick sort is typically faster; better memory locality (heap sort), less auxiliary memory, fewer average swaps
+- linked lists: quick sort, poor pivot choices without random access
+- memory: heap sort is constant and in-place; merge sort is linear for arrays and constant for linked lists, but requires logarithmic stack space in both cases; quick sort requires logarithmic stack space (use of heap sort for linux)
+- Parallel: merge sort can be easily parallelized
+- External: large data sets:
+
+|                               | Best-case          | Average-case       | Worst-case                        | Memory                            | Stable    |
+|:------------------------------|:------------------:|:------------------:|:---------------------------------:|:---------------------------------:|:---------:|
+| Selection sort                | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                            | Yes       |
+| Bubble sort                   | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                            | Yes       |
+| Insertion sort                | _O(n)_             | _O(n<sup>2</sup>)_ | _O(n<sup>2</sup>)_                | _O(1)_                            | Yes       |
+| Merge sort                    | _O(nlog(n))_       | _O(nlog(n))_       | _O(nlog(n))_                      | _O(n)_ / _Olog(n)_<sup>[1]</sup>  | Yes       |
+| Quick sort                    | _O(nlog(n))_       | _O(nlog(n))_       | _O(n<sup>2</sup>)_ <sup>[2]</sup> | _O(log(n))_ <sup>[3]</sup>        | No        |
+| Heap sort                     | _O(n)_             | _O(nlog(n))_       | _O(nlog(n))_                      | _O(1)                             | No        |  
+| Counting sort <sup>[4]</sup>  | _O(n + k)_         | _O(n + k)_         |  _O(n + k)_                       | _O(n + k)_                        | Yes       |
+| Radix sort <sup>[5]</sup>     | _O(d(n+k))_        | _O(d(n+k))_        | _O(d(n+k))_                       | _O(d(n+k))_                       | Yes       |
+
+<sup>[1]</sup> Typical implementation on array list. There are more complex in-place variants that require only constant space and linked list implementations that require only constant auxiliary storage and _O(log(n))_ stack space.
 
 <sup>[2]</sup> Worst-case performance of merge sort occurs when the pivot is always chosen to be the largest or smallest remaining value, such that the size of the list is only reduced by one on each pass.
 
@@ -263,3 +284,10 @@ McDowell, Gayle Lakkmann. _Cracking the Coding Interview_. 6th ed. Palo Alto, CA
 
 Robert, Kanasz. “Visualization and Comparison of Sorting Algorithms in C#.” CodeProject, December 14, 2010. https://www.codeproject.com/Articles/132757/Visualization-and-Comparison-of-sorting-algorithms.
 
+
+
+https://www.cs.auckland.ac.nz/software/AlgAnim/qsort3.html
+
+https://www.geeksforgeeks.org/quicksort-better-mergesort/#:~:text=Auxiliary%20Space%20%3A%20Mergesort%20uses%20extra,and%20exhibits%20good%20cache%20locality.&text=Locality%20of%20reference%20%3A%20Quicksort%20in,like%20in%20virtual%20memory%20environment. 
+
+https://www.cprogramming.com/tutorial/computersciencetheory/sortcomp.html

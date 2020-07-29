@@ -25,7 +25,8 @@ template <class T, class Less = std::less<T>>
 class HeapPriorityQueue : public PriorityQueue<T,Less>
 {
 public:
-    HeapPriorityQueue();
+    HeapPriorityQueue(std::vector<T> data = std::vector<T>());
+
     ~HeapPriorityQueue();
 
     bool empty() const override;
@@ -44,8 +45,15 @@ private:
 };
 
 template <class T, class Less>
-HeapPriorityQueue<T, Less>::HeapPriorityQueue()
+HeapPriorityQueue<T, Less>::HeapPriorityQueue(std::vector<T> data)
 {
+    heap = data;
+    
+    // Heapify
+    for(int i = heap.size() - 1; i >= 0; i--)
+    {
+        swapDown(i);
+    } 
 }
 
 template <class T, class Less>
