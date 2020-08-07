@@ -49,7 +49,7 @@ Heaps provide a maximally efficient implementation of a priority queues, allowin
 | Remove highest-priority element  | _O(log(n))_    |
 | Insert element                   | _O(log(n))_    |
 
-## Examples and Problems
+## Examples & Problems
 
 * Data Structures:
     * Binary heap implementation of priority queue (#REF)
