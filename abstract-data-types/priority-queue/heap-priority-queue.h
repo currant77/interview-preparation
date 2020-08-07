@@ -11,22 +11,18 @@
 #ifndef HEAP_PRIORITY_QUEUE
 #define HEAP_PRIORITY_QUEUE
 
-#include <vector>               // std::vector
-#include <exception>            // std::logic_error
-#include "priority-queue.h"     // PriorityQueue 
+#include <vector>           // std::vector
+#include <exception>        // std::logic_error
+#include "priority-queue.h" // PriorityQueue
 
 /**
- * @brief Implementation of a generic priority queue using a heap
- * 
- * @tparam T - element type
- * @tparam Less - Priority comparison operator object
+ * @brief Implementation of a priority queue using a heap
  */
 template <class T, class Less = std::less<T>>
-class HeapPriorityQueue : public PriorityQueue<T,Less>
+class HeapPriorityQueue : public PriorityQueue<T, Less>
 {
 public:
     HeapPriorityQueue(std::vector<T> data = std::vector<T>());
-
     ~HeapPriorityQueue();
 
     bool empty() const override;
@@ -48,12 +44,12 @@ template <class T, class Less>
 HeapPriorityQueue<T, Less>::HeapPriorityQueue(std::vector<T> data)
 {
     heap = data;
-    
+
     // Heapify
-    for(int i = heap.size() - 1; i >= 0; i--)
+    for (int i = heap.size() - 1; i >= 0; i--)
     {
         swapDown(i);
-    } 
+    }
 }
 
 template <class T, class Less>
@@ -77,7 +73,7 @@ size_t HeapPriorityQueue<T, Less>::size() const
 template <class T, class Less>
 const T &HeapPriorityQueue<T, Less>::top() const
 {
-    if(heap.empty())
+    if (heap.empty())
     {
         throw std::logic_error("Cannot call top() on empty priority queue");
     }
@@ -95,7 +91,7 @@ void HeapPriorityQueue<T, Less>::push(const T &value)
 template <class T, class Less>
 void HeapPriorityQueue<T, Less>::pop()
 {
-    if(heap.empty())
+    if (heap.empty())
     {
         throw std::logic_error("Cannot call pop() on empty priority queue");
     }
@@ -108,19 +104,19 @@ void HeapPriorityQueue<T, Less>::pop()
 
 template <class T, class Less>
 void HeapPriorityQueue<T, Less>::clear()
-{ 
+{
     heap.clear();
 }
 
 template <class T, class Less>
 void HeapPriorityQueue<T, Less>::swapUp(size_t index)
 {
-    if(!index)
+    if (!index)
         return;
 
     size_t parent = (index - 1) / 2;
 
-    if(less_comparison(heap[parent], heap[index]))
+    if (less_comparison(heap[parent], heap[index]))
     {
         T temp = heap[parent];
         heap[parent] = heap[index];
@@ -137,26 +133,26 @@ void HeapPriorityQueue<T, Less>::swapDown(size_t index)
     size_t left_child = (2 * index) + 1;
     size_t right_child = (2 * index) + 2;
 
-    if(left_child < heap.size() && 
-    less_comparison(heap[index_max], heap[left_child]))
+    if (left_child < heap.size() &&
+        less_comparison(heap[index_max], heap[left_child]))
     {
-        index_max = left_child;  
+        index_max = left_child;
     }
 
-    if(right_child < heap.size() &&
-    less_comparison(heap[index_max], heap[right_child]))
+    if (right_child < heap.size() &&
+        less_comparison(heap[index_max], heap[right_child]))
     {
         index_max = right_child;
     }
 
-    if(index_max != index)
+    if (index_max != index)
     {
         T temp = heap[index];
         heap[index] = heap[index_max];
         heap[index_max] = temp;
 
         swapDown(index_max);
-    }     
+    }
 }
 
 #endif

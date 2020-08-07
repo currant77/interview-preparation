@@ -53,8 +53,12 @@ Heaps provide a maximally efficient implementation of a priority queues, allowin
 
 * Data Structures:
     * Binary heap implementation of priority queue (#REF)
+* Algorithms:
+    * Heap sort (#REF)
 
 ## References
 
-<TODO>
+Sedgewick, Robert, and Kevin Daniel Wayne. _Algorithms_. 4th ed. Upper Saddle River (NJ), NJ: Addison-Wesley, 2015.
+
+Magnum, Lucas. "#SideNotes — Priority Queue — Abstract Data Type and Data Structure." Medium, October 27, 2018. https://medium.com/@lucasmagnum/sidenotes-priority-queue-abstract-data-type-and-data-structure-52b5fcd7b904. 
 

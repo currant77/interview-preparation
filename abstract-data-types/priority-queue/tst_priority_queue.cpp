@@ -4,9 +4,9 @@
  * @brief Tests for Priority Queue
  * @version 0.1
  * @date 2020-07-19
- * 
+ *
  * @copyright Copyright (c) 2020
- * 
+ *
  */
 
 #include <cassert>              // assert
@@ -16,10 +16,10 @@
 
 int main()
 {
-    std::cout << std::endl << "Beginning tests..." << std::endl; 
+    std::cout << std::endl << "Beginning tests..." << std::endl;
 
     PriorityQueue<int>* q = new HeapPriorityQueue<int>();
-    
+
     // Empty 
     assert(q->empty());
     assert(!q->size());
@@ -45,13 +45,13 @@ int main()
     q->push(4);               // [17,12,7,5,4,2,2,1]
     assert(q->top() == 17);
     assert(q->size() == 8);
-    
+
     q->pop();                   // [12,7,5,4,2,2,1]
-    assert(q->top() == 12);    
+    assert(q->top() == 12);
 
     q->pop();
     q->pop();                   // [5,4,2,2,1]
-    assert(q->top() == 5); 
+    assert(q->top() == 5);
 
     q->pop();
     q->pop();                   // [2,2,1]
@@ -69,26 +69,26 @@ int main()
         q->pop();
         assert(false);
     }
-    catch(const std::exception& e)
+    catch (const std::exception& e)
     {
         assert(true);
     }
 
-   try
+    try
     {
         q->top();
         assert(false);
     }
-    catch(const std::exception& e)
+    catch (const std::exception& e)
     {
         assert(true);
     }
 
     // Testing heapify
     delete q;
-    q = new HeapPriorityQueue<int>({5,4,2,2,1});
+    q = new HeapPriorityQueue<int>({ 5,4,2,2,1 });
 
-    assert(q->top() == 5); 
+    assert(q->top() == 5);
 
     q->pop();
     q->pop();                   // [2,2,1]
@@ -100,9 +100,9 @@ int main()
     q->clear();                 // []
     assert(q->empty());
     assert(!q->size());
-    
+
     delete q;
-    
+
     std::cout << "All tests passed!" << std::endl;
-    exit(0);   
+    exit(0);
 }
