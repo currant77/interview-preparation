@@ -15,11 +15,11 @@
 #include <exception>    // std::invalid_argument
 #include <functional>   // std::equal_to
 
-template<class Key, class Value, class Equal_To = std::equal_to<Key>>
+template<class K, class V, class Equal_To = std::equal_to<K>>
 class IMap
 {
     public:
-        virtual ~IMap<Key, Value, Equal_To>();
+        virtual ~IMap<K, V, Equal_To>();
 
         /**
          * @brief Returns the number of key-value pairs in the map
@@ -27,6 +27,15 @@ class IMap
          * @return size_t Number of key-value pairs in the map
          */
         virtual size_t size() const noexcept = 0;
+
+        /**
+         * @brief Returns true if the map contains \p key
+         *
+         * @param key 
+         * @return true The map contains \p key
+         * @return false The smapet does not contain \p key
+         */
+        virtual bool contains(const K& key) const noexcept = 0;
 
         /**
          * @brief Returns a reference to the value corresponding to \p key, 
@@ -37,7 +46,7 @@ class IMap
          * @return Value& Reference to the value corresponding to \p key in 
          * the map
          */
-        virtual Value& get(const Key& key) = 0;
+        virtual V& get(const K& key) = 0;
 
          /**
          * @brief Returns a const reference to the value corresponding to 
@@ -48,18 +57,18 @@ class IMap
          * @return Value& Const reference to the value corresponding to \p key 
          * in the map
          */
-        virtual const Value& get(const Key& key) const = 0;
+        virtual const V& get(const K& key) const = 0;
 
         /**
          * 
          * @brief If \p key is not a member of the map, insert \p key and 
-         * \p value as a new key-value pair; if \p key is a member, sets
+         * \p value as a new key-value pair; if \p key is a member, maps
          * the corresponding value to equal \p value
          * 
          * @param key 
          * @param value 
          */
-        virtual void insert(const Key& key, const Value& value) noexcept = 0;
+        virtual void insert(const K& key, const V& value) noexcept = 0;
 
         /**
          * @brief If \p key is a member of the map, removes the corresponding
@@ -67,7 +76,7 @@ class IMap
          * 
          * @param key 
          */
-        virtual void remove(const Key& key) noexcept = 0;
+        virtual void remove(const K& key) noexcept = 0;
 
         /**
          * @brief Removes all the key-value pairs from the map
@@ -76,8 +85,8 @@ class IMap
         virtual void clear() noexcept = 0;
 };
 
-template<class Key, class Value, class Equal_To>
-IMap<Key, Value, Equal_To>::~IMap()
+template<class K, class V, class Equal_To>
+IMap<K, V, Equal_To>::~IMap()
 {
 
 }

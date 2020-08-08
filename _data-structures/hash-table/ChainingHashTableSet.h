@@ -1,5 +1,5 @@
 /**
- * @file HashTableChaining.h
+ * @file ChainingHashTableSet.h
  * @author Taylor Curran
  * @brief Implementation of ISet interface using hash table data structure 
  * with chaining
@@ -27,7 +27,7 @@
  * @tparam Hash Hash function object type (see std::hash)
  */
 template <class T, class Equal_To = std::equal_to<T>, class Hash = std::hash<T>>
-class HashTableChaining : public ISet<T, Equal_To>
+class ChainingHashTableSet : public ISet<T, Equal_To>
 {
 private:
 
@@ -45,8 +45,8 @@ private:
     void resize();
 
 public:
-    explicit HashTableChaining<T, Equal_To, Hash>(size_t size = DEFAULT_SIZE);
-    ~HashTableChaining<T, Equal_To, Hash>();
+    explicit ChainingHashTableSet<T, Equal_To, Hash>(size_t size = DEFAULT_SIZE);
+    ~ChainingHashTableSet<T, Equal_To, Hash>();
 
     size_t size() const noexcept override final;
     bool contains(const T &element) const noexcept override final;
@@ -56,7 +56,7 @@ public:
 };
 
 template <class T, class Equal_To, class Hash>
-HashTableChaining<T, Equal_To, Hash>::HashTableChaining(size_t size)
+ChainingHashTableSet<T, Equal_To, Hash>::ChainingHashTableSet(size_t size)
 {
     num_entries = 0;
     table_size = size;
@@ -64,19 +64,19 @@ HashTableChaining<T, Equal_To, Hash>::HashTableChaining(size_t size)
 }
 
 template <class T, class Equal_To, class Hash>
-HashTableChaining<T, Equal_To, Hash>::~HashTableChaining()
+ChainingHashTableSet<T, Equal_To, Hash>::~ChainingHashTableSet()
 {
     clear();
 }
 
 template <class T, class Equal_To, class Hash>
-size_t HashTableChaining<T, Equal_To, Hash>::size() const noexcept
+size_t ChainingHashTableSet<T, Equal_To, Hash>::size() const noexcept
 {
     return num_entries;
 }
 
 template <class T, class Equal_To, class Hash>
-bool HashTableChaining<T, Equal_To, Hash>::contains(const T &element) const noexcept
+bool ChainingHashTableSet<T, Equal_To, Hash>::contains(const T &element) const noexcept
 {
     size_t index = hash(element) % table_size;
     std::vector<T> &vector = table[index];
@@ -91,7 +91,7 @@ bool HashTableChaining<T, Equal_To, Hash>::contains(const T &element) const noex
 }
 
 template <class T, class Equal_To, class Hash>
-void HashTableChaining<T, Equal_To, Hash>::insert(const T &element) noexcept
+void ChainingHashTableSet<T, Equal_To, Hash>::insert(const T &element) noexcept
 {
     size_t index = hash(element) % table_size;
     std::vector<T> &vector = table[index];
@@ -108,7 +108,7 @@ void HashTableChaining<T, Equal_To, Hash>::insert(const T &element) noexcept
 }
 
 template <class T, class Equal_To, class Hash>
-void HashTableChaining<T, Equal_To, Hash>::remove(const T &element) noexcept
+void ChainingHashTableSet<T, Equal_To, Hash>::remove(const T &element) noexcept
 {
     size_t index = hash(element) % table_size;
     std::vector<T> &vector = table[index];
@@ -125,7 +125,7 @@ void HashTableChaining<T, Equal_To, Hash>::remove(const T &element) noexcept
 }
 
 template <class T, class Equal_To, class Hash>
-void HashTableChaining<T, Equal_To, Hash>::clear() noexcept
+void ChainingHashTableSet<T, Equal_To, Hash>::clear() noexcept
 {
     delete[] table;
     num_entries = 0;
@@ -134,7 +134,7 @@ void HashTableChaining<T, Equal_To, Hash>::clear() noexcept
 }
 
 template <class T, class Equal_To, class Hash>
-void HashTableChaining<T, Equal_To, Hash>::resize()
+void ChainingHashTableSet<T, Equal_To, Hash>::resize()
 {
     // Rehash if load exceeds threshold
     if (double(num_entries) / double(table_size) > LOAD_THRESHOLD)

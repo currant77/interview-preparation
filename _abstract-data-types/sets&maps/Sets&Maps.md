@@ -6,7 +6,7 @@
 
 A **set** is an abstract data type representing an unordered collection of _unique_ elements; it corresponds to the mathematical concept of a _finite set_. 
 
-Sets generally support five basic operations (see [ISet](IMap.h) interface):
+Sets generally support five basic operations (see [ISet](ISet.h) interface):
 * `size()`: determining the number of elements in the set
 * `contains()`: determining if the set contains an element (if the element is a _member_ of the set)
 * `insert()`: adding an element to the set
@@ -23,10 +23,10 @@ Most collections do not have different names for the corresponding object and as
 
 Sets generally support six basic operations (see [IMap](IMap.h) interface):
 * `size()`: determining the number of key-value pairs in the map
+* `contains()`: determining if the map contains a key
 * `get()`: accessing the value associated with a key in the map
 * `insert()`: adding a key-value pair to the set
 * `remove()`: removing an key and its corresponding value from the set
-* `contains()`: determining if the map contains a key
 * `clear()`: removing all elements from the set
 
 ## Data Structures
@@ -54,8 +54,8 @@ With a good hash function (such that worst-case performance rarely occurs), a ha
     * [Set](ISet.h)
     * [Map](IMap.h)
 * Data structures:
-    * [HashTableChaining](../../_data-structures/hash-table/HashTableChaining): implementation of the [Set](ISet.h) interface using a hash table data structure with chaining
-    * [HashTableOpenAddressing](../../_data-structures/hash-table/HashTableOpenAddressing): implementation of the [Map](IMap.h) interface using a hash table data structure with open addressing and linear probing
+    * [ChainingHashTableSet](../../_data-structures/hash-table/ChainingHashTableSet): implementation of the [Set](ISet.h) interface using a hash table data structure with chaining
+    * [OpenAddressingHashTableMapMap](../../_data-structures/hash-tabOpenAddressingHashTableMapbleMap): implementation of the [Map](IMap.h) interface using a hash table data structure with open addressing and linear probing
 * Algorithms:
     * #TODO
 * Problems:

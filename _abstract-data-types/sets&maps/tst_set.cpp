@@ -15,10 +15,11 @@
 // Interface
 #include "ISet.h"
 
-// Implementation of ISet using hash table with chaining
-#include "../../_data-structures/hash-table/HashTableChaining.h"
+// Implementation of ISet using hash table with chaining (ChainingHashTableSet)
+#include "../../_data-structures/hash-table/ChainingHashTableSet.h"
 
 // Custom hash and equality objects for std::string and custom Person class
+// (StringEquality, StringHash, Person, PersonEquality, PersonHash)
 #include "../../_data-structures/hash-table/HashFunctionExamples.h"
 
 /**
@@ -26,7 +27,7 @@
  * 
  * @param set 
  */
-void tst_set_int(ISet<int>* set)
+void tst_set_int(ISet<int> *set)
 {
     // Empty table
     assert(!set->size());
@@ -77,7 +78,7 @@ void tst_set_int(ISet<int>* set)
  * 
  * @param set 
  */
-void tst_set_string(ISet<std::string, StringEquality>* set)
+void tst_set_string(ISet<std::string, StringEquality> *set)
 {
     std::string a = "A";
     std::string a_eq = "A";
@@ -86,7 +87,7 @@ void tst_set_string(ISet<std::string, StringEquality>* set)
     std::string c_eq = "C";
     std::string d = "D";
     std::string d_eq = "D";
-    
+
     // Empty table
     assert(!set->size());
 
@@ -126,10 +127,18 @@ void tst_set_string(ISet<std::string, StringEquality>* set)
     // Insert last value
     set->insert(d_eq);
     assert(set->contains(d));
-    assert(set->size() == 1);    
+    assert(set->size() == 1);
 }
 
-void tst_set_person(ISet<Person, PersonEquality>* set)
+/**
+ * @brief Tests set interface using custom class Person and equality comparison
+ * object PersonEquality
+ * @details PersonEquality considers two people equal if they have the same name
+ * (first and last) and social insurance number.
+ * 
+ * @param set 
+ */
+void tst_set_person(ISet<Person, PersonEquality> *set)
 {
     Person a = {"Taylor", "Curran", 29, 7871325};
     Person a_eq = {"Taylor", "Curran", 29, 7899776};
@@ -137,7 +146,7 @@ void tst_set_person(ISet<Person, PersonEquality>* set)
     Person c = {"Barack", "Obama", 44, 1234567};
     Person c_eq = {"Barack", "Obama", 44, 6543210};
     Person d = {"Joe", "Biden", 46, 4644644};
-    
+
     // Empty table
     assert(!set->size());
 
@@ -188,12 +197,12 @@ int main()
     ISet<std::string, StringEquality> *string_set;
     ISet<Person, PersonEquality> *person_set;
 
-    // Test HashTableChaining
-    std::cout << "Testing HashTableChaining..." << std::endl;
+    // Test ChainingHashTableSet
+    std::cout << "Testing ChainingHashTableSet..." << std::endl;
 
-    int_set = new HashTableChaining<int>(2);
-    string_set = new HashTableChaining<std::string, StringEquality, StringHash>(2);
-    person_set = new HashTableChaining<Person, PersonEquality, PersonHash>(2);
+    int_set = new ChainingHashTableSet<int>();
+    string_set = new ChainingHashTableSet<std::string, StringEquality, StringHash>();
+    person_set = new ChainingHashTableSet<Person, PersonEquality, PersonHash>();
 
     tst_set_int(int_set);
     tst_set_string(string_set);

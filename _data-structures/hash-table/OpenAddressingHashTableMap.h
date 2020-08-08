@@ -1,5 +1,5 @@
 /**
- * @file HashTableOpenAddressing.h
+ * @file OpenAddressingHashTableMap.h
  * @author Taylor Curran
  * @brief Implementation of IMap interface using hash table data structure with
  * open addressing and linear probing
@@ -11,8 +11,8 @@
  * @ref Koffman and Wolfgang 2006, 530-558
  */
 
-#ifndef HASH_TABLE_OPEN_ADDRESSING
-#define HASH_TABLE_OPEN_ADDRESSING
+#ifndef OPEN_ADDRESSING_HASH_TABLE_MAP
+#define OPEN_ADDRESSING_HASH_TABLE_MAP
 
 #include <utility>      // std::pair
 #include <functional>   // std::hash, std::map
@@ -33,7 +33,7 @@ template <
     class V,
     class Equal_To = std::equal_to<K>,
     class Hash = std::hash<K>>
-class HashMap : public IMap<K, V>
+class OpenAddressingHashTableMap : public IMap<K, V, Equal_To>
 {
 private:
     typedef std::pair<const K, V> Entry_Type;
@@ -77,10 +77,11 @@ private:
         size_t table_size) const noexcept;
 
 public:
-    explicit HashMap<K, V, Equal_To, Hash>(size_t size = DEFAULT_SIZE);
-    ~HashMap<K, V, Equal_To, Hash>();
+    explicit OpenAddressingHashTableMap<K, V, Equal_To, Hash>(size_t size = DEFAULT_SIZE);
+    ~OpenAddressingHashTableMap<K, V, Equal_To, Hash>();
 
     size_t size() const noexcept override final;
+    bool contains(const K& key) const noexcept override final;
     V& get(const K& key) override final;
     const V& get(const K& key) const override final;
     void insert(const K& key, const V& value) noexcept override final;
@@ -90,16 +91,16 @@ public:
 
 // Initialize static class members
 template <class K, class V, class Equal_To, class Hash>
-typename HashMap<K, V, Equal_To, Hash>::Entry_Type
-    HashMap<K, V, Equal_To, Hash>::dummy = std::pair<const K, V>(K(), V());
+typename OpenAddressingHashTableMap<K, V, Equal_To, Hash>::Entry_Type
+    OpenAddressingHashTableMap<K, V, Equal_To, Hash>::dummy = std::pair<const K, V>(K(), V());
 
 template <class K, class V, class Equal_To, class Hash>
-typename HashMap<K, V, Equal_To, Hash>::Entry_Type *const
-    HashMap<K, V, Equal_To, Hash>::DELETED = 
-        &HashMap<K, V, Equal_To, Hash>::dummy;
+typename OpenAddressingHashTableMap<K, V, Equal_To, Hash>::Entry_Type *const
+    OpenAddressingHashTableMap<K, V, Equal_To, Hash>::DELETED = 
+        &OpenAddressingHashTableMap<K, V, Equal_To, Hash>::dummy;
 
 template <class K, class V, class Equal_To, class Hash>
-HashMap<K, V, Equal_To, Hash>::HashMap(size_t size)
+OpenAddressingHashTableMap<K, V, Equal_To, Hash>::OpenAddressingHashTableMap(size_t size)
 {
     num_entries = 0;
     num_deleted = 0;
@@ -108,7 +109,7 @@ HashMap<K, V, Equal_To, Hash>::HashMap(size_t size)
 }
 
 template <class K, class V, class Equal_To, class Hash>
-HashMap<K, V, Equal_To, Hash>::~HashMap()
+OpenAddressingHashTableMap<K, V, Equal_To, Hash>::~OpenAddressingHashTableMap()
 {
     for (size_t i = 0; i < table_size; i++)
     {
@@ -119,13 +120,19 @@ HashMap<K, V, Equal_To, Hash>::~HashMap()
 }
 
 template <class K, class V, class Equal_To, class Hash>
-size_t HashMap<K, V, Equal_To, Hash>::size() const noexcept
+size_t OpenAddressingHashTableMap<K, V, Equal_To, Hash>::size() const noexcept
 {
     return num_entries;
 }
 
 template <class K, class V, class Equal_To, class Hash>
-V& HashMap<K, V, Equal_To, Hash>::get(const K& key)
+bool OpenAddressingHashTableMap<K, V, Equal_To, Hash>::contains(const K& key) const noexcept
+{
+    return (table[find(key, table, table_size)] != NULL);
+}
+
+template <class K, class V, class Equal_To, class Hash>
+V& OpenAddressingHashTableMap<K, V, Equal_To, Hash>::get(const K& key)
 {
     size_t i = find(key, table, table_size);
 
@@ -136,13 +143,13 @@ V& HashMap<K, V, Equal_To, Hash>::get(const K& key)
 }
 
 template <class K, class V, class Equal_To, class Hash>
-const V& HashMap<K, V, Equal_To, Hash>::get(const K& key) const
+const V& OpenAddressingHashTableMap<K, V, Equal_To, Hash>::get(const K& key) const
 {
     return get(key);
 }
 
 template <class K, class V, class Equal_To, class Hash>
-void HashMap<K, V, Equal_To, Hash>::insert(const K& key, const V& value) noexcept
+void OpenAddressingHashTableMap<K, V, Equal_To, Hash>::insert(const K& key, const V& value) noexcept
 {
     size_t i = find(key, table, table_size);
 
@@ -163,7 +170,7 @@ void HashMap<K, V, Equal_To, Hash>::insert(const K& key, const V& value) noexcep
 }
 
 template <class K, class V, class Equal_To, class Hash>
-void HashMap<K, V, Equal_To, Hash>::remove(const K& key) noexcept
+void OpenAddressingHashTableMap<K, V, Equal_To, Hash>::remove(const K& key) noexcept
 {
     size_t i = find(key, table, table_size);
 
@@ -177,7 +184,7 @@ void HashMap<K, V, Equal_To, Hash>::remove(const K& key) noexcept
 }
 
 template <class K, class V, class Equal_To, class Hash>
-void HashMap<K, V, Equal_To, Hash>::clear() noexcept
+void OpenAddressingHashTableMap<K, V, Equal_To, Hash>::clear() noexcept
 {
     // Delete existing entries
     for (size_t i = 0; i < table_size; i++)
@@ -195,7 +202,7 @@ void HashMap<K, V, Equal_To, Hash>::clear() noexcept
 }
 
 template <class K, class V, class Equal_To, class Hash>
-size_t HashMap<K, V, Equal_To, Hash>::find(
+size_t OpenAddressingHashTableMap<K, V, Equal_To, Hash>::find(
     const K &key, Entry_Type** table, size_t table_size) const noexcept
 {
     size_t i = hash(key) % table_size;
@@ -210,7 +217,7 @@ size_t HashMap<K, V, Equal_To, Hash>::find(
 }
 
 template <class K, class V, class Equal_To, class Hash>
-void HashMap<K, V, Equal_To, Hash>::rehash() noexcept
+void OpenAddressingHashTableMap<K, V, Equal_To, Hash>::rehash() noexcept
 {
 
     if (double(num_entries + num_deleted) / double(table_size) >= LOAD_THRESHOLD)
