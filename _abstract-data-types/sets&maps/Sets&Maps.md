@@ -54,8 +54,8 @@ With a good hash function (such that worst-case performance rarely occurs), a ha
     * [Set](ISet.h)
     * [Map](IMap.h)
 * Data structures:
-    * [HashTableSet](#REF)
-    * [RedBlackTreeMap](#REF)
+    * [HashTableChaining](../../_data-structures/hash-table/HashTableChaining): implementation of the [Set](ISet.h) interface using a hash table data structure with chaining
+    * [HashTableOpenAddressing](../../_data-structures/hash-table/HashTableOpenAddressing): implementation of the [Map](IMap.h) interface using a hash table data structure with open addressing and linear probing
 * Algorithms:
     * #TODO
 * Problems:
