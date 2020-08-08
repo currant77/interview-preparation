@@ -24,14 +24,14 @@
 #include <functional>   // std::less
 #include "IMap.h"
 
-template<class Key, class Value, class Less = std::less<Key>>
-class RedBlackMap : public IMap<Key, Value>
+template<class T, class Value, class Less = std::less<T>>
+class RedBlackMap : public IMap<T, Value>
 {
     private:
         // Classa and struct definitions
         struct Node
         {
-            Key key;
+            T key;
             Value value;
             Node* left = NULL;
             Node* right = NULL;
@@ -43,8 +43,8 @@ class RedBlackMap : public IMap<Key, Value>
         Node* root = NULL;
     
     public:
-        explicit RedBlackMap<Key, Value, Less>();
-        ~RedBlackMap<Key, Value, Less>();
+        explicit RedBlackMap<T, Value, Less>();
+        ~RedBlackMap<T, Value, Less>();
 
         size_t size() const override;
         bool lookup(const Key& k, Value& v) const override;
@@ -53,44 +53,44 @@ class RedBlackMap : public IMap<Key, Value>
         void clear() override;
 };
 
-template<class Key, class Value, class Less>
-RedBlackMap<Key, Value, Less>::RedBlackMap()
+template<class T, class Value, class Less>
+RedBlackMap<T, Value, Less>::RedBlackMap()
 {
 
 }
 
-template<class Key, class Value, class Less>
-RedBlackMap<Key, Value, Less>::~RedBlackMap()
+template<class T, class Value, class Less>
+RedBlackMap<T, Value, Less>::~RedBlackMap()
 {
     
 }
 
-template<class Key, class Value, class Less >
-size_t RedBlackMap<Key, Value, Less>::size() const
+template<class T, class Value, class Less >
+size_t RedBlackMap<T, Value, Less>::size() const
 {
     return 0;
 }
 
-template<class Key, class Value, class Less>
-bool RedBlackMap<Key, Value, Less>::lookup(const Key& k, Value& v) const
+template<class T, class Value, class Less>
+bool RedBlackMap<T, Value, Less>::lookup(const T& k, Value& v) const
 {
     return false;
 }
 
-template<class Key, class Value, class Less>
-void RedBlackMap<Key, Value, Less>::insert(const Key& k, const Value& v)
+template<class T, class Value, class Less>
+void RedBlackMap<T, Value, Less>::insert(const T& k, const Value& v)
 {
     return;
 }
 
-template<class Key, class Value, class Less>
-bool RedBlackMap<Key, Value, Less>::remove(const Key& k)
+template<class T, class Value, class Less>
+bool RedBlackMap<T, Value, Less>::remove(const T& k)
 {
     return false;
 }
 
-template<class Key, class Value, class Less>
-void RedBlackMap<Key, Value, Less>::clear()
+template<class T, class Value, class Less>
+void RedBlackMap<T, Value, Less>::clear()
 {
     return;  
 }

@@ -17,13 +17,13 @@
 #include <functional>
 #include "IMap.h"
 
-template <class Key, class Value, class Hash = std::hash<Key>,
-          class Equal = std::equal_to<Key>>
-class HashMap : public IMap<Key, Value>
+template <class T, class Value, class Hash = std::hash<T>,
+          class Equal = std::equal_to<T>>
+class HashMap : public IMap<T, Value>
 {
 private:
     // Type definitions
-    typedef std::pair<const Key, Value> Entry_Type;
+    typedef std::pair<const T, Value> Entry_Type;
 
     // Constants
     static const int EXPANSION_FACTOR = 2;
@@ -54,33 +54,33 @@ private:
          * @brief If the key is in the table, returns its index; else
          * returns the first free slot
          */
-    size_t locate(const Key &k, Entry_Type **table, size_t table_size) const;
+    size_t locate(const T &k, Entry_Type **table, size_t table_size) const;
 
 public:
-    explicit HashMap<Key, Value, Hash, Equal>(size_t size = DEFAULT_SIZE);
-    ~HashMap<Key, Value, Hash, Equal>();
+    explicit HashMap<T, Value, Hash, Equal>(size_t size = DEFAULT_SIZE);
+    ~HashMap<T, Value, Hash, Equal>();
 
     size_t size() const override;
-    bool lookup(const Key &k, Value &v) const override;
-    void insert(const Key &k, const Value &v) override;
-    bool remove(const Key &k) override;
+    bool lookup(const T &k, Value &v) const override;
+    void insert(const T &k, const Value &v) override;
+    bool remove(const T &k) override;
     void clear() override;
 };
 
 // Initialize static class members
 // (see Koffman and Wolfgang 2006, 545)
-template <class Key, class Value, class Hash, class Equal>
-typename HashMap<Key, Value, Hash, Equal>::Entry_Type
-    HashMap<Key, Value, Hash, Equal>::dummy =
-        std::pair<const Key, Value>(Key(), Value());
+template <class T, class Value, class Hash, class Equal>
+typename HashMap<T, Value, Hash, Equal>::Entry_Type
+    HashMap<T, Value, Hash, Equal>::dummy =
+        std::pair<const T, Value>(T(), Value());
 
-template <class Key, class Value, class Hash, class Equal>
-typename HashMap<Key, Value, Hash, Equal>::Entry_Type *const
-    HashMap<Key, Value, Hash, Equal>::DELETED =
-        &HashMap<Key, Value, Hash, Equal>::dummy;
+template <class T, class Value, class Hash, class Equal>
+typename HashMap<T, Value, Hash, Equal>::Entry_Type *const
+    HashMap<T, Value, Hash, Equal>::DELETED =
+        &HashMap<T, Value, Hash, Equal>::dummy;
 
-template <class Key, class Value, class Hash, class Equal>
-HashMap<Key, Value, Hash, Equal>::HashMap(size_t size)
+template <class T, class Value, class Hash, class Equal>
+HashMap<T, Value, Hash, Equal>::HashMap(size_t size)
 {
     num_entries = 0;
     num_deleted = 0;
@@ -88,8 +88,8 @@ HashMap<Key, Value, Hash, Equal>::HashMap(size_t size)
     table = new Entry_Type *[initial_size]();
 }
 
-template <class Key, class Value, class Hash, class Equal>
-HashMap<Key, Value, Hash, Equal>::~HashMap()
+template <class T, class Value, class Hash, class Equal>
+HashMap<T, Value, Hash, Equal>::~HashMap()
 {
     for (size_t i = 0; i < table_size; i++)
     {
@@ -99,14 +99,14 @@ HashMap<Key, Value, Hash, Equal>::~HashMap()
     delete[] table;
 }
 
-template <class Key, class Value, class Hash, class Equal>
-size_t HashMap<Key, Value, Hash, Equal>::size() const
+template <class T, class Value, class Hash, class Equal>
+size_t HashMap<T, Value, Hash, Equal>::size() const
 {
     return num_entries;
 }
 
-template <class Key, class Value, class Hash, class Equal>
-bool HashMap<Key, Value, Hash, Equal>::lookup(const Key &k, Value &v) const
+template <class T, class Value, class Hash, class Equal>
+bool HashMap<T, Value, Hash, Equal>::lookup(const T &k, Value &v) const
 {
     size_t i = locate(k, table, table_size);
 
@@ -122,8 +122,8 @@ bool HashMap<Key, Value, Hash, Equal>::lookup(const Key &k, Value &v) const
     }
 }
 
-template <class Key, class Value, class Hash, class Equal>
-void HashMap<Key, Value, Hash, Equal>::insert(const Key &k, const Value &v)
+template <class T, class Value, class Hash, class Equal>
+void HashMap<T, Value, Hash, Equal>::insert(const T &k, const Value &v)
 {
     size_t i = locate(k, table, table_size);
 
@@ -147,8 +147,8 @@ void HashMap<Key, Value, Hash, Equal>::insert(const Key &k, const Value &v)
     }
 }
 
-template <class Key, class Value, class Hash, class Equal>
-bool HashMap<Key, Value, Hash, Equal>::remove(const Key &k)
+template <class T, class Value, class Hash, class Equal>
+bool HashMap<T, Value, Hash, Equal>::remove(const T &k)
 {
     size_t i = locate(k, table, table_size);
 
@@ -169,8 +169,8 @@ bool HashMap<Key, Value, Hash, Equal>::remove(const Key &k)
     }
 }
 
-template <class Key, class Value, class Hash, class Equal>
-void HashMap<Key, Value, Hash, Equal>::clear()
+template <class T, class Value, class Hash, class Equal>
+void HashMap<T, Value, Hash, Equal>::clear()
 {
     // Delete existing entries
     for (size_t i = 0; i < table_size; i++)
@@ -187,8 +187,8 @@ void HashMap<Key, Value, Hash, Equal>::clear()
     table = new Entry_Type *[initial_size]();
 }
 
-template <class Key, class Value, class Hash, class Equal>
-void HashMap<Key, Value, Hash, Equal>::rehash()
+template <class T, class Value, class Hash, class Equal>
+void HashMap<T, Value, Hash, Equal>::rehash()
 {
     // Create new table
     size_t new_table_size = table_size * EXPANSION_FACTOR;
@@ -212,8 +212,8 @@ void HashMap<Key, Value, Hash, Equal>::rehash()
     num_deleted = 0;
 }
 
-template <class Key, class Value, class Hash, class Equal>
-size_t HashMap<Key, Value, Hash, Equal>::locate(const Key &k,
+template <class T, class Value, class Hash, class Equal>
+size_t HashMap<T, Value, Hash, Equal>::locate(const T &k,
                                                 Entry_Type **table, size_t table_size) const
 {
     size_t i = hash(k) % table_size;
