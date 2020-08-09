@@ -23,7 +23,7 @@
  * with chaining. The behaviour of \tparam Equal_To and \tparam Hash objects 
  * must be consistent.
  * 
- * @tparam T data type stored in the hash table
+ * @tparam T data type stored in the set
  * @tparam Equal_To equality comparison object type (see std::equal_to)
  * @tparam Hash hash function object type (see std::hash)
  */

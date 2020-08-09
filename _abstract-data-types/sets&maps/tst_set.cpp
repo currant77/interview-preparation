@@ -15,12 +15,15 @@
 // Interface
 #include "ISet.h"
 
-// Implementation of ISet using hash table with chaining (ChainingHashTableSet)
-#include "../../_data-structures/hash-table/ChainingHashTableSet.h"
-
 // Custom hash and equality objects for std::string and custom Person class
 // (StringEquality, StringHash, Person, PersonEquality, PersonHash)
 #include "../../_data-structures/hash-table/HashFunctionExamples.h"
+
+// Implementation of ISet using hash table with chaining (ChainingHashTableSet)
+#include "../../_data-structures/hash-table/ChainingHashTableSet.h"
+
+// Implementation of ISet using a red-black tree (RedBlackTreeSet)
+#include "../../_data-structures/red-black-tree/RedBlackTreeSet.h"
 
 /**
  * @brief Tests set interface using integers
@@ -207,7 +210,21 @@ int main()
     tst_set_string(string_set);
     tst_set_person(person_set);
 
-    // Cleanup
+    delete int_set;
+    delete string_set;
+    delete person_set;
+
+    // Test RedBlackTreeSet
+    std::cout << "Testing RedBlackTreeSet..." << std::endl;
+
+    int_set = new RedBlackTreeSet<int>();
+    string_set = new RedBlackTreeSet<std::string, StringEquality>();
+    person_set = new RedBlackTreeSet<Person>();
+
+    tst_set_int(int_set);
+    tst_set_string(string_set);
+    tst_set_person(person_set);
+
     delete int_set;
     delete string_set;
     delete person_set;
