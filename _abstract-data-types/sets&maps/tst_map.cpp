@@ -178,7 +178,7 @@ void tst_map_string(IMap<std::string, int, StringEquality>* map)
  * 
  * @param map 
  */
-void tst_map_person(IMap<Person, int, PersonEquality>* map)
+void tst_map_person(IMap<Person, int>* map)
 {
     Person a = {"Taylor", "Curran", 29, 7871325};
     Person a_eq = {"Taylor", "Curran", 29, 7899776};
@@ -258,7 +258,7 @@ int main()
 
     IMap<int, int>* int_map;
     IMap<std::string, int, StringEquality>* string_map;
-    IMap<Person, int, PersonEquality>* person_map;
+    IMap<Person, int>* person_map;
 
     // Test ChainingHashTableSet
     std::cout << "Testing OpenAddressingHashTableMap..." << std::endl;
@@ -266,7 +266,7 @@ int main()
     // Small table size to force rehash
     int_map = new OpenAddressingHashTableMap<int, int>(2);
     string_map = new OpenAddressingHashTableMap<std::string, int, StringEquality, StringHash>(2);
-    person_map = new OpenAddressingHashTableMap<Person, int, PersonEquality, PersonHash>(2);
+    person_map = new OpenAddressingHashTableMap<Person, int>(2);
 
     tst_map_int(int_map);
     tst_map_string(string_map);

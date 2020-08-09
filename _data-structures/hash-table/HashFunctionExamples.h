@@ -8,23 +8,28 @@
  * 
  * @copyright Copyright (c) 2020
  * 
+ * @see https://www.learncpp.com/cpp-tutorial/96-overloading-the-comparison-operators/
+ * @see https://en.cppreference.com/w/cpp/utility/hash
  */
 
-#include <cmath>        // std::pow
-#include <string>       // std::string
+#include <cmath>  // std::pow
+#include <string> // std::string
 
-// Library classes ----------
+/* Library class (std::string) ----------
+By providing equality and hashing objects, we can provide a desired
+behaviour in a specific context without changing the default behaviour
+(represented by the comparison operators and std::hash) */
 
 /**
  * @brief String equality comparison object
  */
 struct StringEquality
 {
-    public:
-        bool operator()(const std::string& s1, const std::string& s2) const
-        {
-            return !s1.compare(s2);
-        }
+public:
+    bool operator()(const std::string &s1, const std::string &s2) const
+    {
+        return !s1.compare(s2);
+    }
 };
 
 /**
@@ -33,21 +38,23 @@ struct StringEquality
  */
 struct StringHash
 {
-    public:
-        size_t operator()(const std::string& str) const
-        {
-            size_t hash = 0;
-            size_t n = str.length() - 1;  
+public:
+    size_t operator()(const std::string &str) const
+    {
+        size_t hash = 0;
+        size_t n = str.length() - 1;
 
-            for(char const& c : str)
-            {
-                hash += c * std::pow(31, n--);
-            }      
-            return hash;
+        for (char const &c : str)
+        {
+            hash += c * std::pow(31, n--);
         }
+        return hash;
+    }
 };
 
-// Custom class ---------------------
+/* Custom class ---------------------
+In contrast to the case above, here we want to change the default behaviour
+by overriding the equality and inequality operators and std::hash. */
 
 /**
  * @brief Simple struct for demonstrating custom hash function and 
@@ -56,41 +63,35 @@ struct StringHash
  */
 struct Person
 {
-    public:
-        std::string first_name;
-        std::string last_name;
-        int sin;
-        int phone_number;      
+public:
+    std::string first_name;
+    std::string last_name;
+    int sin;
+    int phone_number;  
 };
 
-/**
- * @brief Custom equality comparison object for \class Person
- */
-struct PersonEquality
+bool operator==(const Person &p1, const Person &p2)
 {
-    public:
-        bool operator()(const Person& p1, const Person& p2) const
-        {
-            return !p1.first_name.compare(p2.first_name) &
-                    !p1.last_name.compare(p2.last_name) &
-                    p1.sin == p2.sin;
-        }
-};
+    return !p1.first_name.compare(p2.first_name) &
+            !p1.last_name.compare(p2.last_name) &
+            p1.sin == p2.sin;
+}
 
-/**
- * @brief Custom hash function object for \class Person
- * @ref based on boost::hash_combine
- */
-struct PersonHash
+bool operator!=(const Person& p1, const Person& p2)
 {
-    private:
-        void combine(size_t& seed, size_t hash) const
+    return !(p1 == p2);
+}
+
+namespace std
+{
+    template<> struct hash<Person>
+    {
+        void combine(size_t &seed, size_t hash) const
         {
-            seed ^= hash + 0x9e3779b9 + (seed<<6) + (seed>>2);    
+            seed ^= hash + 0x9e3779b9 + (seed << 6) + (seed >> 2);
         }
 
-    public:
-        size_t operator()(const Person& p) const
+        size_t operator()(const Person &p) const
         {
             size_t seed = 0;
 
@@ -100,7 +101,8 @@ struct PersonHash
             combine(seed, string_hash(p.first_name));
             combine(seed, string_hash(p.last_name));
             combine(seed, int_hash(p.sin));
-        
+
             return seed;
         }
-};
+    };
+}

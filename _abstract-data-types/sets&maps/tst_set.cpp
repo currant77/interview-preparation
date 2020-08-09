@@ -131,14 +131,13 @@ void tst_set_string(ISet<std::string, StringEquality> *set)
 }
 
 /**
- * @brief Tests set interface using custom class Person and equality comparison
- * object PersonEquality
- * @details PersonEquality considers two people equal if they have the same name
+ * @brief Tests set interface using custom class Person 
+ * @details Person considers two people equal if they have the same name
  * (first and last) and social insurance number.
  * 
  * @param set 
  */
-void tst_set_person(ISet<Person, PersonEquality> *set)
+void tst_set_person(ISet<Person> *set)
 {
     Person a = {"Taylor", "Curran", 29, 7871325};
     Person a_eq = {"Taylor", "Curran", 29, 7899776};
@@ -195,14 +194,14 @@ int main()
 
     ISet<int> *int_set;
     ISet<std::string, StringEquality> *string_set;
-    ISet<Person, PersonEquality> *person_set;
+    ISet<Person> *person_set;
 
     // Test ChainingHashTableSet
     std::cout << "Testing ChainingHashTableSet..." << std::endl;
 
     int_set = new ChainingHashTableSet<int>();
     string_set = new ChainingHashTableSet<std::string, StringEquality, StringHash>();
-    person_set = new ChainingHashTableSet<Person, PersonEquality, PersonHash>();
+    person_set = new ChainingHashTableSet<Person>();
 
     tst_set_int(int_set);
     tst_set_string(string_set);

@@ -18,7 +18,12 @@
  * @brief Interface representing the set abstract data type
  * 
  * @tparam T data type of set elements
- * @tparam Equal_To Equality comparison object (see std::equal_to)
+ * @tparam Equal_To equality comparison object (see std::equal_to)
+ * 
+ * @details Sets cannot contain duplicate items. Equality is determined by the
+ * Equal_To object; the default behaviour uses std::equal_to<T>, which simply
+ * uses the equaliy operator. To implement custom equality behaviour, either 
+ * provide an equality comparison object or override the equality operator. 
  */
 template<class T, class Equal_To = std::equal_to<T>>
 class ISet

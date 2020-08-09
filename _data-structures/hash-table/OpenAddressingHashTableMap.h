@@ -21,7 +21,8 @@
 
 /**
  * @brief Implementation of IMap interface using hash table data structure with
- * open addressing and linear probing
+ * open addressing and linear probing. The behaviour of \tparam Equal_To and 
+ * \tparam Hash objects must be consistent
  * 
  * @tparam K key data type
  * @tparam V value data type

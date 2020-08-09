@@ -10,8 +10,8 @@
  * 
  */
 
-#ifndef HASH_TABLE_CHAINING
-#define HASH_TABLE_CHAINING
+#ifndef CHAINING_HASH_TABLE_SET
+#define CHAINING_HASH_TABLE_SET
 
 #include <vector>     // std::vector
 #include <functional> // std::hash, std::equal_to
@@ -20,11 +20,12 @@
 
 /**
  * @brief Implementation of ISet interface using hash table data structure 
- * with chaining
+ * with chaining. The behaviour of \tparam Equal_To and \tparam Hash objects 
+ * must be consistent.
  * 
- * @tparam T data type store in the hash table
- * @tparam Equal_To Equality comparison object type (see std::equal_to)
- * @tparam Hash Hash function object type (see std::hash)
+ * @tparam T data type stored in the hash table
+ * @tparam Equal_To equality comparison object type (see std::equal_to)
+ * @tparam Hash hash function object type (see std::hash)
  */
 template <class T, class Equal_To = std::equal_to<T>, class Hash = std::hash<T>>
 class ChainingHashTableSet : public ISet<T, Equal_To>
