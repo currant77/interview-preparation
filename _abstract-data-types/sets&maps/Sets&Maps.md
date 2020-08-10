@@ -51,11 +51,9 @@ With a good hash function (such that worst-case performance rarely occurs), a ha
 ## Problems & Examples
 
 * Interfaces:
-    * [Set](ISet.h)
-    * [Map](IMap.h)
+    * #TODO
 * Data structures:
-    * [ChainingHashTableSet](../../_data-structures/hash-table/ChainingHashTableSet): implementation of the [Set](ISet.h) interface using a hash table data structure with chaining
-    * [OpenAddressingHashTableMapMap](../../_data-structures/hash-tabOpenAddressingHashTableMapbleMap): implementation of the [Map](IMap.h) interface using a hash table data structure with open addressing and linear probing
+    * #TODO
 * Algorithms:
     * #TODO
 * Problems:
