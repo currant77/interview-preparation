@@ -15,13 +15,14 @@
 
 /* Approach: <text> */
 
-#include <cassert>      // assert
-#include <iostream>     // std::cout, std::endl;
+#include <cassert> // assert
+#include <iostream> // std::cout, std::endl;
 
 int main()
 {
-    std::cout << "Beginning tests..." << std::endl; 
+    std::cout << std::endl
+              << "Beginning tests..." << std::endl;
 
     std::cout << "All tests passed!" << std::endl;
-    exit(0); 
+    exit(0);
 }
